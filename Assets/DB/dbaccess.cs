@@ -30,17 +30,6 @@ static class MyDataBase
         return filePath;
 #endif
 
-        /*
-#if UNITY_STANDALONE
-        string filePath = Path.Combine(Application.dataPath, fileName);
-        if(!File.Exists(filePath)) UnpackDatabase(filePath);
-        return filePath;*/
-        /*
-    #if UNITY_ANDROID
-        string filePath = Path.Combine(Application.persistentDataPath, fileName);
-            if (!File.Exists(filePath)) UnpackDatabase(filePath);
-            return filePath;
-    #endif*/
     }
 
     /// <summary> Распаковывает базу данных в указанный путь. </summary>
