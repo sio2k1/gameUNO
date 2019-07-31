@@ -118,6 +118,7 @@ public class intro_scene_manager : MonoBehaviour
     IEnumerator player_intro_talk()
     {
         yield return new WaitForSeconds(1);
+        //player.GetComponent<Animator>().SetBool("walk", true);
         images_and_text_at_canvas_fade(player_bubble, 0f, 0f);
         player_bubble.GetComponent<Canvas>().enabled = true;
         images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
