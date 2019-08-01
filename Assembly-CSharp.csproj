@@ -66,8 +66,11 @@
     <Compile Include="Assets\main_menu_script.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\background_movement.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\input_button.cs" />
+    <Compile Include="Assets\Scripts\intro_scripts\input_handler.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\intro_scene_manager.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\narrator_bubble_storyline.cs" />
+    <Compile Include="Assets\Scripts\intro_scripts\scene_state.cs" />
+    <Compile Include="Assets\Scripts\intro_scripts\visual_effects.cs" />
     <Compile Include="Assets\Scripts\type_text_effect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
