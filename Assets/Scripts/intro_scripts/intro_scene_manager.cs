@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
 using UB.Simple2dWeatherEffects.Standard;
+using System.Linq;
 
 // This is the introscene manager, handles a scene logic
 
@@ -18,6 +19,7 @@ public class intro_scene_manager : MonoBehaviour
 
     public Canvas player_bubble;
     public Canvas narrator_bubble;
+    public Canvas input_cvns;
 
     private GameObject player;
     private DataTable storyline;
@@ -28,9 +30,16 @@ public class intro_scene_manager : MonoBehaviour
     private float fog_stop_ctr=0;
     private float fog_stop_in_sec = 7;
     private float fog_start_density=0;
+
+
+    private scene_state stt = new scene_state();
+
+    //private string debug_short_story = "";
+    private string debug_short_story = " and order=1.0"; //""; //leave empty for release, using for debug purposes to make storylines shorter
     public bool ism_scroll_bg()
     {
         return scroll_bg_;
+        
     }
 
     public void fog_handler()
@@ -51,7 +60,91 @@ public class intro_scene_manager : MonoBehaviour
 
     private void Awake()
     {
-        storyline = MyDataBase.GetTable("SELECT * from storyline where scene='intro' order by [order] LIMIT 1"); //load storyline from db on load;
+        storyline = MyDataBase.GetTable("SELECT * from storyline"); //load storyline from db on load;
+        //where scene='intro' order by [order] LIMIT 1
+    }
+
+    IEnumerator player_talk_wrong_dest()
+    {
+        yield return new WaitForSeconds(1);
+        type_text_for_canvas_bubble(player_bubble, "Wrong destination.");
+        yield return new WaitForSeconds(2);
+        StartCoroutine(player_talk_dest_choise());
+
+    }
+
+    IEnumerator player_talk_dest_choise()
+    {
+        yield return new WaitForSeconds(0.1f);
+        foreach (DataRow r in storyline.Select("id=5")) //we starting from story text in narrator box, foreach row in table we display text with delay
+        {
+            string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
+            float te_delay = type_text_for_canvas_bubble(player_bubble, next_text);
+            int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
+            yield return new WaitForSeconds(delay_len);
+        }
+    }
+
+    IEnumerator scene_fading()
+    {
+        yield return new WaitForSeconds(2f);
+        foreach (SpriteRenderer s in GameObject.FindObjectsOfType<SpriteRenderer>())
+        {
+
+            StartCoroutine(FadeTo(0f, 3f, s));
+            //FadeTo(0f, 3f, s);
+        }
+
+        images_and_text_at_canvas_fade(player_bubble, 0f, 2f);
+
+        yield return new WaitForSeconds(4);
+
+        foreach (SpriteRenderer s in GameObject.FindObjectsOfType<SpriteRenderer>())
+        {
+
+            StartCoroutine(FadeTo(1f, 3f, s));
+            //FadeTo(0f, 3f, s);
+        }
+        yield return new WaitForSeconds(2);
+        images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
+        StartCoroutine(player_talk_dest_choise());
+    }
+
+    IEnumerator FadeTo(float aValue, float aTime, SpriteRenderer sr)
+    {
+        float alpha = sr.color.a;
+        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+        {
+            Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, aValue, t));
+            sr.color = newColor;
+            yield return null;
+        }
+    }
+
+    public void button_handler(string input_text)
+    {
+        if (stt.scene_stt==scene_state.states.wait_for_dest_cmd) //if scenestate 
+        {
+            if (input_text.ToLower()=="north")
+            {
+                type_text_for_canvas_bubble(player_bubble, "Going "+ input_text.ToLower() + "...");
+                StartCoroutine(scene_fading());
+            } else
+            if (input_text.ToLower() == "west")
+            {
+                type_text_for_canvas_bubble(player_bubble, "Going " + input_text.ToLower() + "...");
+                StartCoroutine(scene_fading());
+            } else
+            if (input_text.ToLower() == "east")
+            {
+                type_text_for_canvas_bubble(player_bubble, "Going " + input_text.ToLower() + "...");
+                StartCoroutine(scene_fading());
+            } else
+            {
+                StartCoroutine(player_talk_wrong_dest());
+            }
+
+        }
     }
 
     /*private void narrowbox_n_text_fade(float alpha, float time)
@@ -76,6 +169,11 @@ public class intro_scene_manager : MonoBehaviour
     private void images_and_text_at_canvas_fade(Canvas cvn, float alpha, float time)
     {
         //new function to fade all images and texts in canvas
+        if (alpha>0)
+        {
+            cvn.enabled = true;
+        }
+
         foreach (var img in cvn.GetComponentsInChildren<Image>())
         {
             img.CrossFadeAlpha(alpha, time, false);
@@ -99,8 +197,11 @@ public class intro_scene_manager : MonoBehaviour
     private void Start()
     {
         images_and_text_at_canvas_fade(narrator_bubble, 0f, 0f);//hide image and text on start
-        //narrowbox_n_text_fade(0f, 0f); //hide image and text on start
-        D2FogsNoiseTexPE fog = GameObject.FindObjectOfType<D2FogsNoiseTexPE>();
+        images_and_text_at_canvas_fade(input_cvns, 0f, 0f);
+        input_cvns.enabled = false;
+
+         //narrowbox_n_text_fade(0f, 0f); //hide image and text on start
+         D2FogsNoiseTexPE fog = GameObject.FindObjectOfType<D2FogsNoiseTexPE>();
         if (fog != null)
         {
             fog_start_density = fog.Density;// init acutal fog dens at start so we can .lerp it later
@@ -122,7 +223,16 @@ public class intro_scene_manager : MonoBehaviour
         images_and_text_at_canvas_fade(player_bubble, 0f, 0f);
         player_bubble.GetComponent<Canvas>().enabled = true;
         images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
-        type_text_for_canvas_bubble(player_bubble, "sdsadsafsfdsfdfsdf");
+        foreach (DataRow r in storyline.Select("scene='intro_hero'"+debug_short_story, "order ASC")) //we starting from story text in narrator box, foreach row in table we display text with delay
+        {
+            string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
+            float te_delay = type_text_for_canvas_bubble(player_bubble, next_text);
+            int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
+            yield return new WaitForSeconds(delay_len);
+        }
+        stt.scene_stt = scene_state.states.wait_for_dest_cmd; //change scene state so we can assept destination commnds;
+        images_and_text_at_canvas_fade(input_cvns, 1f, 2f);
+        //type_text_for_canvas_bubble(player_bubble, "sdsadsafsfdsfdfsdf");
     }
 
     IEnumerator introstory()
@@ -134,8 +244,9 @@ public class intro_scene_manager : MonoBehaviour
         //narrowbox_n_text_fade(1f, 2f);// fadein story box and text
 
         yield return new WaitForSeconds(1);
-        
-        foreach (DataRow r in storyline.Rows) //we starting from story text in narrator box, foreach row in table we display text with delay
+
+        //DataRow[] results = ;
+        foreach (DataRow r in storyline.Select("scene='intro'"+debug_short_story, "order ASC")) //we starting from story text in narrator box, foreach row in table we display text with delay
         {
             string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
             float te_delay = type_text_for_canvas_bubble(narrator_bubble, next_text);
@@ -168,6 +279,26 @@ public class intro_scene_manager : MonoBehaviour
         StartCoroutine(player_intro_talk());
     }
     
-    
+    public class scene_state
+    {
+        public enum states
+        {
+            intro, wait_for_dest_cmd
+        }
+
+        public states scene_stt;
+        public List<level> levels = new List<level>();
+
+        private states Scene_stt { get => scene_stt; set => scene_stt = value; }
+    }
+
+    public class level
+    {
+        public string name;
+        public int score;
+        public int time_in_sec;
+    }
 
 }
+
+

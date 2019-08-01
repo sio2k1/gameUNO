@@ -3,6 +3,7 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - UB.Simple2dWeatherEffects.Standard.D2FogsNoiseTexPE
     - background_movement
+    - input_button
     - intro_scene_manager
     - type_text_effect
     Unity.TextMeshPro.dll:
@@ -11,12 +12,22 @@ ScriptsOnlyBuild:
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
+    UnityEditor.Graphs.dll:
+    - UnityEditor.Graphs.AnimationBlendTree.Graph
+    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
+    - UnityEditor.Graphs.AnimationStateMachine.Graph
+    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
+    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
+    - UnityEngine.EventSystems.EventSystem
+    - UnityEngine.EventSystems.StandaloneInputModule
+    - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.InputField
     - UnityEngine.UI.Text
   sceneClasses:
     Assets/Scenes/intro.unity:
@@ -47,11 +58,19 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
+      Script: {instanceID: 9408}
+    - Class: 114
       Script: {instanceID: 9410}
+    - Class: 114
+      Script: {instanceID: 9416}
     - Class: 114
       Script: {instanceID: 9422}
     - Class: 114
       Script: {instanceID: 9430}
+    - Class: 114
+      Script: {instanceID: 9432}
+    - Class: 114
+      Script: {instanceID: 9466}
     - Class: 114
       Script: {instanceID: 9468}
     - Class: 114
@@ -72,6 +91,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10458}
     - Class: 114
       Script: {instanceID: 10532}
+    - Class: 114
+      Script: {instanceID: 14644}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -829,7 +850,7 @@ ScriptsOnlyBuild:
     className: D2FogsNoiseTexPE
   - hash:
       serializedVersion: 2
-      Hash: 1b9f78a773bf4ef0bc292edcd5c2c584
+      Hash: 40a544756122ea89742c851f90190bbb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: intro_scene_manager
@@ -977,6 +998,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 2a5e5948ab31c184eab021411c72a6c2
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: input_button
   platform: 13
   scenePathNames:
   - Assets/Scenes/intro.unity
