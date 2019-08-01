@@ -652,6 +652,7 @@ GameObject:
   - component: {fileID: 527948116}
   - component: {fileID: 527948115}
   - component: {fileID: 527948114}
+  - component: {fileID: 527948118}
   m_Layer: 5
   m_Name: cmd_input_field
   m_TagString: Untagged
@@ -711,7 +712,18 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 527948118}
+        m_MethodName: on_button_input_click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
@@ -784,6 +796,20 @@ RectTransform:
   m_AnchoredPosition: {x: -55, y: -2}
   m_SizeDelta: {x: 197.6, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &527948118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 527948113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a55932e7e99c5b46990f7dc21fb91fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inp: {fileID: 527948114}
+  ism: {fileID: 378906480}
 --- !u!1 &547518988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2016,7 +2042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1981267386}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1380.9, y: 56, z: 340.95}
+  m_LocalPosition: {x: 1385, y: 56, z: 340.95}
   m_LocalScale: {x: 40, y: 40, z: 40}
   m_Children: []
   m_Father: {fileID: 1097488761}
@@ -2095,7 +2121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2023695733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 615.5, y: 56, z: 340.95}
+  m_LocalPosition: {x: 617, y: 56, z: 340.95}
   m_LocalScale: {x: 40, y: 40, z: 40}
   m_Children: []
   m_Father: {fileID: 1097488761}

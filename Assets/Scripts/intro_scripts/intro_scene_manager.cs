@@ -34,8 +34,8 @@ public class intro_scene_manager : MonoBehaviour
 
     private scene_state stt = new scene_state();
 
-    //private string debug_short_story = "";
-    private string debug_short_story = " and order=1.0"; //""; //leave empty for release, using for debug purposes to make storylines shorter
+    private string debug_short_story = "";
+    //private string debug_short_story = " and order=1.0"; //""; //leave empty for release, using for debug purposes to make storylines shorter
     public bool ism_scroll_bg()
     {
         return scroll_bg_;
@@ -223,6 +223,8 @@ public class intro_scene_manager : MonoBehaviour
         images_and_text_at_canvas_fade(player_bubble, 0f, 0f);
         player_bubble.GetComponent<Canvas>().enabled = true;
         images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
+        input_cvns.GetComponentInChildren<InputField>().ActivateInputField();
+
         foreach (DataRow r in storyline.Select("scene='intro_hero'"+debug_short_story, "order ASC")) //we starting from story text in narrator box, foreach row in table we display text with delay
         {
             string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)

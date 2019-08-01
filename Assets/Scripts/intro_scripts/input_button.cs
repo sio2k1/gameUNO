@@ -11,7 +11,8 @@ public class input_button : MonoBehaviour
     public void on_button_input_click()
     {
         
-            ism.button_handler(inp.text);
-        
+        ism.button_handler(inp.text);
+        inp.text = "";
+        inp.ActivateInputField();
     }
 }
