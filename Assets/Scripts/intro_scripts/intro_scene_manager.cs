@@ -31,7 +31,7 @@ public class intro_scene_manager : MonoBehaviour
 
 
 
-    private scene_state stt = new scene_state();
+    //private scene_state stt = new scene_state();
 
     //private string debug_short_story = "";
     private string debug_short_story = " and order=1.0"; //""; //leave empty for release, using for debug purposes to make storylines shorter
@@ -66,7 +66,7 @@ public class intro_scene_manager : MonoBehaviour
         }
     }
 
-
+    /*
     IEnumerator inp_handler(string input_text)
     {
         yield return new WaitForSeconds(0.1f);
@@ -108,7 +108,7 @@ public class intro_scene_manager : MonoBehaviour
     public void button_handler(string input_text)
     {
         StartCoroutine(inp_handler(input_text));
-    }
+    }*/
     
 
 
@@ -138,7 +138,7 @@ public class intro_scene_manager : MonoBehaviour
 
     IEnumerator introstory()
     {
-
+        narrator_bubble.enabled = true;
         scroll_bg_ = true; //setting up the background scrolling enabled on start
         vief.show_fog_ = true;
         vief.images_and_text_at_canvas_fade(narrator_bubble, 1f, 2f);// fadein story box and text
@@ -156,7 +156,7 @@ public class intro_scene_manager : MonoBehaviour
         vief.show_fog_ = false; //stop fog
         player=Instantiate(knight_to_spawn, new Vector3(455, -120, 0), Quaternion.identity, GameObject.Find("bigForest").transform); // player spawn so camera can catch hero nicely and smoothly
         yield return new WaitForSeconds(7); //weiting a bit before stop the camera. Smoth camera stop is seted in background script
-
+        narrator_bubble.enabled = false;
         scroll_bg_ = false; //stop bg scrolling
         StartCoroutine(player_intro_talk());
     }
@@ -177,8 +177,9 @@ public class intro_scene_manager : MonoBehaviour
             int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
             yield return new WaitForSeconds(delay_len);
         }
-        stt.scene_stt = scene_state.states.wait_for_dest_cmd; //change scene state so we can assept destination commnds;
+        //stt.scene_stt = scene_state.states.wait_for_dest_cmd; //change scene state so we can assept destination commnds;
         vief.images_and_text_at_canvas_fade(input_cvns, 1f, 2f);
+        input_cvns.enabled = true;
         input_cvns.GetComponentInChildren<InputField>().ActivateInputField();
         //type_text_for_canvas_bubble(player_bubble, "sdsadsafsfdsfdfsdf");
     }

@@ -48,9 +48,11 @@ public class visual_effects : MonoBehaviour
         }
     }
 
-    public IEnumerator scene_fading(float wait, float transition, float last, Canvas player_bubble)
+
+
+    public IEnumerator scene_fade_to_0()
     {
-        yield return new WaitForSeconds(wait);
+        yield return new WaitForSeconds(0.1f);
         foreach (SpriteRenderer s in GameObject.FindObjectsOfType<SpriteRenderer>())
         {
 
@@ -58,21 +60,49 @@ public class visual_effects : MonoBehaviour
             //FadeTo(0f, 3f, s);
         }
 
-        images_and_text_at_canvas_fade(player_bubble, 0f, 2f);
+        foreach (Canvas c in GameObject.FindObjectsOfType<Canvas>())
+        {
 
-        yield return new WaitForSeconds(transition);
+            images_and_text_at_canvas_fade(c, 0f, 2f);
+            //FadeTo(0f, 3f, s);
+        }
 
+        //images_and_text_at_canvas_fade(player_bubble, 0f, 2f);
+
+
+
+    }
+
+
+    public IEnumerator scene_fade_to_100()
+    {
+        yield return new WaitForSeconds(0.1f);
         foreach (SpriteRenderer s in GameObject.FindObjectsOfType<SpriteRenderer>())
         {
 
             StartCoroutine(FadeTo(1f, 3f, s));
             //FadeTo(0f, 3f, s);
         }
-        yield return new WaitForSeconds(last);
-        images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
-        
+
+        foreach (Canvas c in GameObject.FindObjectsOfType<Canvas>())
+        {
+
+            images_and_text_at_canvas_fade(c, 1f, 2f);
+            //FadeTo(0f, 3f, s);
+        }
+
+        //yield return new WaitForSeconds(last);
+        //images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
+
     }
 
+    public void sprite_renderer_set_alpha(SpriteRenderer sr, float alpha)
+    {
+
+        Color newColor = new Color(1, 1, 1, alpha);
+        sr.color = newColor;
+
+    }
 
     public float type_text_for_canvas_bubble(Canvas cvn, string text)
     {
@@ -89,10 +119,7 @@ public class visual_effects : MonoBehaviour
     public void images_and_text_at_canvas_fade(Canvas cvn, float alpha, float time)
     {
         //new function to fade all images and texts in canvas
-        if (alpha > 0)
-        {
-            cvn.enabled = true;
-        }
+       
 
         foreach (var img in cvn.GetComponentsInChildren<Image>())
         {

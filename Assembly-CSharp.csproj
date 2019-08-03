@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="Assets\DB\dbaccess.cs" />
     <Compile Include="Assets\main_menu_script.cs" />
+    <Compile Include="Assets\Scripts\console_input_handling.cs" />
+    <Compile Include="Assets\Scripts\game_west_logic.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\background_movement.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\input_button.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\input_handler.cs" />
