@@ -10,7 +10,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{B1FA5B0E-F6BF-6264-E716-6EDBCA94790B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -133,6 +134,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="ClassDiagram1.cd" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

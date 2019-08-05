@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="console_input_handling">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <AssociationLine Name="level_west_logic" Type="game_west_logic" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="1.5" />
+        <Point X="3.374" Y="1.5" />
+        <Point X="3.374" Y="1.401" />
+        <Point X="7.312" Y="1.401" />
+        <Point X="7.312" Y="2.595" />
+        <Point X="10.453" Y="2.595" />
+        <Point X="10.453" Y="1.938" />
+        <Point X="12" Y="1.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>IAQAAAAAICAAAAAAAAAAAgAQAAAAAAIBAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\console_input_handling.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="gamestate" />
+      <Field Name="level_west_logic" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="game_west_logic">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwBAAAAICAEACAAAACggAAAAAABAAAAAAACAAAACAI=</HashCode>
+      <FileName>Assets\Scripts\game_west_logic.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="vief" />
+      <Field Name="current_game_state" />
+    </ShowAsAssociation>
+    <Lollipop Orientation="Left" Position="0.129" />
+  </Class>
+  <Class Name="intro_scene_manager">
+    <Position X="10.25" Y="5.25" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAQBEIAAIKAAAAAADAAAAAAAABAAAAgBIABCAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\intro_scene_manager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="vief" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="visual_effects">
+    <Position X="15.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAgAAGQAggAAAABAAAkAAAAAAABAAAAAAAIgAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\visual_effects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="scene_state">
+    <Position X="5.75" Y="3.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="scene_state.states" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\intro_scripts\scene_state.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <AssociationLine Name="levels" Type="level" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.062" Y="3.75" />
+        <Point X="6.062" Y="3.5" />
+        <Point X="5.5" Y="3.5" />
+        <Point X="5.5" Y="4.566" />
+        <Point X="3.5" Y="4.566" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAEEAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="current_level" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="levels" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="level">
+    <Position X="2" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAEAAAEAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Igame_level">
+    <Position X="8.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
