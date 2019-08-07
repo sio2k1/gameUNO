@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
+using cmn_infrastructure;
 
 public class game_west_logic : MonoBehaviour, Igame_level
 {
@@ -14,11 +15,14 @@ public class game_west_logic : MonoBehaviour, Igame_level
     private Canvas enemy_box_canvas;
     DataTable storyline;
 
+    int debug = 1;
+
     private scene_state current_game_state;
 
     IEnumerator level_start()
     {
-        storyline = MyDataBase.GetTable("SELECT * from storyline where scene='"+current_game_state.current_level.name+"'");
+        
+        storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='"+current_game_state.current_level.name+"'");
         //vief.type_text_for_canvas_bubble(player_bubble, "Going west...");
         StartCoroutine(vief.scene_fade_to_0());
 
@@ -70,11 +74,28 @@ public class game_west_logic : MonoBehaviour, Igame_level
                 yield return new WaitForSeconds(delay_len);
             }
         }
+        yield return new WaitForSeconds(2);
+        current_game_state.scene_stt = scene_state.states.level_progress;
+    }
+
+    void questions_init()
+    {
+        for(int i=0; i<=3;i++)
+        {
+            question q = math_question_builder.create_math_question(10 + i);
+            if (debug == 1)
+            {
+                q.question_text += ":" + q.answers[0].txt; //we will show right answer in question for debug reasons
+            }
+            current_game_state.current_level.questions.Add(q);
+        }
+        current_game_state.current_level.questions.Reverse();
     }
 
     public void run_game_level(scene_state st)
     {
         current_game_state = st;
+        questions_init();
         StartCoroutine(level_start());
 
     }
@@ -84,9 +105,49 @@ public class game_west_logic : MonoBehaviour, Igame_level
         return current_game_state;
     }
 
+    IEnumerator next_question(bool correct, string input_text)
+    {
+        float te_delay = vief.type_text_for_canvas_bubble(player_bubble, "I think it is " + input_text);
+        int delay_len = Mathf.RoundToInt(te_delay * input_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
+        yield return new WaitForSeconds(delay_len);
+        yield return new WaitForSeconds(1);
+
+        string text = "";
+
+        if (correct)
+        {
+            text = "Correct!";
+
+        } else
+        {
+            text = "U wrong!";
+        }
+        te_delay = vief.type_text_for_canvas_bubble(enemy_box_canvas, text);
+        delay_len = Mathf.RoundToInt(te_delay * text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
+        yield return new WaitForSeconds(delay_len);
+        yield return new WaitForSeconds(2);
+        current_game_state.scene_stt = scene_state.states.level_progress;
+    }
+
     public void level_input_handler(string input_text)
     {
-
+        if (current_game_state.scene_stt == scene_state.states.wait_for_input_answer)
+        {
+            question q = current_game_state.current_level.current_question;
+            if (q.answers.Count==1)
+            {
+                
+                if (q.answers[0].txt.ToLower()==input_text.ToLower())
+                {
+                    //ok
+                    StartCoroutine(next_question(true,input_text));
+                } else
+                {
+                    StartCoroutine(next_question(false, input_text));
+                    //next question
+                }
+            }
+        }
     }
 
     void Start()
@@ -94,9 +155,42 @@ public class game_west_logic : MonoBehaviour, Igame_level
         
     }
 
+    IEnumerator show_question(question q)
+    {
+        yield return null;
+        current_game_state.current_level.current_question = q;
+        float te_delay = vief.type_text_for_canvas_bubble(enemy_box_canvas, q.question_text);
+        //int delay_len = Mathf.RoundToInt(te_delay * q.question_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
+        //yield return new WaitForSeconds(delay_len);
 
+    }
+
+    float timer;
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if (timer>0.300f)
+        {
+            timer = 0;
+            if (current_game_state != null)
+            {
+                if (current_game_state.scene_stt == scene_state.states.level_progress)
+                {
+                    current_game_state.scene_stt = scene_state.states.wait_for_input_answer;
+                    int qcount = current_game_state.current_level.questions.Count;
+                    if (qcount > 0)
+                    {
+                        question q = current_game_state.current_level.questions[qcount - 1];
+                        current_game_state.current_level.questions.RemoveAt(qcount - 1);
+                        StartCoroutine(show_question(q));
+                    }
+                    else
+                    {
+                        //level ends here
+                    }
+                }
+            }
+        }
+
     }
 }

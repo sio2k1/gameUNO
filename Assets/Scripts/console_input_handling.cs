@@ -37,7 +37,7 @@ public class console_input_handling : MonoBehaviour
             {
                 right_dest = true;
                 gamestate.current_level = l;
-                gamestate.scene_stt = scene_state.states.level_progress;
+                gamestate.scene_stt = scene_state.states.level_intro;
                 level_west_logic.run_game_level(gamestate);
                 //change scene
             }
@@ -65,7 +65,7 @@ public class console_input_handling : MonoBehaviour
         {
             destination_handler(input_text);
         }
-        if (gamestate.scene_stt == scene_state.states.level_progress) //if scenestate is level in progress -> we pass input to that level control script
+        if (gamestate.scene_stt == scene_state.states.wait_for_input_answer) //if scenestate is level in progress -> we pass input to that level control script
         {
             level_progress_input_forwarder(input_text);
         }

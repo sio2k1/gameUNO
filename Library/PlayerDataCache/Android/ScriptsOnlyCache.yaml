@@ -3,9 +3,12 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - UB.Simple2dWeatherEffects.Standard.D2FogsNoiseTexPE
     - background_movement
+    - console_input_handling
+    - game_west_logic
     - input_button
     - intro_scene_manager
     - type_text_effect
+    - visual_effects
     Unity.TextMeshPro.dll:
     - TMPro.TMP_ColorGradient
     - TMPro.TMP_FontAsset
@@ -74,25 +77,31 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9468}
     - Class: 114
-      Script: {instanceID: 9666}
+      Script: {instanceID: 9504}
     - Class: 114
-      Script: {instanceID: 9782}
+      Script: {instanceID: 9670}
     - Class: 114
-      Script: {instanceID: 10088}
+      Script: {instanceID: 9786}
     - Class: 114
-      Script: {instanceID: 10098}
+      Script: {instanceID: 9806}
     - Class: 114
-      Script: {instanceID: 10242}
+      Script: {instanceID: 10094}
     - Class: 114
-      Script: {instanceID: 10244}
+      Script: {instanceID: 10104}
     - Class: 114
-      Script: {instanceID: 10266}
+      Script: {instanceID: 10136}
     - Class: 114
-      Script: {instanceID: 10458}
+      Script: {instanceID: 10250}
     - Class: 114
-      Script: {instanceID: 10532}
+      Script: {instanceID: 10252}
     - Class: 114
-      Script: {instanceID: 14644}
+      Script: {instanceID: 10274}
+    - Class: 114
+      Script: {instanceID: 10468}
+    - Class: 114
+      Script: {instanceID: 10518}
+    - Class: 114
+      Script: {instanceID: 10544}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -370,6 +379,12 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
+      Hash: 4e917014114d1581eee58673e29cba8e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: game_west_logic
+  - hash:
+      serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
@@ -563,6 +578,12 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: input_handler
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: SignalAsset
@@ -650,6 +671,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
     className: Benchmark01
+  - hash:
+      serializedVersion: 2
+      Hash: e14ee63fde03d62a3506964a121284df
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: visual_effects
   - hash:
       serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
@@ -772,6 +799,12 @@ ScriptsOnlyBuild:
     className: TMP_TextSelector_A
   - hash:
       serializedVersion: 2
+      Hash: 6f99955b03f25867ec14eb4ba3943c3b
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: console_input_handling
+  - hash:
+      serializedVersion: 2
       Hash: 88cc9df3c6fc697bfbeacd24c0d6f2d7
     assemblyName: UnityEngine.TestRunner.dll
     namespaceName: UnityEngine.TestTools
@@ -850,7 +883,7 @@ ScriptsOnlyBuild:
     className: D2FogsNoiseTexPE
   - hash:
       serializedVersion: 2
-      Hash: 40a544756122ea89742c851f90190bbb
+      Hash: 1819edf17a86006fb098f355769bba3b
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: intro_scene_manager
@@ -946,6 +979,12 @@ ScriptsOnlyBuild:
     className: TMPro_InstructionOverlay
   - hash:
       serializedVersion: 2
+      Hash: fea89de7ef3c810b5508e18333dd3d2f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: input_button
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
@@ -998,12 +1037,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 2a5e5948ab31c184eab021411c72a6c2
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: input_button
   platform: 13
   scenePathNames:
   - Assets/Scenes/intro.unity

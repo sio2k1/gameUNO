@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
+using cmn_infrastructure;
 //using System.Linq;
 
 // This is the introscene manager, handles a scene logic
@@ -126,7 +127,7 @@ public class intro_scene_manager : MonoBehaviour
 
     private void Start()
     {
-        storyline = MyDataBase.GetTable("SELECT * from storyline"); //load storyline from db on load;
+        storyline = sqlite_db_helper.GetTable("SELECT * from storyline"); //load storyline from db on load;
         vief.images_and_text_at_canvas_fade(narrator_bubble, 0f, 0f);//hide image and text on start
         vief.images_and_text_at_canvas_fade(input_cvns, 0f, 0f);
         input_cvns.enabled = false;
@@ -138,6 +139,21 @@ public class intro_scene_manager : MonoBehaviour
 
     IEnumerator introstory()
     {
+        /*question q = new question();
+        q.question_text = "qtext";
+        answer a1 = new answer(false,"false answ 1");
+        answer a2 = new answer(false, "false answ 2");
+        answer a3 = new answer(true, "true answ");
+        q.answers.Add(a1);
+        q.answers.Add(a2);
+        q.answers.Add(a3);
+        q.shuffle_answers();
+
+        q=math_question_builder.create_math_question(10);
+
+        string json2 = cmn_infrastructure.serializer_helper.json_serialize_object_to_string(q);
+        Debug.Log(json2);*/
+
         narrator_bubble.enabled = true;
         scroll_bg_ = true; //setting up the background scrolling enabled on start
         vief.show_fog_ = true;

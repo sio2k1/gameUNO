@@ -15,7 +15,7 @@ public class scene_state
 {
     public enum states
     {
-        intro, wait_for_dest_cmd, level_progress
+        intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro
     }
 
     public level current_level;
@@ -33,6 +33,9 @@ public class level
     public int score=0;
     public int time_in_sec=0;
     public bool passed = false;
+    public question current_question;
+    public List<question> questions = new List<question>();
+
 
     public level(string level_name)
     {
