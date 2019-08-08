@@ -6,20 +6,22 @@ public class background_movement : MonoBehaviour
 {
     public float speed; //bg transition speed
     private Vector3 start_pos; //we keep starting pos here
-    intro_scene_manager ism;
+    scene_objects ism;
     private float time_counter_for_stop=0;
     public float stop_in_sec = 3;
 
+    public bool scrollbg;
+
     void Start()
     {
-        ism = GameObject.FindObjectOfType<intro_scene_manager>();
+        ism = GameObject.FindObjectOfType<scene_objects>();
         start_pos = transform.position;
     }
 
 
     void Update()
     {
-        if (ism.ism_scroll_bg())
+        if (scrollbg)
         {
             transform.Translate((new Vector3(-1, 0, 0)) * speed * Time.deltaTime);
         } else

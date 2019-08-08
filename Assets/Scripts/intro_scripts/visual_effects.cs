@@ -116,6 +116,23 @@ public class visual_effects : MonoBehaviour
         }
         return res;
     }
+
+    public float type_text_for_canvas_bubble_v2(Canvas cvn, string text)
+    {
+        float res = 0;
+
+        type_text_effect te = cvn.GetComponentInChildren<type_text_effect>();
+        if (te != null) // in case we dont have type_effect attached to text
+        {
+            te.type_text(text);
+            res = te.delay;
+        }
+        int delay_len = Mathf.RoundToInt(res * text.Length + 2);
+        return delay_len;
+    }
+
+
+
     public void images_and_text_at_canvas_fade(Canvas cvn, float alpha, float time)
     {
         //new function to fade all images and texts in canvas

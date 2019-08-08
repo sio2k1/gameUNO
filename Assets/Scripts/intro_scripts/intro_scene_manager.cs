@@ -67,50 +67,7 @@ public class intro_scene_manager : MonoBehaviour
         }
     }
 
-    /*
-    IEnumerator inp_handler(string input_text)
-    {
-        yield return new WaitForSeconds(0.1f);
-        if (stt.scene_stt == scene_state.states.wait_for_dest_cmd) //if scenestate 
-        {
-            if (input_text.ToLower() == "north")
-            {
-                vief.type_text_for_canvas_bubble(player_bubble, "Going " + input_text.ToLower() + "...");
-                StartCoroutine(vief.scene_fading(2, 4, 2, player_bubble));
-                yield return new WaitForSeconds(2 + 4 + 2);
-                StartCoroutine(player_talk_dest_choise());
-            }
-            else
-            if (input_text.ToLower() == "west")
-            {
-                vief.type_text_for_canvas_bubble(player_bubble, "Going " + input_text.ToLower() + "...");
-                StartCoroutine(vief.scene_fading(2, 4, 2, player_bubble));
-                yield return new WaitForSeconds(2 + 4 + 2);
-                StartCoroutine(player_talk_dest_choise());
-            }
-            else
-            if (input_text.ToLower() == "east")
-            {
-                vief.type_text_for_canvas_bubble(player_bubble, "Going " + input_text.ToLower() + "...");
-                StartCoroutine(vief.scene_fading(2, 4, 2, player_bubble));
-                yield return new WaitForSeconds(2 + 4 + 2);
-                StartCoroutine(player_talk_dest_choise());
-            }
-            else
-            {
-                StartCoroutine(player_talk_wrong_dest());
 
-            }
-
-        }
-    }
-
-
-    public void button_handler(string input_text)
-    {
-        StartCoroutine(inp_handler(input_text));
-    }*/
-    
 
 
 
@@ -160,13 +117,20 @@ public class intro_scene_manager : MonoBehaviour
         vief.images_and_text_at_canvas_fade(narrator_bubble, 1f, 2f);// fadein story box and text
         yield return new WaitForSeconds(1);
 
+        foreach (string next_text in db_helper.intro_story_line(""))
+        {
+            float te_delay = vief.type_text_for_canvas_bubble(narrator_bubble, next_text);
+            int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
+            yield return new WaitForSeconds(delay_len);
+        }
+        /*
         foreach (DataRow r in storyline.Select("scene='intro'"+debug_short_story, "order ASC")) //we starting from story text in narrator box, foreach row in table we display text with delay
         {
             string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
             float te_delay = vief.type_text_for_canvas_bubble(narrator_bubble, next_text);
             int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
             yield return new WaitForSeconds(delay_len);
-        }
+        }*/
 
         vief.images_and_text_at_canvas_fade(narrator_bubble, 0f, 3f); // after no story records in sql table left, we fadeout narrator box and text
         vief.show_fog_ = false; //stop fog
