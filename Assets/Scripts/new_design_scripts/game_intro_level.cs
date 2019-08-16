@@ -6,7 +6,7 @@ public class game_intro_level : MonoBehaviour
 {
     // Start is called before the first frame update
     public scene_objects scene;
-    private string debug = "";//"LIMIT 1";
+    private string debug = "LIMIT 1";
     void Start()
     {
         scene.narrator_enabled(false);
@@ -51,13 +51,14 @@ public class game_intro_level : MonoBehaviour
         scene.narrator_enabled(false);
         scene.scroll_bg(false); //stop bg scrolling
 
-        StartCoroutine(player_intro_talk());
+        StartCoroutine(player_intro_talk()); //follow to player talking part of intro
     }
 
     IEnumerator player_intro_talk()
     {
         yield return new WaitForSeconds(1);
-        scene.player_bubble_hide();
+        scene.player_bubble_fade(0f, 0f); //set alph to 0 so we can fade it in later
+        //scene.player_bubble_fade_to_0_in_0();
         scene.player_bubble_enabled(true);
         scene.player_bubble_fade(1f, 2f);
         foreach (string next_text in db_helper.intro_hero_text(debug))

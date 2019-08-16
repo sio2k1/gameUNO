@@ -58,14 +58,19 @@ public class scene_objects : MonoBehaviour
         return vief.type_text_for_canvas_bubble_v2(player_bubble, text);
     }
 
-    public void player_bubble_hide()
+    /*public void player_bubble_fade_to_0_in_0()
     {
         vief.images_and_text_at_canvas_fade(player_bubble, 0f, 0f);//hide image and text on start
-    }
+    }*/
 
     public void player_bubble_enabled(bool enabled)
     {
         player_bubble.enabled = enabled;
+    }
+
+    public bool player_bubble_is_enabled()
+    {
+        return player_bubble.enabled; 
     }
 
 
@@ -112,7 +117,39 @@ public class scene_objects : MonoBehaviour
         forest.scrollbg = scroll;
     }
 
-    
+    public void scene_fade_to(float alpha)
+    {
+        StartCoroutine(vief.scene_fade_to(alpha));
+    }
+
+
+
+    public void level_west_enemy_instatinate()
+    {
+        enemy = Instantiate(enemy_prefab, new Vector3(-200, -70, 0), Quaternion.identity, GameObject.Find("bigForest").transform); // player spawn so camera can catch hero nicely and smoothly
+        enemy_box_canvas = enemy.GetComponentInChildren<Canvas>();
+        vief.sprite_renderer_set_alpha(enemy.GetComponent<SpriteRenderer>(), 0); //init enemy sprite with 0 alpha
+    }
+
+    public void level_west_enemy_enabled(bool enabled)
+    {
+        enemy_box_canvas.enabled = enabled;
+    }
+
+    public void level_west_enemy_bubble_fade(float alpha, float time)
+    {
+        vief.images_and_text_at_canvas_fade(enemy_box_canvas, alpha, time);
+    }
+
+    public bool level_west_enemy_bubble_is_enabled()
+    {
+        return enemy_box_canvas.enabled;
+    }
+
+    public float level_west_enemy_bubble_type_text(string text)
+    {
+        return vief.type_text_for_canvas_bubble_v2(enemy_box_canvas, text);
+    }
 
     // Start is called before the first frame update
     void Start()

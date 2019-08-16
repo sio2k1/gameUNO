@@ -50,20 +50,20 @@ public class visual_effects : MonoBehaviour
 
 
 
-    public IEnumerator scene_fade_to_0()
+    public IEnumerator scene_fade_to(float alpha)
     {
         yield return new WaitForSeconds(0.1f);
         foreach (SpriteRenderer s in GameObject.FindObjectsOfType<SpriteRenderer>())
         {
 
-            StartCoroutine(FadeTo(0f, 3f, s));
+            StartCoroutine(FadeTo(alpha, 3f, s));
             //FadeTo(0f, 3f, s);
         }
 
         foreach (Canvas c in GameObject.FindObjectsOfType<Canvas>())
         {
 
-            images_and_text_at_canvas_fade(c, 0f, 2f);
+            images_and_text_at_canvas_fade(c, alpha, 2f);
             //FadeTo(0f, 3f, s);
         }
 
@@ -73,7 +73,7 @@ public class visual_effects : MonoBehaviour
 
     }
 
-
+    /*
     public IEnumerator scene_fade_to_100()
     {
         yield return new WaitForSeconds(0.1f);
@@ -94,7 +94,7 @@ public class visual_effects : MonoBehaviour
         //yield return new WaitForSeconds(last);
         //images_and_text_at_canvas_fade(player_bubble, 1f, 2f);
 
-    }
+    }*/
 
     public void sprite_renderer_set_alpha(SpriteRenderer sr, float alpha)
     {
