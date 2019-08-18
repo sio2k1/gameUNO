@@ -19,6 +19,7 @@ public class game_west_logic : MonoBehaviour, Igame_level
     string debug = "LIMIT 1";
 
     private scene_state current_game_state;
+    private level_finished lvl_finish_callback;
 
     IEnumerator level_start()
     {
@@ -31,10 +32,11 @@ public class game_west_logic : MonoBehaviour, Igame_level
         scene.player_bubble_enabled(false);
         scene.level_west_enemy_enabled(false);
         yield return new WaitForSeconds(1);
-        scene.scene_fade_to(100f);
+        scene.scene_fade_to(1f);
         scene.player_bubble_fade(0f, 0f);
         scene.level_west_enemy_bubble_fade(0f, 0f);
-        yield return new WaitForSeconds(2);
+        
+        yield return new WaitForSeconds(3);
 
         StartCoroutine(enemy_intro());
         //StartCoroutine(player_talk_dest_choise());
@@ -69,11 +71,12 @@ public class game_west_logic : MonoBehaviour, Igame_level
         }
         yield return new WaitForSeconds(2);
         current_game_state.scene_stt = scene_state.states.level_progress;
+        current_game_state.current_level.time_level_started = Time.time;
     }
 
     void questions_init()
     {
-        for(int i=0; i<=3;i++)
+        for(int i=0; i<5;i++)
         {
             question q = math_question_builder.create_math_question(10 + i);
             if (debug != "")
@@ -85,8 +88,9 @@ public class game_west_logic : MonoBehaviour, Igame_level
         current_game_state.current_level.questions.Reverse();
     }
 
-    public void run_game_level(scene_state st)
+    public void run_game_level(scene_state st, level_finished callback)
     {
+        lvl_finish_callback = callback;
         current_game_state = st;
         questions_init();
         StartCoroutine(level_start());
@@ -133,6 +137,8 @@ public class game_west_logic : MonoBehaviour, Igame_level
                 if (q.answers[0].txt.ToLower()==input_text.ToLower())
                 {
                     //ok
+                    current_game_state.current_level.score += 2;
+                    //score_calculator.add_right_answer(this);
                     StartCoroutine(next_question(true,input_text));
                 } else
                 {
@@ -145,7 +151,7 @@ public class game_west_logic : MonoBehaviour, Igame_level
 
     void Start()
     {
-        
+        //score_start_time = Time.time;
     }
 
     IEnumerator show_question(question q)
@@ -163,7 +169,7 @@ public class game_west_logic : MonoBehaviour, Igame_level
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer>0.300f)
+        if (timer>0.300f) //evry 300ms
         {
             timer = 0;
             if (current_game_state != null)
@@ -180,6 +186,8 @@ public class game_west_logic : MonoBehaviour, Igame_level
                     }
                     else
                     {
+                        
+                        lvl_finish_callback(current_game_state);
                         //level ends here
                     }
                 }

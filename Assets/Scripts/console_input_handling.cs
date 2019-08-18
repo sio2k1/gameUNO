@@ -27,6 +27,42 @@ public class console_input_handling : MonoBehaviour
 
     }
 
+    public void level_fin_handler(scene_state st)
+    {
+        //after level finish we come here from callback.
+        Debug.Log("lvl fin");
+
+        gamestate = st;
+        gamestate.current_level.time_level_finished = Time.time;
+        gamestate.current_level.passed = true;
+        foreach (level l in gamestate.levels)
+        {
+            if (l.name==gamestate.current_level.name) //replacing level with updated info of completed level
+            {
+                gamestate.levels.Remove(l);
+                gamestate.levels.Add(gamestate.current_level);
+                break;
+            }
+        }
+        bool any_levels_left = false;
+        foreach (level l in gamestate.levels)
+        {
+            if (l.passed==false)
+            {
+                any_levels_left = true;
+            }
+        }
+        if (any_levels_left)
+        {
+            //
+        } else
+        {
+            //game over - calc results 
+        }
+
+
+    }
+
     void destination_handler(string input_text)
     {
         bool right_dest = false;
@@ -38,7 +74,9 @@ public class console_input_handling : MonoBehaviour
                 right_dest = true;
                 gamestate.current_level = l;
                 gamestate.scene_stt = scene_state.states.level_intro;
-                level_west_logic.run_game_level(gamestate);
+                level_finished l_f_handler = level_fin_handler;
+
+                level_west_logic.run_game_level(gamestate, l_f_handler);
                 //change scene
             }
             if (!right_dest)

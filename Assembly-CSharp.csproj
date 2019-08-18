@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\new_design_scripts\game_intro_level.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\scene_objects.cs" />
     <Compile Include="Assets\Scripts\question.cs" />
+    <Compile Include="Assets\Scripts\scores.cs" />
     <Compile Include="Assets\Scripts\type_text_effect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+public delegate void level_finished(scene_state st);
 public interface Igame_level
 {
-    void run_game_level(scene_state st);
+    void run_game_level(scene_state st, level_finished callback);
     void level_input_handler(string input_text);
     scene_state return_level_results();
 
@@ -31,7 +31,8 @@ public class level
 {
     public string name="";
     public int score=0;
-    public int time_in_sec=0;
+    public float time_level_finished;
+    public float time_level_started;
     public bool passed = false;
     public question current_question;
     public List<question> questions = new List<question>();
