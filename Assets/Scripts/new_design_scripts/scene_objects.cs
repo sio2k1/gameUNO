@@ -21,7 +21,20 @@ public class scene_objects : MonoBehaviour
     public background_movement forest;
 
     
-
+    public void change_enemy_model()
+    {
+        
+        //anim.SetInteger("anim_switcher", 2);
+        enemy_res_anim era = GameObject.FindObjectOfType<enemy_res_anim>();
+        Animator anim = enemy.GetComponent<Animator>();
+        anim.speed = 0.2f;
+        int rnd = Random.Range(1, 3);
+        anim.SetInteger("anim_switcher", rnd);
+        /*if (rnd==1)
+        {
+            enemy.GetComponentsInChildren<SpriteRenderer>()[0].sprite = era.spr_t1;   
+        }*/
+    }
     
     public void narrator_hide()
     {
@@ -31,6 +44,10 @@ public class scene_objects : MonoBehaviour
     public void narrator_enabled(bool enabled)
     {
         narrator_bubble.enabled = enabled;
+        //level_west_enemy_instatinate();
+        //level_west_enemy_enabled(true);
+        
+
     }
 
     public float narrator_type_text(string text)

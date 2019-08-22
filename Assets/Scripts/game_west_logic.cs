@@ -31,6 +31,9 @@ public class game_west_logic : MonoBehaviour, Igame_level
         scene.level_west_enemy_instatinate();
         scene.player_bubble_enabled(false);
         scene.level_west_enemy_enabled(false);
+
+        scene.change_enemy_model();
+
         yield return new WaitForSeconds(1);
         scene.scene_fade_to(1f);
         scene.player_bubble_fade(0f, 0f);
@@ -45,6 +48,7 @@ public class game_west_logic : MonoBehaviour, Igame_level
 
     IEnumerator enemy_intro()
     {
+        
         yield return new WaitForSeconds(0.1f);
         foreach (db_helper_west.dialog_entry de in db_helper_west.level_west_intro_talk())
         {
