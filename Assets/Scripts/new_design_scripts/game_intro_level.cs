@@ -6,6 +6,7 @@ public class game_intro_level : MonoBehaviour
 {
     // Start is called before the first frame update
     public scene_objects scene;
+    public map_objects map_obj;
     private string debug = "LIMIT 1";
     void Start()
     {
@@ -18,7 +19,11 @@ public class game_intro_level : MonoBehaviour
     IEnumerator introstory()
     {
         yield return null;
-
+        //yield return new WaitForSeconds(2);
+        map_obj.map_visibility(true);
+        map_obj.player_reset_pos();
+        //yield return new WaitForSeconds(4);
+        //map_obj.map_visibility(false);
         /*question q = new question();
         q.question_text = "qtext";
         answer a1 = new answer(false,"false answ 1");

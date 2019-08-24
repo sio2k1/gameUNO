@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\main_menu_script.cs" />
+    <Compile Include="Assets\Scripts\common_utils\rect_transforms.cs" />
     <Compile Include="Assets\Scripts\common_utils\serialization.cs" />
     <Compile Include="Assets\Scripts\common_utils\sqlite_db_helper.cs" />
     <Compile Include="Assets\Scripts\console_input_handling.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Assets\Scripts\intro_scripts\visual_effects.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\db_helper.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\game_intro_level.cs" />
+    <Compile Include="Assets\Scripts\new_design_scripts\map_objects.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\scene_objects.cs" />
     <Compile Include="Assets\Scripts\question.cs" />
     <Compile Include="Assets\Scripts\scores.cs" />
@@ -121,6 +123,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\UB\Simple2dWeatherEffects\Standard\D2FogsNoiseTex.shader" />
+    <None Include="Assets\Map_Assets\to_scatter\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />

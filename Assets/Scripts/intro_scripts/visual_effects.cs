@@ -43,7 +43,27 @@ public class visual_effects : MonoBehaviour
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
         {
             Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, aValue, t));
-            //Debug.Log(Mathf.Lerp(alpha, aValue, t).ToString()+" "+alpha.ToString()+" "+ aValue.ToString()+" "+ t.ToString());
+            sr.color = newColor;
+            yield return null;
+        }
+    }
+
+    public IEnumerator FadeTo(float aValue, float aTime, Image sr)
+    {
+        //yield return null;
+        float alpha = sr.color.a;
+
+        if (aTime != 0f)
+        {
+            for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / aTime)
+            {
+                Color newColor = new Color(1, 1, 1, Mathf.Lerp(alpha, aValue, t));
+                sr.color = newColor;
+                yield return null;
+            }
+        } else
+        {
+            Color newColor = new Color(1, 1, 1, aValue);
             sr.color = newColor;
             yield return null;
         }
