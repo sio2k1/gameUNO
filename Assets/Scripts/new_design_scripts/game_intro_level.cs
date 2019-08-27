@@ -7,7 +7,7 @@ public class game_intro_level : MonoBehaviour
     // Start is called before the first frame update
     public scene_objects scene;
     public map_objects map_obj;
-    private string debug = "LIMIT 1";
+    //private string debug = "LIMIT 1";
     void Start()
     {
         scene.narrator_enabled(false);
@@ -19,32 +19,32 @@ public class game_intro_level : MonoBehaviour
     IEnumerator introstory()
     {
         yield return null;
+        global_debug_state.use_debug();
+
+
+        //db_helper_questions.add_some_questions_to_db();
+
         //yield return new WaitForSeconds(2);
-        map_obj.map_visibility(true);
-        map_obj.player_reset_pos();
+
+        //level l = new level("north");
+        //scene.background_change(l);
+        //questions_provider qp = new questions_provider();
+
+
+        //map_obj.map_visibility(true);
+        //map_obj.player_reset_pos();
+
+
         //yield return new WaitForSeconds(4);
         //map_obj.map_visibility(false);
-        /*question q = new question();
-        q.question_text = "qtext";
-        answer a1 = new answer(false,"false answ 1");
-        answer a2 = new answer(false, "false answ 2");
-        answer a3 = new answer(true, "true answ");
-        q.answers.Add(a1);
-        q.answers.Add(a2);
-        q.answers.Add(a3);
-        q.shuffle_answers();
 
-        q=math_question_builder.create_math_question(10);
-
-        string json2 = cmn_infrastructure.serializer_helper.json_serialize_object_to_string(q);
-        Debug.Log(json2);*/
 
         scene.narrator_enabled(true);
         scene.scroll_bg(true);
         scene.fog_start_stop(true);
         scene.narrator_fade(1f, 2f);// fade_in story box and text
         yield return new WaitForSeconds(1);
-        foreach (string next_text in db_helper.intro_story_line(debug))
+        foreach (string next_text in db_helper.intro_story_line())
         {
             float delay_len = scene.narrator_type_text(next_text);
             yield return new WaitForSeconds(delay_len);
@@ -66,7 +66,7 @@ public class game_intro_level : MonoBehaviour
         //scene.player_bubble_fade_to_0_in_0();
         scene.player_bubble_enabled(true);
         scene.player_bubble_fade(1f, 2f);
-        foreach (string next_text in db_helper.intro_hero_text(debug))
+        foreach (string next_text in db_helper.intro_hero_text())
         {
             float delay_len = scene.player_bubble_type_text(next_text);
             yield return new WaitForSeconds(delay_len);
@@ -74,5 +74,9 @@ public class game_intro_level : MonoBehaviour
         scene.input_fade(1f, 2f);
         scene.input_enabled(true);
         scene.input_activate();
+        yield return new WaitForSeconds(1);
+        map_obj.player_reset_pos();
+        map_obj.map_visibility(true);
+
     }
 }

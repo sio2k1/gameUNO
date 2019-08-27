@@ -117,7 +117,7 @@ public class intro_scene_manager : MonoBehaviour
         vief.images_and_text_at_canvas_fade(narrator_bubble, 1f, 2f);// fadein story box and text
         yield return new WaitForSeconds(1);
 
-        foreach (string next_text in db_helper.intro_story_line(""))
+        foreach (string next_text in db_helper.intro_story_line())
         {
             float te_delay = vief.type_text_for_canvas_bubble(narrator_bubble, next_text);
             int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read

@@ -43,3 +43,11 @@ public class level
         name = level_name;
     }
 }
+
+
+public static class levelnames
+{
+    public static string West = "west";
+    public static string East = "east";
+    public static string North = "north";
+}

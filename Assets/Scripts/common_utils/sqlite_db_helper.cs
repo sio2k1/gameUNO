@@ -60,6 +60,14 @@ namespace cmn_infrastructure
             return DS.Tables[0];
         }
 
+        public static void ExecuteQueryWithoutAnswer(string query)
+        {
+            OpenConnection();
+            command.CommandText = query;
+            command.ExecuteNonQuery();
+            CloseConnection();
+        }
+
         public static void CloseConnection()
         {
             connection.Close();

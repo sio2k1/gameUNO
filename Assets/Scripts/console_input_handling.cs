@@ -7,15 +7,15 @@ public class console_input_handling : MonoBehaviour
 {
     // Start is called before the first frame update
     scene_state gamestate;
-    public game_west_logic level_west_logic;
+    public game_level_logic level_logic;
 
     void init()
     {
         gamestate = new scene_state();
         gamestate.scene_stt = scene_state.states.wait_for_dest_cmd;
-        level l1 = new level("west");
-        level l2 = new level("east");
-        level l3 = new level("north");
+        level l1 = new level(levelnames.West);
+        level l2 = new level(levelnames.East);
+        level l3 = new level(levelnames.North);
         gamestate.levels.Add(l1);
         gamestate.levels.Add(l2);
         gamestate.levels.Add(l3);
@@ -27,7 +27,7 @@ public class console_input_handling : MonoBehaviour
 
     }
 
-    public void level_fin_handler(scene_state st)
+    public void level_finish_handler(scene_state st)
     {
         //after level finish we come here from callback.
         Debug.Log("lvl fin");
@@ -54,7 +54,9 @@ public class console_input_handling : MonoBehaviour
         }
         if (any_levels_left)
         {
-            //
+            //map
+            gamestate.scene_stt = scene_state.states.wait_for_dest_cmd;
+            level_logic.map_show(true);
         } else
         {
             //game over - calc results 
@@ -74,9 +76,9 @@ public class console_input_handling : MonoBehaviour
                 right_dest = true;
                 gamestate.current_level = l;
                 gamestate.scene_stt = scene_state.states.level_intro;
-                level_finished l_f_handler = level_fin_handler;
+                level_finished l_f_handler = level_finish_handler;
 
-                level_west_logic.run_game_level(gamestate, l_f_handler);
+                level_logic.run_game_level(gamestate, l_f_handler);
                 //change scene
             }
             if (!right_dest)
@@ -88,11 +90,11 @@ public class console_input_handling : MonoBehaviour
 
     void level_progress_input_forwarder(string input_text)
     {
-        if (gamestate.current_level.name == "west")
-        {
+        //if (gamestate.current_level.name.ToLower() == levelnames.West)
+        //{
             //pass_input_to_west_mngr
-            level_west_logic.level_input_handler(input_text);
-        }
+            level_logic.level_input_handler(input_text);
+        //}
     }
 
 

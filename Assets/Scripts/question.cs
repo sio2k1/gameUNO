@@ -49,8 +49,39 @@ public static class math_question_builder //this class provides us random calcul
 
 public class question 
 {
+    [DataMember]
     public string question_text;
     public List<answer> answers = new List<answer>();
+
+    public string generate_question_text()
+    {
+        string res = question_text;
+
+        if (answers.Count>1)
+        {
+            res = question_text + "\r\n";
+            int order = 1;
+            foreach (answer a in answers)
+            {
+                res += order.ToString() + "." + a.txt +" ";
+                order++;
+            }
+        }
+
+        return res;
+    }
+
+    public answer get_correct_answer()
+    {
+        //answers.fi
+        return answers.Find(a => a.is_correct);
+        //return an[0];
+    }
+
+    public string get_correct_answer_position()
+    {
+        return (answers.IndexOf(answers.Find(a => a.is_correct))+1).ToString();
+    }
 
     public void shuffle_answers() //this we use to shuffle answer order
     {

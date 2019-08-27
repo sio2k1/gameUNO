@@ -6,9 +6,9 @@ using UnityEngine;
 
 public static class db_helper
 {
-    public static List<string> intro_story_line(string limit)
+    public static List<string> intro_story_line()
     {
-        DataTable storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='intro' order by [order] ASC " +limit);
+        DataTable storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='intro' order by [order] ASC " +global_debug_state.is_debug_query);
         List<string> res = new List<string>();
 
         foreach (DataRow r in storyline.Select()) //we starting from story text in narrator box, foreach row in table we display text with delay
@@ -19,9 +19,9 @@ public static class db_helper
         return res;
     }
 
-    public static List<string> intro_hero_text(string limit)
+    public static List<string> intro_hero_text()
     {
-        DataTable storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='intro_hero' order by [order] ASC "+limit);
+        DataTable storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='intro_hero' order by [order] ASC "+ global_debug_state.is_debug_query);
         List<string> res = new List<string>();
 
         foreach (DataRow r in storyline.Select()) //we starting from story text in narrator box, foreach row in table we display text with delay
@@ -34,6 +34,85 @@ public static class db_helper
 
 }
 
+public static class db_helper_questions
+{
+
+    public static void add_some_questions_to_db()
+    {
+        List<question> qlist = questions_provider.get_questions(3);
+
+        foreach (var q in qlist)
+        {
+            string json = serializer_helper.json_serialize_object_to_string(q);
+            if (sqlite_db_helper.GetTable("SELECT ID FROM QUESTIONS_JSON WHERE JSON='" + json.Replace("'", "") + "'").Rows.Count==0) //if this question not in db
+            {
+                sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO QUESTIONS_JSON (COMPLEXITY, JSON) VALUES (1,'" + json.Replace("'", "") + "')");
+
+            }
+        }
+
+        /*var text_list = qlist.FindAll(q => q.answers.Count == 1);
+        var multiple_list = qlist.FindAll(q => q.answers.Count > 1);
+
+        foreach (var q in text_list)
+        {
+            
+        }*/
+
+    }
+
+    public static List<question> load_questions(string level, int qty)
+    {
+        List<question> qlist = new List<question>();
+
+        if (level.ToLower()==levelnames.West)
+        {
+            for (int i = 0; i < qty; i++)
+            {
+                question q = math_question_builder.create_math_question(10 + i);
+                if (global_debug_state.is_debug)
+                {
+                    q.question_text += ":" + q.answers[0].txt; //we will show right answer in question for debug reasons
+                }
+                qlist.Add(q);
+            }
+            qlist.Reverse();
+        }
+        else if (level.ToLower() == levelnames.East)
+        {
+            DataTable t = sqlite_db_helper.GetTable("SELECT JSON FROM QUESTIONS_JSON WHERE ID IN (SELECT id FROM QUESTIONS_JSON WHERE COMPLEXITY=1 ORDER BY RANDOM() LIMIT " + qty.ToString()+")");
+
+            foreach (var r in t.Select())
+            {
+                question q = serializer_helper.json_deserialize_object_from_string<question>(r["JSON"].ToString());
+                if (global_debug_state.is_debug) //add right answer to query if debugging
+                {
+                    q.question_text += " (" + q.get_correct_answer().txt + ")";
+                    q.shuffle_answers();
+                }
+                qlist.Add(q);
+            }
+
+
+
+
+
+
+            //SELECT * FROM table WHERE id IN (SELECT id FROM table ORDER BY RANDOM() LIMIT x)
+        }
+        else if (level.ToLower() == levelnames.North)
+        {
+
+        }
+        else
+        { }
+
+
+        return qlist;
+    }
+
+    
+}
 
 public static class db_helper_west
 {

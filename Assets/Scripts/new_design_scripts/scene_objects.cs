@@ -21,6 +21,32 @@ public class scene_objects : MonoBehaviour
     public background_movement forest;
 
     
+    public void background_change(level lvl)
+    {
+
+
+        foreach (SpriteRenderer sr in GameObject.Find("bigForest").GetComponentsInChildren<SpriteRenderer>())
+        {
+            Sprite s = Resources.Load<Sprite>("BG1");
+
+            if (lvl.name.ToLower() == levelnames.West)
+            {
+                s = Resources.Load<Sprite>("BG1");
+            }
+            if (lvl.name.ToLower() == levelnames.East)
+            {
+                s = Resources.Load<Sprite>("BG2");
+            }
+            if (lvl.name.ToLower() == levelnames.North)
+            {
+                s = Resources.Load<Sprite>("BG3");
+            }
+
+            sr.sprite = s;
+        }
+
+    }
+
     public void change_enemy_model()
     {
         
@@ -67,7 +93,10 @@ public class scene_objects : MonoBehaviour
 
     public void player_instatinate()
     {
-        player = Instantiate(knight_to_spawn, new Vector3(455, -120, 0), Quaternion.identity, GameObject.Find("bigForest").transform); // player spawn so camera can catch hero nicely and smoothly
+        if (player == null)
+        {
+            player = Instantiate(knight_to_spawn, new Vector3(455, -120, 0), Quaternion.identity, GameObject.Find("bigForest").transform); // player spawn so camera can catch hero nicely and smoothly
+        }
     }
 
     public float player_bubble_type_text(string text)
@@ -141,10 +170,13 @@ public class scene_objects : MonoBehaviour
 
 
 
-    public void level_west_enemy_instatinate()
+    public void level_enemy_instatinate()
     {
-        enemy = Instantiate(enemy_prefab, new Vector3(-200, -70, 0), Quaternion.identity, GameObject.Find("bigForest").transform); // player spawn so camera can catch hero nicely and smoothly
-        enemy_box_canvas = enemy.GetComponentInChildren<Canvas>();
+        if (enemy == null)
+        {
+            enemy = Instantiate(enemy_prefab, new Vector3(-200, -70, 0), Quaternion.identity, GameObject.Find("bigForest").transform); // player spawn so camera can catch hero nicely and smoothly
+            enemy_box_canvas = enemy.GetComponentInChildren<Canvas>();
+        }
         vief.sprite_renderer_set_alpha(enemy.GetComponent<SpriteRenderer>(), 0); //init enemy sprite with 0 alpha
     }
 

@@ -55,17 +55,17 @@ public class map_objects : MonoBehaviour
     IEnumerator move_hero(level lvl)
     {
         yield return new WaitForSeconds(0.1f);
-        if (lvl.name.ToLower()=="west")
+        if (lvl.name.ToLower()== levelnames.West)
         {
             player_setposition(95, 461, 1087, 79);
             player_set_rotation_y(180);
         }
-        else if (lvl.name.ToLower() == "east")
+        else if (lvl.name.ToLower() == levelnames.East)
         {
             player_setposition(95, 461, 1087, 79);
             player_set_rotation_y(0);
         }
-        else if (lvl.name.ToLower() == "north")
+        else if (lvl.name.ToLower() == levelnames.North)
         {
             player_setposition(467, 34, 748, 527);
             player_set_rotation_y(180);
