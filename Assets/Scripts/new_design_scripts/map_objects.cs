@@ -17,7 +17,8 @@ public class map_objects : MonoBehaviour
             map.SetActive(show);
         } else
         {
-            secactive_after(map_appear_in, show);
+
+            StartCoroutine(secactive_after(map_appear_in, show));
         }
         foreach (Image sr in map.GetComponentsInChildren<Image>(true))
         {
@@ -25,12 +26,9 @@ public class map_objects : MonoBehaviour
             if (show) //show
             {
                StartCoroutine(vief.FadeTo(1f, map_appear_in, sr));
-                //Debug.Log(sr.name);
             } else //hide
             {
-                
                StartCoroutine(vief.FadeTo(0f, map_appear_in, sr));
-                //secactive_after(3f, show);
             }
         }
     }
@@ -52,7 +50,7 @@ public class map_objects : MonoBehaviour
 
     }
 
-    IEnumerator move_hero(level lvl)
+    public IEnumerator move_hero(level lvl)
     {
         yield return new WaitForSeconds(0.1f);
         if (lvl.name.ToLower()== levelnames.West)
@@ -62,7 +60,7 @@ public class map_objects : MonoBehaviour
         }
         else if (lvl.name.ToLower() == levelnames.East)
         {
-            player_setposition(95, 461, 1087, 79);
+            player_setposition(1056, 369, 126, 171);
             player_set_rotation_y(0);
         }
         else if (lvl.name.ToLower() == levelnames.North)
@@ -98,7 +96,8 @@ public class map_objects : MonoBehaviour
 
     IEnumerator secactive_after(float time, bool show)
     {
-        yield return new WaitForSeconds(time+0.1f);
+        //yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(time + 0.5f);
         map.SetActive(show);
 
     }

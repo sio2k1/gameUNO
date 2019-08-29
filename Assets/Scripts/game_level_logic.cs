@@ -17,6 +17,8 @@ public class game_level_logic : MonoBehaviour, Igame_level
     {
 
         //storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='"+current_game_state.current_level.name+"'");
+        StartCoroutine(map_obj.move_hero(current_game_state.current_level));
+        yield return new WaitForSeconds(1);
         map_show(false);
         scene.scene_fade_to(0f);
         yield return new WaitForSeconds(3);
