@@ -34,6 +34,35 @@ public static class db_helper
 
 }
 
+public static class db_helper_menu
+{
+    public class table_line
+    {
+        public string pos;
+        public string player;
+        public string score;
+        public table_line(string pos_, string player_, string score_)
+        {
+            pos = pos_;
+            player = player_;
+            score = score_;
+        }
+    }
+    public static List<table_line> load_ladder()
+    {
+        DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores) RowNum, * from ladder order by scores limit 10");
+        List<table_line> res = new List<table_line>();
+
+        foreach (DataRow r in storyline.Select())
+        {
+            table_line de = new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString());
+            res.Add(de);
+        }
+        return res;
+
+    }
+}
+
 public static class db_helper_questions
 {
 
