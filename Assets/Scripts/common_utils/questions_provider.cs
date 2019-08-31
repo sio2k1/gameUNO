@@ -19,13 +19,19 @@ public class opentdbcom_json_entry
 }
 public static class questions_provider
 {
-   public static List<question> get_questions(int count)
+    public static class diff_level
+    {
+        public static string medium = "medium";
+        public static string easy = "easy";
+        public static string hard = "hard";
+    }
+   public static List<question> get_questions(int count, string difficulty)
     {
         List<question> qlist = new List<question>();
         try
         {
             WebClient client = new WebClient(); //connect to api and get json
-            string jsonstr = client.DownloadString("https://opentdb.com/api.php?amount=" + count.ToString() + "&difficulty=easy&type=multiple");
+            string jsonstr = client.DownloadString("https://opentdb.com/api.php?amount=" + count.ToString() + "&difficulty="+ difficulty + "&type=multiple");
             opentdbcom_json_parser obj = serializer_helper.json_deserialize_object_from_string<opentdbcom_json_parser>(jsonstr); //deserialize
 
             foreach (opentdbcom_json_entry en in obj.results) // converting api format to our format
@@ -34,7 +40,15 @@ public static class questions_provider
                 q.question_text = HttpUtility.HtmlDecode(en.question);
                 answer correct = new answer(true, HttpUtility.HtmlDecode(en.correct_answer));
                 q.answers.Add(correct);
-                if (en.correct_answer.Contains(" ")) //if not contains " " mean answer is one word, write this as typable answer
+
+                foreach (string s in en.incorrect_answers)
+                {
+                    answer incorrect = new answer(false, HttpUtility.HtmlDecode(s));
+                    q.answers.Add(incorrect);
+                }
+                q.shuffle_answers();
+
+                /*if (en.correct_answer.Contains(" ")) //if not contains " " mean answer is one word, write this as typable answer
                 {
                     foreach (string s in en.incorrect_answers)
                     {
@@ -42,7 +56,7 @@ public static class questions_provider
                         q.answers.Add(incorrect);
                     }
                     q.shuffle_answers();
-                }
+                }*/
                 qlist.Add(q);
             }
         } catch (Exception e)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class console_input_handling : MonoBehaviour
 {
@@ -17,8 +18,8 @@ public class console_input_handling : MonoBehaviour
         level l2 = new level(levelnames.East);
         level l3 = new level(levelnames.North);
         gamestate.levels.Add(l1);
-        gamestate.levels.Add(l2);
-        gamestate.levels.Add(l3);
+        //gamestate.levels.Add(l2);
+        //gamestate.levels.Add(l3);
     }
     void Start()
     {
@@ -30,7 +31,7 @@ public class console_input_handling : MonoBehaviour
     public void level_finish_handler(scene_state st)
     {
         //after level finish we come here from callback.
-        Debug.Log("lvl fin");
+        //Debug.Log("lvl fin");
 
         gamestate = st;
         gamestate.current_level.time_level_finished = Time.time;
@@ -59,7 +60,16 @@ public class console_input_handling : MonoBehaviour
             level_logic.map_show(true);
         } else
         {
-            //game over - calc results 
+            int score = 0;
+            foreach (level l in gamestate.levels)
+            {
+                score += Mathf.RoundToInt(l.score*1000/(l.time_level_finished- l.time_level_started));
+            }
+            db_helper_menu.write_scores(gamestate.player_name, score);
+                //game over - calc results 
+
+
+             SceneManager.LoadScene(0);
         }
 
 

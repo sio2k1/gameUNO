@@ -20,6 +20,17 @@ public class scene_objects : MonoBehaviour
 
     public background_movement forest;
 
+    public Text level_duration;
+
+
+    public void level_duration_set(float num)
+    {
+        level_duration.text = Mathf.RoundToInt(num).ToString();
+        if (level_duration.text=="0") // dont display anything if 0
+        {
+            level_duration.text = "";
+        }
+    }
     
     public void background_change(level lvl)
     {
@@ -54,7 +65,7 @@ public class scene_objects : MonoBehaviour
         enemy_res_anim era = GameObject.FindObjectOfType<enemy_res_anim>();
         Animator anim = enemy.GetComponent<Animator>();
         anim.speed = 0.2f;
-        int rnd = Random.Range(1, 3);
+        int rnd = Random.Range(1, 4);
         anim.SetInteger("anim_switcher", rnd);
         /*if (rnd==1)
         {

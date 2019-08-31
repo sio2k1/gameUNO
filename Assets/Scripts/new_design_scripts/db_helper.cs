@@ -50,7 +50,7 @@ public static class db_helper_menu
     }
     public static List<table_line> load_ladder()
     {
-        DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores) RowNum, * from ladder order by scores limit 10");
+        DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder order by scores desc limit 10");
         List<table_line> res = new List<table_line>();
 
         foreach (DataRow r in storyline.Select())
@@ -61,33 +61,33 @@ public static class db_helper_menu
         return res;
 
     }
+
+    public static void write_scores(string player_name, int scores)
+    {
+        sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO LADDER (NAME, SCORES) VALUES ('" + player_name + "'," + scores + ")");
+    }
 }
 
 public static class db_helper_questions
 {
 
-    public static void add_some_questions_to_db()
+    public static void add_some_questions_to_db(int number, string compexity)
     {
-        List<question> qlist = questions_provider.get_questions(3);
+        List<question> qlist = questions_provider.get_questions(number, questions_provider.diff_level.easy);
+
+
+        //string comp_digit = "1";
+        //if c
 
         foreach (var q in qlist)
         {
             string json = serializer_helper.json_serialize_object_to_string(q);
             if (sqlite_db_helper.GetTable("SELECT ID FROM QUESTIONS_JSON WHERE JSON='" + json.Replace("'", "") + "'").Rows.Count==0) //if this question not in db
             {
-                sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO QUESTIONS_JSON (COMPLEXITY, JSON) VALUES (1,'" + json.Replace("'", "") + "')");
+                sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO QUESTIONS_JSON (COMPLEXITY, JSON) VALUES ('"+compexity+"','" + json.Replace("'", "") + "')");
 
             }
         }
-
-        /*var text_list = qlist.FindAll(q => q.answers.Count == 1);
-        var multiple_list = qlist.FindAll(q => q.answers.Count > 1);
-
-        foreach (var q in text_list)
-        {
-            
-        }*/
-
     }
 
     public static List<question> load_questions(string level, int qty)
@@ -107,10 +107,12 @@ public static class db_helper_questions
             }
             qlist.Reverse();
         }
-        else if (level.ToLower() == levelnames.East)
+        else if ((level.ToLower() == levelnames.East)||(level.ToLower() == levelnames.North))
         {
-            DataTable t = sqlite_db_helper.GetTable("SELECT JSON FROM QUESTIONS_JSON WHERE ID IN (SELECT id FROM QUESTIONS_JSON WHERE COMPLEXITY=1 ORDER BY RANDOM() LIMIT " + qty.ToString()+")");
 
+            string complexity = level.ToLower() == levelnames.North ? questions_provider.diff_level.medium : questions_provider.diff_level.easy;
+            string query = "SELECT JSON FROM QUESTIONS_JSON WHERE ID IN (SELECT id FROM QUESTIONS_JSON WHERE COMPLEXITY='" + complexity + "' ORDER BY RANDOM() LIMIT " + qty.ToString() + ")";
+            DataTable t = sqlite_db_helper.GetTable(query);
             foreach (var r in t.Select())
             {
                 question q = serializer_helper.json_deserialize_object_from_string<question>(r["JSON"].ToString());
@@ -122,16 +124,7 @@ public static class db_helper_questions
                 qlist.Add(q);
             }
 
-
-
-
-
-
             //SELECT * FROM table WHERE id IN (SELECT id FROM table ORDER BY RANDOM() LIMIT x)
-        }
-        else if (level.ToLower() == levelnames.North)
-        {
-
         }
         else
         { }

@@ -254,9 +254,9 @@ RectTransform:
   m_Father: {fileID: 9851682}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1080, y: -84.2}
   m_SizeDelta: {x: 547, y: 168.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &51384360
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -351,14 +351,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6509434, g: 0.43293878, b: 0.43293878, a: 1}
+  m_Color: {r: 0.3018868, g: 0.20363119, b: 0.20363119, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 32bce948bf691d445ab16f7e2812e3bb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1093,7 +1093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.86700004}
   m_AnchorMax: {x: 0.164, y: 1}
-  m_AnchoredPosition: {x: -6.199951, y: 6.0999756}
+  m_AnchoredPosition: {x: -6.199951, y: -23}
   m_SizeDelta: {x: -12.400024, y: -12.200012}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1141356084
@@ -2079,7 +2079,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2091402095
 Transform:
   m_ObjectHideFlags: 0
@@ -2180,17 +2180,17 @@ PrefabInstance:
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -214.09999
       objectReference: {fileID: 0}
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1873.2
+      value: 1754
       objectReference: {fileID: 0}
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
@@ -2205,7 +2205,7 @@ PrefabInstance:
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
@@ -2215,7 +2215,7 @@ PrefabInstance:
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4428143493260026315, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
         type: 3}
@@ -2226,21 +2226,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2728465550932463504, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
-        type: 3}
-      propertyPath: m_Text
-      value: Position
-      objectReference: {fileID: 0}
-    - target: {fileID: 7147718157156441978, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
-        type: 3}
-      propertyPath: m_Text
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4823682973771500219, guid: 29eaed20eb59b0a47ab285c22f92bfdc,
-        type: 3}
-      propertyPath: m_Text
-      value: Score
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29eaed20eb59b0a47ab285c22f92bfdc, type: 3}

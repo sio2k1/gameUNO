@@ -22,7 +22,7 @@ public class game_intro_level : MonoBehaviour
         global_debug_state.use_debug();
 
 
-        //db_helper_questions.add_some_questions_to_db();
+        //db_helper_questions.add_some_questions_to_db(2,questions_provider.diff_level.medium);
 
         //yield return new WaitForSeconds(2);
 

@@ -13,6 +13,8 @@ public class game_level_logic : MonoBehaviour, Igame_level
     private scene_state current_game_state;
     private level_finished lvl_finish_callback;
 
+    private bool level_timer = false;
+
     IEnumerator level_start()
     {
 
@@ -71,22 +73,23 @@ public class game_level_logic : MonoBehaviour, Igame_level
         yield return new WaitForSeconds(2);
         current_game_state.scene_stt = scene_state.states.level_progress;
         current_game_state.current_level.time_level_started = Time.time;
+        level_timer = true;
+
     }
 
     void questions_init(level lvl)
     {
         current_game_state.current_level.questions.Clear();
+        current_game_state.current_level.questions = db_helper_questions.load_questions(lvl.name, 2);
+        /* if (lvl.name == levelnames.West)
+         {
+             current_game_state.current_level.questions = db_helper_questions.load_questions(levelnames.West, 5);
+         }
 
-        if (lvl.name == levelnames.West)
-        {
-            current_game_state.current_level.questions = db_helper_questions.load_questions(levelnames.West, 5);
-            //current_game_state.current_level.questions.Reverse();
-        }
-
-        if (lvl.name == levelnames.East)
-        {
-            current_game_state.current_level.questions = db_helper_questions.load_questions(levelnames.East, 4 );
-        }
+         if (lvl.name == levelnames.East)
+         {
+             current_game_state.current_level.questions = db_helper_questions.load_questions(levelnames.East, 4 );
+         }*/
     }
 
     public void run_game_level(scene_state st, level_finished callback)
@@ -172,6 +175,7 @@ public class game_level_logic : MonoBehaviour, Igame_level
 
     void Start()
     {
+        
         //score_start_time = Time.time;
     }
 
@@ -187,6 +191,12 @@ public class game_level_logic : MonoBehaviour, Igame_level
     float timer;
     void Update()
     {
+        if (level_timer)
+        {
+            scene.level_duration_set((Time.time - current_game_state.current_level.time_level_started));
+            // ;
+        }
+
         timer += Time.deltaTime;
         if (timer>0.300f) //evry 300ms
         {
@@ -205,7 +215,8 @@ public class game_level_logic : MonoBehaviour, Igame_level
                     }
                     else
                     {
-                        
+                        level_timer = false;
+                        scene.level_duration_set(0);
                         lvl_finish_callback(current_game_state);
                         //level ends here
                     }

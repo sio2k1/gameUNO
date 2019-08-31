@@ -9,7 +9,7 @@ public class main_menu_script : MonoBehaviour
     public void btn_play_onClick()
     {
         //Basically  loads a next scene from scenes list
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(1);
     }
 
     public void btn_ladder_onClick()

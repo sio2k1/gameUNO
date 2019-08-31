@@ -17,7 +17,7 @@ public class scene_state
     {
         intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro
     }
-
+    public string player_name = "test";
     public level current_level;
     public states scene_stt;
     public List<level> levels = new List<level>();
