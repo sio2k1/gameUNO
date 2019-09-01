@@ -15,9 +15,10 @@ public class scene_state
 {
     public enum states
     {
-        intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro
+        intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro, wait_for_input_player_name
     }
-    public string player_name = "test";
+   // public string player_name = "test";
+    public int total_score = 0;
     public level current_level;
     public states scene_stt;
     public List<level> levels = new List<level>();

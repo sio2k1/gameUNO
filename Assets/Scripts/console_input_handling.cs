@@ -9,6 +9,7 @@ public class console_input_handling : MonoBehaviour
     // Start is called before the first frame update
     scene_state gamestate;
     public game_level_logic level_logic;
+    public game_end_objects ges;
 
     void init()
     {
@@ -60,16 +61,20 @@ public class console_input_handling : MonoBehaviour
             level_logic.map_show(true);
         } else
         {
+
+            //game over - calc results, set state to waiting player name
             int score = 0;
             foreach (level l in gamestate.levels)
             {
                 score += Mathf.RoundToInt(l.score*1000/(l.time_level_finished- l.time_level_started));
             }
-            db_helper_menu.write_scores(gamestate.player_name, score);
-                //game over - calc results 
+            
 
-
-             SceneManager.LoadScene(0);
+            ges.game_end_screen_visibility(true);
+            ges.game_end_screen_set_scores(score);
+            gamestate.total_score = score;
+            gamestate.scene_stt = scene_state.states.wait_for_input_player_name;
+            
         }
 
 
@@ -119,6 +124,12 @@ public class console_input_handling : MonoBehaviour
         {
             level_progress_input_forwarder(input_text);
         }
+        if (gamestate.scene_stt == scene_state.states.wait_for_input_player_name) //if scenestate is level in progress -> we pass input to that level control script
+        {
+            db_helper_menu.write_scores(input_text, gamestate.total_score);
+            SceneManager.LoadScene(0);
+        }
+
     }
 
     public void input_on_new_text_handler(string input_text)
