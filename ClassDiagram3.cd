@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="opentdbcom_json_parser">
+    <Position X="13.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\questions_provider.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="results" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="opentdbcom_json_entry">
+    <Position X="14" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAEBAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\questions_provider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="questions_provider" Collapsed="true">
+    <Position X="26.25" Y="5.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="questions_provider.diff_level" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\common_utils\questions_provider.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\questions_provider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="rect_transform_ext" Collapsed="true">
+    <Position X="26.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAiAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\rect_transforms.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="background_movement" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAKBAAAAAEAAAAAAAAAIAAQAAAAAAEAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\background_movement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="input_button">
+    <Position X="7" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAIAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\input_button.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="cih" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="narrator_bubble_storyline" Collapsed="true">
+    <Position X="7" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\narrator_bubble_storyline.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="scene_state">
+    <Position X="18.5" Y="7" Width="3.75" />
+    <NestedTypes>
+      <Enum Name="scene_state.states" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\intro_scripts\scene_state.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <AssociationLine Name="current_level" Type="level" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="21.938" Y="8.555" />
+        <Point X="21.938" Y="8.949" />
+        <Point X="22.25" Y="8.949" />
+        <Point X="22.25" Y="11.375" />
+        <Point X="22" Y="11.375" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAAAAAAEAAAIABAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="current_level" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="levels" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="level">
+    <Position X="19" Y="10" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAIAAAAAAQEAAAAAAAIAAAgIAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="current_question" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="questions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="levelnames" Collapsed="true">
+    <Position X="26.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQ=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="visual_effects" Collapsed="true">
+    <Position X="20.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAAAgAACQAggAAAABIAAkAAAAAAAAAAAAAAAIgAAg=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\visual_effects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ladder_board" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAEAABAAA=</HashCode>
+      <FileName>Assets\Scripts\menu_scripts\ladder_board.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="db_helper" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\db_helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="db_helper_menu" Collapsed="true">
+    <Position X="14" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="db_helper_menu.table_line" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\new_design_scripts\db_helper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\db_helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="db_helper_questions" Collapsed="true">
+    <Position X="7" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\db_helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="db_helper_level_logic" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="db_helper_level_logic.dialog_entry" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\new_design_scripts\db_helper.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\db_helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="game_end_objects" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\game_end_objects.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="game_intro_level">
+    <Position X="18.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAACAAAAAAAAAAAIAAABAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\game_intro_level.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map_obj" />
+      <Field Name="scene" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="global_debug_state" Collapsed="true">
+    <Position X="14" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\global_debug_state.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="map_objects">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAACAAAAAAAABAABAAYAAIAAABAAACAAAAAIA=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\map_objects.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="vief" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="scene_objects">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQJWIAAICAAAAIABKChgQAAIQIBQAgBAABCAAyQgCo=</HashCode>
+      <FileName>Assets\Scripts\new_design_scripts\scene_objects.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="vief" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="console_input_handling">
+    <Position X="13.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgAAAAAAoCAAAAAAAAACQgAQAAAAAAIAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\console_input_handling.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="gamestate" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="game_level_logic" BaseTypeListCollapsed="true">
+    <Position X="24" Y="6" Width="1.5" />
+    <AssociationLine Name="scene" Type="scene_objects" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="24" Y="6.688" />
+        <Point X="17.25" Y="6.688" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="current_game_state" Type="scene_state" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="24" Y="9.421" />
+        <Point X="23.625" Y="9.421" />
+        <Point X="23.625" Y="7.875" />
+        <Point X="22.25" Y="7.875" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAwQQAAAAiAEACEAAACAgIAAAAAAAAAQAAAAAACACAE=</HashCode>
+      <FileName>Assets\Scripts\game_level_logic.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map_obj" />
+      <Field Name="scene" />
+      <Field Name="lvl_finish_callback" />
+      <Field Name="current_game_state" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="math_question_builder" Collapsed="true">
+    <Position X="7" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\question.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="question">
+    <Position X="16" Y="10" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgEAAAAAAgAAAAAAAAAAAgBAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\question.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="answers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="answer">
+    <Position X="13.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\question.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="type_text_effect" Collapsed="true">
+    <Position X="26.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAEAAAAAAgAAAAAAAAAAACAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\type_text_effect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="main_menu_script">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAIACAgAAAAA=</HashCode>
+      <FileName>Assets\main_menu_script.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.string_serializer" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.string_writer_reader">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.serialized_string" Collapsed="true">
+    <Position X="2.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.serializer_helper" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAAAQCAAEAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.JsonSerializer" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.Xml_Serializer" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cmn_infrastructure.sqlite_db_helper" Collapsed="true">
+    <Position X="26.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AMAJAAAAAAAAAAAAAAABABAAAQQAAAAAAEAAAAAAAIA=</HashCode>
+      <FileName>Assets\Scripts\common_utils\sqlite_db_helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IGame_level" Collapsed="true">
+    <Position X="22.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Delegate Name="level_finished" Collapsed="true">
+    <Position X="26" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\intro_scripts\scene_state.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

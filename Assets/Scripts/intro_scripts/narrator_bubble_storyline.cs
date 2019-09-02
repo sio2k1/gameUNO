@@ -4,14 +4,14 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
-//this script is an example to access game manager 
+//DELETE THIS
 public class narrator_bubble_storyline : MonoBehaviour
 {
     
-    private intro_scene_manager ism;
+    //private intro_scene_manager ism;
     private void Awake()
     {
-        ism = GameObject.FindObjectOfType<intro_scene_manager>(); 
+       // ism = GameObject.FindObjectOfType<intro_scene_manager>(); 
     }
 
 }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public static class score_calculator
+//DELETE OR IMPLEMENT THIS
+public static class OLD_score_calculator
 {
     public static int points=0;
     public static float time=0f;

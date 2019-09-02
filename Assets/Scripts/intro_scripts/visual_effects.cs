@@ -148,7 +148,7 @@ public class visual_effects : MonoBehaviour
             te.type_text(text);
             res = te.delay;
         }
-        int delay_len = Mathf.RoundToInt(res * text.Length + 2);
+        int delay_len = Mathf.RoundToInt(res * text.Length + 2); //calculate show of line duration bases on number of letters in text.
         return delay_len;
     }
 

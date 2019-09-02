@@ -4,42 +4,54 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
+//this is main console input handler, there is a component attatched to input and "go" button in input_button.cs which passes all input here to input_on_new_text_handler method
+
 public class console_input_handling : MonoBehaviour
 {
-    // Start is called before the first frame update
     scene_state gamestate;
-    public game_level_logic level_logic;
-    public game_end_objects ges;
+    public game_level_logic level_logic; //link to class that controlls behavior of level
+    public game_end_objects ges; // link to class that handles player name input
 
     void init()
     {
+        //setup env, clear gamestate and assing levels
         gamestate = new scene_state();
         gamestate.scene_stt = scene_state.states.wait_for_dest_cmd;
         level l1 = new level(levelnames.West);
         level l2 = new level(levelnames.East);
         level l3 = new level(levelnames.North);
         gamestate.levels.Add(l1);
-        //gamestate.levels.Add(l2);
+        gamestate.levels.Add(l2);
         //gamestate.levels.Add(l3);
     }
     void Start()
     {
-        //initialisation
-        init();
+        init(); // this is calde on scene load, so evry time we load scene we clear gamestate in init.
 
     }
 
-    public void level_finish_handler(scene_state st)
+    private void game_end_handler(scene_state st) //game over - calc results, set state to waiting player name
     {
-        //after level finish we come here from callback.
-        //Debug.Log("lvl fin");
+        int score = 0;
+        foreach (level l in gamestate.levels) // calculating scores
+        {
+            score += Mathf.RoundToInt(l.score * 2000 / (l.time_level_finished - l.time_level_started));
+        }
+        ges.game_end_screen_visibility(true);
+        ges.game_end_screen_set_scores(score);
+        gamestate.total_score = score;
+        gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state to wait player name
+    }
 
+    public void level_finish_handler(scene_state st) //after level finish we come here from callback.
+    {
+        
         gamestate = st;
         gamestate.current_level.time_level_finished = Time.time;
         gamestate.current_level.passed = true;
         foreach (level l in gamestate.levels)
         {
-            if (l.name==gamestate.current_level.name) //replacing level with updated info of completed level
+            if (l.name==gamestate.current_level.name) //replacing level with updated info and (passed state) of completed level
             {
                 gamestate.levels.Remove(l);
                 gamestate.levels.Add(gamestate.current_level);
@@ -47,43 +59,52 @@ public class console_input_handling : MonoBehaviour
             }
         }
         bool any_levels_left = false;
-        foreach (level l in gamestate.levels)
+        foreach (level l in gamestate.levels) // checking if any levels left to pass
         {
             if (l.passed==false)
             {
                 any_levels_left = true;
             }
         }
-        if (any_levels_left)
+        if (any_levels_left) // if any levels left - display map
         {
-            //map
+            //map show if any levels left o pass
             gamestate.scene_stt = scene_state.states.wait_for_dest_cmd;
             level_logic.map_show(true);
-        } else
+        } else // if not do some gameover stuff
         {
-
             //game over - calc results, set state to waiting player name
-            int score = 0;
-            foreach (level l in gamestate.levels)
-            {
-                score += Mathf.RoundToInt(l.score*1000/(l.time_level_finished- l.time_level_started));
-            }
-            
-
-            ges.game_end_screen_visibility(true);
-            ges.game_end_screen_set_scores(score);
-            gamestate.total_score = score;
-            gamestate.scene_stt = scene_state.states.wait_for_input_player_name;
-            
+            game_end_handler(st);
         }
 
 
     }
 
-    void destination_handler(string input_text)
+    void destination_handler(string input_text) // handling destination to go
     {
+
         bool right_dest = false;
-        var linq = gamestate.levels.Where(p => p.passed == false); // we select levels we haven't visited yet
+
+        gamestate.levels.Where(p => p.passed == false).ToList().ForEach(l=> { // we select levels we haven't visited yet, and apply foreach arrow func
+            if (l.name.ToLower() == input_text) //if found level equal to input -> go to that level
+            {
+                right_dest = true;
+                gamestate.current_level = l;
+                gamestate.scene_stt = scene_state.states.level_intro;
+                level_finished l_f_handler = level_finish_handler; // callback on level is finished
+                level_logic.run_game_level(gamestate, l_f_handler);
+                //change scene
+            }
+        }); 
+        if (!right_dest)
+        {
+            Debug.Log("Wrong destination");
+            //wrong dest/or level passed
+        }
+
+
+        /* //replaced with arrow func code above
+         var linq = gamestate.levels.Where(p => p.passed == false);
         foreach (level l in linq)
         {
             if (l.name.ToLower() == input_text)
@@ -100,20 +121,16 @@ public class console_input_handling : MonoBehaviour
             {
                 //wrong dest/or level passed
             }
-        }
+        }*/
     }
 
-    void level_progress_input_forwarder(string input_text)
+    void level_progress_input_forwarder(string input_text) //forward input handling to level logic
     {
-        //if (gamestate.current_level.name.ToLower() == levelnames.West)
-        //{
-            //pass_input_to_west_mngr
-            level_logic.level_input_handler(input_text);
-        //}
+        level_logic.level_input_handler(input_text);
     }
 
 
-    IEnumerator handling_thread(string input_text)
+    IEnumerator handling_thread(string input_text) // async handling of input, all input is comming here.
     {
         yield return new WaitForSeconds(0.1f);
         if (gamestate.scene_stt == scene_state.states.wait_for_dest_cmd) //if scenestate is dest_wait -> we pass input to dest_handler
@@ -124,7 +141,7 @@ public class console_input_handling : MonoBehaviour
         {
             level_progress_input_forwarder(input_text);
         }
-        if (gamestate.scene_stt == scene_state.states.wait_for_input_player_name) //if scenestate is level in progress -> we pass input to that level control script
+        if (gamestate.scene_stt == scene_state.states.wait_for_input_player_name) //if scenestate is wait_for_input_player_name -> we write scores to db and load menu.
         {
             db_helper_menu.write_scores(input_text, gamestate.total_score);
             SceneManager.LoadScene(0);
@@ -132,14 +149,9 @@ public class console_input_handling : MonoBehaviour
 
     }
 
-    public void input_on_new_text_handler(string input_text)
+    public void input_on_new_text_handler(string input_text) // general handling of input, all input is comming here
     {
         StartCoroutine(handling_thread(input_text));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

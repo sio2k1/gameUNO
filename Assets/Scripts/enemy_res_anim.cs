@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//DELETE THIS
 
-
-public class enemy_res_anim : MonoBehaviour
+public class OLD_enemy_res_anim : MonoBehaviour
 {
 
     public Sprite spr_t1;

@@ -3,36 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//this script we use to control of object behavior in scene, to move objects, display or hide them etc...
+
 public class scene_objects : MonoBehaviour
 {
-    public GameObject knight_to_spawn;
-    private GameObject player;
-    public Canvas player_bubble;
+    public GameObject knight_to_spawn; //knight prefab
+    private GameObject player; // player
+    public Canvas player_bubble; //represent bubble with text for player
 
-    public Canvas narrator_bubble;
-    public Canvas input_cvns;
+    public Canvas narrator_bubble; //represent narrator bubble
+    public Canvas input_cvns; //represent canvas with input box
 
-    public GameObject enemy_prefab;
-    private GameObject enemy;
-    private Canvas enemy_box_canvas;
+    public GameObject enemy_prefab; //prefab for spawning enemy
+    private GameObject enemy; //enemy
+    private Canvas enemy_box_canvas; //canvas for enemy text box
 
-    public visual_effects vief;
+    public visual_effects vief; // link to videoeffects class
 
-    public background_movement forest;
+    public background_movement forest; //link to bg movement script
 
-    public Text level_duration;
+    public Text level_duration; // link to Text with level time duration
 
 
-    public void level_duration_set(float num)
+    public void level_duration_set(float num) // set level duration text
     {
         level_duration.text = Mathf.RoundToInt(num).ToString();
-        if (level_duration.text=="0") // dont display anything if 0
+        if (level_duration.text=="0") // dont display anything if 0 (hide)
         {
             level_duration.text = "";
         }
     }
     
-    public void background_change(level lvl)
+    public void background_change(level lvl) // setup different backgrounds for levels
     {
 
 
@@ -58,42 +60,31 @@ public class scene_objects : MonoBehaviour
 
     }
 
-    public void change_enemy_model()
+    public void change_enemy_model() // setup different enemy model (by switchng animation) for level randomly
     {
-        
-        //anim.SetInteger("anim_switcher", 2);
-        enemy_res_anim era = GameObject.FindObjectOfType<enemy_res_anim>();
         Animator anim = enemy.GetComponent<Animator>();
         anim.speed = 0.2f;
         int rnd = Random.Range(1, 4);
         anim.SetInteger("anim_switcher", rnd);
-        /*if (rnd==1)
-        {
-            enemy.GetComponentsInChildren<SpriteRenderer>()[0].sprite = era.spr_t1;   
-        }*/
     }
     
-    public void narrator_hide()
+    public void narrator_hide() // set narrator alpha to 0 in 0 sec
     {
         vief.images_and_text_at_canvas_fade(narrator_bubble, 0f, 0f);//hide image and text on start
     }
 
-    public void narrator_enabled(bool enabled)
+    public void narrator_enabled(bool enabled) // set narrator activity
     {
         narrator_bubble.enabled = enabled;
-        //level_west_enemy_instatinate();
-        //level_west_enemy_enabled(true);
-        
-
     }
 
-    public float narrator_type_text(string text)
+    public float narrator_type_text(string text) // display text in narration box
     {
         return vief.type_text_for_canvas_bubble_v2(narrator_bubble,text);
     }
-    public void narrator_fade(float alpha, float time)
+    public void narrator_fade(float alpha, float time) //
     {
-        vief.images_and_text_at_canvas_fade(narrator_bubble, alpha, time);//hide image and text on start
+        vief.images_and_text_at_canvas_fade(narrator_bubble, alpha, time); //hide image and text on start
     }
 
 

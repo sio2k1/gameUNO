@@ -6,11 +6,11 @@ using System.Data;
 using cmn_infrastructure;
 //using System.Linq;
 
-// This is the introscene manager, handles a scene logic
+// This is the introscene manager, handles a scene logic CHECK IF WE CAN DELETE THIS FILE
 
 
 
-public class intro_scene_manager : MonoBehaviour
+public class OLD_intro_scene_manager : MonoBehaviour
 {
     //intro scene manager is used to control scene in time
     //public Image story_img;

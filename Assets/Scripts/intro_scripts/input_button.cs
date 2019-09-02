@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//this is input handler transfer script, all it does is send input to console_input_handling
 public class input_button : MonoBehaviour
 {
     public InputField inp;
-    //public intro_scene_manager ism;
     public console_input_handling cih;
-    // Start is called before the first frame update
     public void on_button_input_click()
     {
         cih.input_on_new_text_handler(inp.text); // pass input text to input handler
-        //ism.button_handler();
-        inp.text = "";
-        inp.ActivateInputField();
+        inp.text = ""; // clear last command
+        inp.ActivateInputField(); //return cursor to input field
     }
 }

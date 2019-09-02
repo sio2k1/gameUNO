@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System.Data;
 using cmn_infrastructure;
 
-public class game_level_logic : MonoBehaviour, Igame_level
+public class game_level_logic : MonoBehaviour, IGame_level
 {
     public scene_objects scene;
     public map_objects map_obj;
@@ -47,7 +47,7 @@ public class game_level_logic : MonoBehaviour, Igame_level
     {
         
         yield return new WaitForSeconds(0.1f);
-        foreach (db_helper_west.dialog_entry de in db_helper_west.level_west_intro_talk())
+        foreach (db_helper_level_logic.dialog_entry de in db_helper_level_logic.level_west_intro_talk())
         {
             if (de.char_t == "player")
             {
