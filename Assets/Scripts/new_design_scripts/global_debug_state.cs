@@ -12,7 +12,7 @@ public static class global_debug_state
     public static void use_debug()
     {
         is_debug = true;
-        questions_per_level = 2;
+        questions_per_level = 2; // how many questions we use per level in debug mode
         is_debug_query = "LIMIT 1"; // we add this limit to sql queries where we want to display just one dext message instead of all (for narration in game start for example)
     }
 }

@@ -151,7 +151,7 @@ public class console_input_handling : MonoBehaviour
 
     public void input_on_new_text_handler(string input_text) // general handling of input, all input is comming here
     {
-        StartCoroutine(handling_thread(input_text));
+        StartCoroutine(handling_thread(input_text.ToLower())); // passing input in lower case
     }
 
 }
