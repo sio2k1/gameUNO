@@ -6,33 +6,34 @@ using System.Net;
 using System.Web;
 using System;
 
-public class opentdbcom_json_parser
+// we use this to extaract question from api (opentdbcom)
+public class opentdbcom_json_parser //we use this to deserialize original json from api
 {
     public List<opentdbcom_json_entry> results = new List<opentdbcom_json_entry>();
 }
-public class opentdbcom_json_entry
+public class opentdbcom_json_entry //we use this to deserialize original json from api, fields are simmilar to api ones
 {
     public string correct_answer;
     public string difficulty;
     public string question;
     public List<string> incorrect_answers = new List<string>();
 }
-public static class questions_provider
+public static class questions_provider // actual class to extract questions from  opentdbcom
 {
-    public static class diff_level
+    public static class diff_level // define complexity levels, according to api
     {
         public static string medium = "medium";
         public static string easy = "easy";
         public static string hard = "hard";
     }
-   public static List<question> get_questions(int count, string difficulty)
+   public static List<question> get_questions(int count, string difficulty) // request api, get, convert and return list of question
     {
         List<question> qlist = new List<question>();
-        try
+        try 
         {
             WebClient client = new WebClient(); //connect to api and get json
             string jsonstr = client.DownloadString("https://opentdb.com/api.php?amount=" + count.ToString() + "&difficulty="+ difficulty + "&type=multiple");
-            opentdbcom_json_parser obj = serializer_helper.json_deserialize_object_from_string<opentdbcom_json_parser>(jsonstr); //deserialize
+            opentdbcom_json_parser obj = serializer_helper.json_deserialize_object_from_string<opentdbcom_json_parser>(jsonstr); //deserialize, idea is name fields in object same way as in api json and deserialize it
 
             foreach (opentdbcom_json_entry en in obj.results) // converting api format to our format
             {
@@ -48,7 +49,8 @@ public static class questions_provider
                 }
                 q.shuffle_answers();
 
-                /*if (en.correct_answer.Contains(" ")) //if not contains " " mean answer is one word, write this as typable answer
+                /* // this code i used to generate questions with typable answers, but i refused this idea for now.
+                if (en.correct_answer.Contains(" ")) //if not contains " " mean answer is one word, write this as typable answer
                 {
                     foreach (string s in en.incorrect_answers)
                     {
@@ -61,7 +63,7 @@ public static class questions_provider
             }
         } catch (Exception e)
         {
-            Debug.Log(e.Message);
+            Debug.Log(e.Message); // working with remote api fore sure will cause an error in future.
         }
         return qlist;
     }

@@ -383,9 +383,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ae360000
-      m_LastClickedID: 13998
-      m_ExpandedIDs: 8efbffff2a360000
+      m_SelectedIDs: 18340000
+      m_LastClickedID: 0
+      m_ExpandedIDs: 06a1feff8efbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -652,20 +652,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
   m_LastProjectPath: E:\@SkyDrive\SkyDrive\@backup\@nmit\SWD2\uprj\gameUNO
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 59}
-    m_SelectedIDs: b82e0000
-    m_LastClickedID: 11960
-    m_ExpandedIDs: 000000009e2900003c2a0000b82e0000c62f0000243000005a310000f4390000f6390000f8390000fa390000fc39000000ca9a3b
+    scrollPos: {x: 0, y: 60}
+    m_SelectedIDs: f4340000
+    m_LastClickedID: 13556
+    m_ExpandedIDs: 000000009e2900003c2a0000c62f0000243000005a310000f4390000f6390000f8390000fa390000fc39000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

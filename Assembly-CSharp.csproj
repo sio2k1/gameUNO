@@ -10,8 +10,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{B1FA5B0E-F6BF-6264-E716-6EDBCA94790B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -73,8 +72,8 @@
     <Compile Include="Assets\Scripts\game_level_logic.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\background_movement.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\input_button.cs" />
-    <Compile Include="Assets\Scripts\intro_scripts\intro_scene_manager.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\narrator_bubble_storyline.cs" />
+    <Compile Include="Assets\Scripts\intro_scripts\OLD_intro_scene_manager.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\scene_state.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\visual_effects.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\ladder_board.cs" />
@@ -148,8 +147,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="ClassDiagram2.cd" />
-    <None Include="ClassDiagram3.cd" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

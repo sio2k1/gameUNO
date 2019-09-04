@@ -49,7 +49,7 @@ public class OLD_intro_scene_manager : MonoBehaviour
     IEnumerator player_talk_wrong_dest()
     {
         yield return new WaitForSeconds(1);
-        vief.type_text_for_canvas_bubble(player_bubble, "Wrong destination.");
+        vief.type_text_for_canvas_bubble_v2(player_bubble, "Wrong destination.");
         yield return new WaitForSeconds(2);
         StartCoroutine(player_talk_dest_choise());
 
@@ -61,7 +61,7 @@ public class OLD_intro_scene_manager : MonoBehaviour
         foreach (DataRow r in storyline.Select("id=5")) //we starting from story text in narrator box, foreach row in table we display text with delay
         {
             string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
-            float te_delay = vief.type_text_for_canvas_bubble(player_bubble, next_text);
+            float te_delay = vief.type_text_for_canvas_bubble_v2(player_bubble, next_text);
             int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
             yield return new WaitForSeconds(delay_len);
         }
@@ -119,7 +119,7 @@ public class OLD_intro_scene_manager : MonoBehaviour
 
         foreach (string next_text in db_helper.intro_story_line())
         {
-            float te_delay = vief.type_text_for_canvas_bubble(narrator_bubble, next_text);
+            float te_delay = vief.type_text_for_canvas_bubble_v2(narrator_bubble, next_text);
             int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
             yield return new WaitForSeconds(delay_len);
         }
@@ -153,7 +153,7 @@ public class OLD_intro_scene_manager : MonoBehaviour
         foreach (DataRow r in storyline.Select("scene='intro_hero'" + debug_short_story, "order ASC")) //we starting from story text in narrator box, foreach row in table we display text with delay
         {
             string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
-            float te_delay = vief.type_text_for_canvas_bubble(player_bubble, next_text);
+            float te_delay = vief.type_text_for_canvas_bubble_v2(player_bubble, next_text);
             int delay_len = Mathf.RoundToInt(te_delay * next_text.Length + 2); // depending on type_text delay and lettercount we delay output so text coud be read
             yield return new WaitForSeconds(delay_len);
         }
