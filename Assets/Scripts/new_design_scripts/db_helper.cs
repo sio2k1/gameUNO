@@ -63,6 +63,21 @@ public static class db_helper_menu // access data for menu (ladderboard)
 
     }
 
+
+    public static List<table_line> search_in_ladder(string input_text) // return top 10 players scores as table lines
+    {
+        DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder where name like '%"+ input_text + "%' order by scores desc limit 10");
+        List<table_line> res = new List<table_line>();
+
+        foreach (DataRow r in storyline.Select())
+        {
+            table_line de = new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString());
+            res.Add(de);
+        }
+        return res;
+
+    }
+
     public static void write_scores(string player_name, int scores) // store scores in db
     {
         sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO LADDER (NAME, SCORES) VALUES ('" + player_name + "'," + scores + ")");

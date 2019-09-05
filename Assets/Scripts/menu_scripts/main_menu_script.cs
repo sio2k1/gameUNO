@@ -25,6 +25,7 @@ public class main_menu_script : MonoBehaviour
         ladderboard.SetActive(false); 
     }
 
+
     public void btn_quit_onClick() //exit app
     {
         Application.Quit();

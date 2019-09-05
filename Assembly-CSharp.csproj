@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\main_menu_script.cs" />
     <Compile Include="Assets\Scripts\common_utils\questions_provider.cs" />
     <Compile Include="Assets\Scripts\common_utils\rect_transforms.cs" />
     <Compile Include="Assets\Scripts\common_utils\serialization.cs" />
@@ -76,7 +75,9 @@
     <Compile Include="Assets\Scripts\intro_scripts\OLD_intro_scene_manager.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\scene_state.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\visual_effects.cs" />
+    <Compile Include="Assets\Scripts\menu_scripts\input_ladder.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\ladder_board.cs" />
+    <Compile Include="Assets\Scripts\menu_scripts\main_menu_script.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\db_helper.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\game_end_objects.cs" />
     <Compile Include="Assets\Scripts\new_design_scripts\game_intro_level.cs" />

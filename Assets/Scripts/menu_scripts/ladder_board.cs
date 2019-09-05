@@ -18,11 +18,17 @@ public class ladder_board : MonoBehaviour
             Destroy(go);
         }
     }
-    public void load_scores() // load scores from DB
+
+    public void display_search(string input_text)
     {
         clear_scores(); // clear old first
-        List<db_helper_menu.table_line> lines = db_helper_menu.load_ladder(); // get info from DB
+        List<db_helper_menu.table_line> lines = db_helper_menu.search_in_ladder(input_text); // get search from DB
+        display_scores(lines);
+    }
 
+
+    public void display_scores(List<db_helper_menu.table_line> lines)
+    {
         foreach (var l in lines) // for each line create table_line
         {
             var tl = Instantiate(table_line, new Vector3(0, 0, 0), Quaternion.identity, ladder_panel.transform); // place on panel to autodistribution with "vertical layout group"
@@ -42,6 +48,15 @@ public class ladder_board : MonoBehaviour
                     t.text = l.score;
                 }
             }
-        } 
+        }
+    }
+
+    public void load_scores() // load scores from DB
+    {
+        clear_scores(); // clear old first
+        List<db_helper_menu.table_line> lines = db_helper_menu.load_ladder(); // get info from DB
+        display_scores(lines);
+
+
     }
 }
