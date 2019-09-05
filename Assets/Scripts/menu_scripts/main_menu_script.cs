@@ -16,7 +16,7 @@ public class main_menu_script : MonoBehaviour
     public void btn_ladder_onClick()
     {
         ladderboard.SetActive(true); //show up scores stats
-        ladderboard.GetComponent<ladder_board>().load_scores(); //load scores form db
+        ladderboard.GetComponent<ladder_cl>().load_scores(); //load scores form db
 
     }
 

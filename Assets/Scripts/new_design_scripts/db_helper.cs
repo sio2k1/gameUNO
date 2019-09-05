@@ -1,22 +1,70 @@
 ﻿using cmn_infrastructure;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using UnityEngine;
 
+
 //this scripts adapts sql data to lists of objects so we can use them in app, all sql code we keep in this file.
+
+/*
+ * gonna use this for handling errors during sql calls
+public delegate List<T> sql_error_handler<T>();
+public delegate List<T>sql_error_handler_p1<T>(string p1);
+public delegate List<T> sql_error_handler_p2<T>(object param1=null, object param2=null);
+
+public static class db_query_invoker
+{
+    public static List<T> invoke<T>(sql_error_handler<T> hnd)
+    {
+        List<T> res = new List<T>();
+        try
+        {
+            res = hnd();
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        return res;
+    }
+    public static List<T> invoke<T>(sql_error_handler_p1<T> hnd, string p1)
+    {
+        List<T> res = new List<T>();
+        try
+        {
+            res = hnd(p1);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        return res;
+    }
+    public static List<T> invoke<T>(sql_error_handler_p2<T> hnd, string p1, string p2)
+    {
+        List<T> res = new List<T>();
+        try
+        {
+            res = hnd(p1,p2);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        return res;
+    }
+
+}*/
 public static class db_helper // access data for intro
 {
     public static List<string> intro_story_line() // intro narration
     {
         DataTable storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='intro' order by [order] ASC " +global_debug_state.is_debug_query);
         List<string> res = new List<string>();
-
-        foreach (DataRow r in storyline.Select()) //we starting from story text in narrator box, foreach row in table we display text with delay
-        {
-            string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
-            res.Add(next_text);
-        }
+        storyline.Rows.OfType<DataRow>().ToList().ForEach(r => res.Add(r["ctext"].ToString())); //we starting from story text in narrator box, foreach row in table we display text with delay //getting a text record from table (field = ctext)
         return res;
     }
 
@@ -24,12 +72,12 @@ public static class db_helper // access data for intro
     {
         DataTable storyline = sqlite_db_helper.GetTable("SELECT * from storyline where scene='intro_hero' order by [order] ASC "+ global_debug_state.is_debug_query);
         List<string> res = new List<string>();
-
-        foreach (DataRow r in storyline.Select()) 
+        storyline.Rows.OfType<DataRow>().ToList().ForEach(r => res.Add(r["ctext"].ToString()));  //getting a text record from table (field = ctext)
+        /*foreach (DataRow r in storyline.Select()) 
         {
             string next_text = r["ctext"].ToString(); //getting a text record from table (field = ctext)
             res.Add(next_text);
-        }
+        }*/
         return res;
     }
 
@@ -54,11 +102,10 @@ public static class db_helper_menu // access data for menu (ladderboard)
         DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder order by scores desc limit 10");
         List<table_line> res = new List<table_line>();
 
-        foreach (DataRow r in storyline.Select())
-        {
-            table_line de = new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString());
-            res.Add(de);
-        }
+
+        storyline.Rows.OfType<DataRow>().ToList().ForEach(
+            r => res.Add(new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString())) 
+        ); 
         return res;
 
     }
@@ -66,14 +113,26 @@ public static class db_helper_menu // access data for menu (ladderboard)
 
     public static List<table_line> search_in_ladder(string input_text) // return top 10 players scores as table lines
     {
-        DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder where name like '%"+ input_text + "%' order by scores desc limit 10");
+        DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder"); // we will search all database in datatable.select
         List<table_line> res = new List<table_line>();
 
-        foreach (DataRow r in storyline.Select())
+        int rowcounter = 0; // counter to limit rows output quantity
+        foreach (DataRow r in storyline.Select("name like '%" + input_text + "%'", "scores desc")) //we using select here to display the actual player position in the scoreboard
         {
-            table_line de = new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString());
-            res.Add(de);
+           // table_line de = new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString());
+            res.Add(new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString()));
+            rowcounter++;
+            if (rowcounter>=10) // there is no option to limit rows in datatable.select, still we can output only 10, at this point i limited rows here, so in any case it will return top 10 at search
+            {
+                break; //exit from foreach
+            }
         }
+
+        if (res.Count==0) // if there is no player found for search condition
+        {
+            res.Add(new table_line("n/a","not found","n/a"));
+        }
+
         return res;
 
     }

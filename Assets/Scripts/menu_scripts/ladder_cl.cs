@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 // script to operate with scoreboard
 
-public class ladder_board : MonoBehaviour
+public class ladder_cl : MonoBehaviour
 {
     public GameObject table_line; // table line prefab
     public GameObject ladder_panel; //panel at ladderboard
@@ -19,16 +19,18 @@ public class ladder_board : MonoBehaviour
         }
     }
 
-    public void display_search(string input_text)
+    public void display_search(string input_text) //display player by name in search field (top 10 from search list)
     {
-        clear_scores(); // clear old first
-        List<db_helper_menu.table_line> lines = db_helper_menu.search_in_ladder(input_text); // get search from DB
+        //List<db_helper_menu.table_line> lines = db_query_invoker.invoke(db_helper_menu.search_in_ladder, input_text); // get from DB using search conditions
+        List<db_helper_menu.table_line> lines = db_helper_menu.search_in_ladder(input_text); // get from DB using search conditions
+
         display_scores(lines);
     }
 
 
-    public void display_scores(List<db_helper_menu.table_line> lines)
+    public void display_scores(List<db_helper_menu.table_line> lines) // display lines as prefabed table lines
     {
+        clear_scores(); // clear old first
         foreach (var l in lines) // for each line create table_line
         {
             var tl = Instantiate(table_line, new Vector3(0, 0, 0), Quaternion.identity, ladder_panel.transform); // place on panel to autodistribution with "vertical layout group"
@@ -53,10 +55,8 @@ public class ladder_board : MonoBehaviour
 
     public void load_scores() // load scores from DB
     {
-        clear_scores(); // clear old first
+        //List<db_helper_menu.table_line> lines = db_query_invoker.invoke(db_helper_menu.load_ladder); // get info from DB, we using delegate to cover method in try/catch
         List<db_helper_menu.table_line> lines = db_helper_menu.load_ladder(); // get info from DB
         display_scores(lines);
-
-
     }
 }
