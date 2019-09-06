@@ -22,7 +22,7 @@ public class console_input_handling : MonoBehaviour
         level l3 = new level(levelnames.North);
         gamestate.levels.Add(l1);
         gamestate.levels.Add(l2);
-        //gamestate.levels.Add(l3);
+        gamestate.levels.Add(l3);
     }
     void Start()
     {

@@ -16,27 +16,20 @@ public class game_intro_level : MonoBehaviour
         StartCoroutine(introstory()); // start to display story
     }
 
+    IEnumerator populate_db_with_new_questions() // add some extra questions to db (async)
+    {
+        yield return null;
+        //db_helper_questions.clear_questions_from_db();
+        db_helper_questions.add_some_questions_to_db(3, questions_provider.diff_level.medium);
+        db_helper_questions.add_some_questions_to_db(3, questions_provider.diff_level.easy);
+    }
+
     IEnumerator introstory()
     {
         yield return null; //its a coroutine, so we need to return some delay or null to make it work.
-        global_debug_state.use_debug(); //its almost gamestart, so we set debug state incase we neeed to our game became shorter.
+        //global_debug_state.use_debug(); //its almost gamestart, so we set debug state incase we neeed to our game became shorter.
 
-
-        //db_helper_questions.add_some_questions_to_db(2,questions_provider.diff_level.medium);
-
-        //yield return new WaitForSeconds(2);
-
-        //level l = new level("north");
-        //scene.background_change(l);
-        //questions_provider qp = new questions_provider();
-
-
-        //map_obj.map_visibility(true);
-        //map_obj.player_reset_pos();
-
-
-        //yield return new WaitForSeconds(4);
-        //map_obj.map_visibility(false);
+        StartCoroutine(populate_db_with_new_questions()); // get some extra questions from api
 
 
         scene.narrator_enabled(true); //show narrator box
@@ -76,7 +69,8 @@ public class game_intro_level : MonoBehaviour
         scene.input_activate();
         yield return new WaitForSeconds(2);
         map_obj.player_reset_pos(); // set player to crosroads and show map
-        map_obj.map_visibility(true);
+        map_obj.map_redraw_clear_passed_levels(); // clearing dead enemies at map
+        map_obj.map_visibility(true); // show map
 
     }
 }

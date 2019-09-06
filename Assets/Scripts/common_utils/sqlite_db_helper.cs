@@ -51,21 +51,35 @@ namespace cmn_infrastructure
 
         public static DataTable GetTable(string query) // return first table on select statment
         {
-            OpenConnection();
-            SqliteDataAdapter adapter = new SqliteDataAdapter(query, connection);
             DataSet DS = new DataSet();
-            adapter.Fill(DS);
-            adapter.Dispose();
-            CloseConnection();
+            OpenConnection();
+            if (connection.State == ConnectionState.Open)
+            {
+                SqliteDataAdapter adapter = new SqliteDataAdapter(query, connection);
+                adapter.Fill(DS);
+                adapter.Dispose();
+                CloseConnection();
+            }
+            else
+            {
+                Debug.Log("Cannot open SQL connection");
+            }
+
             return DS.Tables[0];
         }
 
         public static void ExecuteQueryWithoutAnswer(string query) // execute insert\delete\update
         {
             OpenConnection();
-            command.CommandText = query;
-            command.ExecuteNonQuery();
-            CloseConnection();
+            if (connection.State == ConnectionState.Open)
+            {
+                command.CommandText = query;
+                command.ExecuteNonQuery();
+                CloseConnection();
+            } else
+            {
+                Debug.Log("Cannot open SQL connection");
+            }
         }
 
         public static void CloseConnection() //close connection to db

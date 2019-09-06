@@ -10,6 +10,9 @@ public class map_objects : MonoBehaviour
     public GameObject map; //link to map
     public visual_effects vief; // link to visual effect
     public GameObject player; // player on map
+    public GameObject dead_troll_east; // to show that level completed we show\hide dead troll model.
+    public GameObject dead_troll_west; // to show that level completed we show\hide dead troll model.
+    public GameObject dead_troll_north; // to show that level completed we show\hide dead troll model.
     private float map_appear_in = 2f; // duration of fading
     public void map_visibility(bool show) // change map visibility state
     {
@@ -32,7 +35,30 @@ public class map_objects : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void map_redraw_according_passed_level(level lvl) // we mark passed levels with troll corpses :)
+    {
+        if (lvl.name==levelnames.East)
+        {
+            dead_troll_east.SetActive(true);
+        }
+        if (lvl.name == levelnames.West)
+        {
+            dead_troll_west.SetActive(true);
+        }
+        if (lvl.name == levelnames.North)
+        {
+            dead_troll_north.SetActive(true);
+        }
+    }
+
+    public void map_redraw_clear_passed_levels()  // at level start we calling this to clear corpses :)
+    {
+        dead_troll_east.SetActive(false);
+        dead_troll_west.SetActive(false);
+        dead_troll_north.SetActive(false);
+    }
+
+        private void Start()
     {
         map.SetActive(false); //hide evrything related to map on start
         foreach (Image sr in map.GetComponentsInChildren<Image>(true))

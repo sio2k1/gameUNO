@@ -21,9 +21,7 @@ public class ladder_cl : MonoBehaviour
 
     public void display_search(string input_text) //display player by name in search field (top 10 from search list)
     {
-        //List<db_helper_menu.table_line> lines = db_query_invoker.invoke(db_helper_menu.search_in_ladder, input_text); // get from DB using search conditions
         List<db_helper_menu.table_line> lines = db_helper_menu.search_in_ladder(input_text); // get from DB using search conditions
-
         display_scores(lines);
     }
 

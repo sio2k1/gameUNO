@@ -130,6 +130,7 @@ public class game_level_logic : MonoBehaviour, IGame_level
  
         if (current_game_state.scene_stt == scene_state.states.wait_for_input_answer) // if we r waiting for answer
         {
+            current_game_state.scene_stt = scene_state.states.enemy_pronouncing_question; // enemy speaking true or false, we dont assept input when its happening
             question q = current_game_state.current_level.current_question;
             if ((q.get_correct_answer().txt.ToLower() == input_text.ToLower()) || (q.get_correct_answer_position() == input_text))
             {
@@ -152,16 +153,20 @@ public class game_level_logic : MonoBehaviour, IGame_level
         map_obj.map_visibility(visibility);
     }
 
-    void Start()
-    {
-        
-    }
 
     IEnumerator show_question(question q) // show current question
     {
         yield return null;
         current_game_state.current_level.current_question = q;
-        scene.level_west_enemy_bubble_type_text(q.generate_question_text());
+        float delay_len = scene.level_west_enemy_bubble_type_text(q.generate_question_text());
+        if (delay_len >= 1.2f) // fix to compensate input delay on question typing...
+        {
+            yield return new WaitForSeconds(delay_len - 1.2f);
+        } else
+        {
+            yield return new WaitForSeconds(delay_len);
+        }
+        current_game_state.scene_stt = scene_state.states.wait_for_input_answer; //after anouncing question we can accept input
     }
 
     float timer; // we use this to perform code on update, as it can affect performance not in every single frame, but every 300 ms
@@ -170,7 +175,7 @@ public class game_level_logic : MonoBehaviour, IGame_level
         if (level_timer)
         {
             scene.level_duration_set((Time.time - current_game_state.current_level.time_level_started)); // display seonds you spent at level
-            // ;
+       
         }
 
         timer += Time.deltaTime;
@@ -181,7 +186,7 @@ public class game_level_logic : MonoBehaviour, IGame_level
             {
                 if (current_game_state.scene_stt == scene_state.states.level_progress) // if gamestate is  level_progress we show next question
                 {
-                    current_game_state.scene_stt = scene_state.states.wait_for_input_answer; // w8 for input
+                    current_game_state.scene_stt = scene_state.states.enemy_pronouncing_question; // w8 for enemy to pronounce question fully
                     int qcount = current_game_state.current_level.questions.Count;
                     if (qcount > 0) // if questions left
                     {
@@ -194,6 +199,7 @@ public class game_level_logic : MonoBehaviour, IGame_level
                         //no questions left, we finishing this level
                         level_timer = false; // stop timer
                         scene.level_duration_set(0); // hide digits, that display duration
+                        map_obj.map_redraw_according_passed_level(current_game_state.current_level);
                         lvl_finish_callback(current_game_state); // call calback to provide info to conole_input_handler that level is completed
                         //level ends here
                     }

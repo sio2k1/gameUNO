@@ -17,7 +17,7 @@ public class scene_state
 {
     public enum states // defines gamestates
     {
-        intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro, wait_for_input_player_name
+        intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro, wait_for_input_player_name, enemy_pronouncing_question
     }
     public int total_score = 0; // record scores
     public level current_level; // current level we r doing

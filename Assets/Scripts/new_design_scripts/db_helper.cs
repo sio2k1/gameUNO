@@ -9,55 +9,6 @@ using UnityEngine;
 
 //this scripts adapts sql data to lists of objects so we can use them in app, all sql code we keep in this file.
 
-/*
- * gonna use this for handling errors during sql calls
-public delegate List<T> sql_error_handler<T>();
-public delegate List<T>sql_error_handler_p1<T>(string p1);
-public delegate List<T> sql_error_handler_p2<T>(object param1=null, object param2=null);
-
-public static class db_query_invoker
-{
-    public static List<T> invoke<T>(sql_error_handler<T> hnd)
-    {
-        List<T> res = new List<T>();
-        try
-        {
-            res = hnd();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-        return res;
-    }
-    public static List<T> invoke<T>(sql_error_handler_p1<T> hnd, string p1)
-    {
-        List<T> res = new List<T>();
-        try
-        {
-            res = hnd(p1);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-        return res;
-    }
-    public static List<T> invoke<T>(sql_error_handler_p2<T> hnd, string p1, string p2)
-    {
-        List<T> res = new List<T>();
-        try
-        {
-            res = hnd(p1,p2);
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-        }
-        return res;
-    }
-
-}*/
 public static class db_helper // access data for intro
 {
     public static List<string> intro_story_line() // intro narration
@@ -102,10 +53,10 @@ public static class db_helper_menu // access data for menu (ladderboard)
         DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder order by scores desc limit 10");
         List<table_line> res = new List<table_line>();
 
-
         storyline.Rows.OfType<DataRow>().ToList().ForEach(
             r => res.Add(new table_line(r["RowNum"].ToString(), r["name"].ToString(), r["scores"].ToString())) 
         ); 
+
         return res;
 
     }
@@ -134,7 +85,6 @@ public static class db_helper_menu // access data for menu (ladderboard)
         }
 
         return res;
-
     }
 
     public static void write_scores(string player_name, int scores) // store scores in db
@@ -145,7 +95,6 @@ public static class db_helper_menu // access data for menu (ladderboard)
 
 public static class db_helper_questions //class to extract/write questions from db
 {
-
     public static void add_some_questions_to_db(int number, string compexity) // call api to get questions from web, write them to db
     {
         List<question> qlist = questions_provider.get_questions(number, compexity);
@@ -156,17 +105,11 @@ public static class db_helper_questions //class to extract/write questions from 
                 sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO QUESTIONS_JSON (COMPLEXITY, JSON) VALUES ('" + compexity + "','" + json.Replace("'", "") + "')");
             }
         });
+    }
 
-        /* //changed to "=>" above
-        foreach (var q in qlist)
-        {
-            string json = serializer_helper.json_serialize_object_to_string(q);
-            if (sqlite_db_helper.GetTable("SELECT ID FROM QUESTIONS_JSON WHERE JSON='" + json.Replace("'", "") + "'").Rows.Count == 0) //if this question not in db
-            {
-                sqlite_db_helper.ExecuteQueryWithoutAnswer("INSERT INTO QUESTIONS_JSON (COMPLEXITY, JSON) VALUES ('" + compexity + "','" + json.Replace("'", "") + "')");
-
-            }
-        }*/
+    public static void clear_questions_from_db() // THIS WILL DELETE EVERY SINGLE QUESTIONS FROM QUESTIONS_JSON TABLE (made for dev reasons)
+    {
+        sqlite_db_helper.ExecuteQueryWithoutAnswer("DELETE FROM QUESTIONS_JSON");
     }
 
     public static List<question> load_questions(string level, int qty) // gathering questions for levels
@@ -189,7 +132,6 @@ public static class db_helper_questions //class to extract/write questions from 
         }
         else if ((level.ToLower() == levelnames.East)||(level.ToLower() == levelnames.North)) // select some random questions from DB (with different complexity)
         {
-
             string complexity = level.ToLower() == levelnames.North ? questions_provider.diff_level.medium : questions_provider.diff_level.easy; // select complexity for levels
             string query = "SELECT JSON FROM QUESTIONS_JSON WHERE ID IN (SELECT id FROM QUESTIONS_JSON WHERE COMPLEXITY='" + complexity + "' ORDER BY RANDOM() LIMIT " + qty.ToString() + ")";
             DataTable t = sqlite_db_helper.GetTable(query);
@@ -208,8 +150,6 @@ public static class db_helper_questions //class to extract/write questions from 
         {
             Debug.Log("No questions defined for level: " + level.ToLower());
         }
-
-
         return qlist;
     }
 
