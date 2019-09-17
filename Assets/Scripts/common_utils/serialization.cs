@@ -19,6 +19,38 @@ using System.Xml.Serialization;
   */
 
 
+/* //binnary serialization example to implement in future in this classes
+ *  public static void Save_(string file_, object data)
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(file_);
+        bf.Serialize(file, data);
+        file.Close();
+    }
+
+    public static T Load<T>(string file_)
+    {
+        T data= default(T);
+        if (File.Exists(file_))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(file_, FileMode.Open);
+            data = (T)bf.Deserialize(file);
+            file.Close();
+        }
+        return data;
+    }
+
+    [Serializable]
+    class PlayerData
+    {
+        public float health;
+        public float experience;
+    }
+ * 
+ * 
+ * */
+
 namespace cmn_infrastructure 
 {
 

@@ -51,6 +51,19 @@ public class map_objects : MonoBehaviour
         }
     }
 
+    public void map_redraw_according_scenestate(scene_state st ) // we mark passed levels with troll corpses according to scene_state
+    {
+
+        map_redraw_clear_passed_levels();
+        st.levels.ForEach(l => {
+            if (l.passed)
+            {
+                map_redraw_according_passed_level(l);
+            }
+        });
+    }
+
+
     public void map_redraw_clear_passed_levels()  // at level start we calling this to clear corpses :)
     {
         dead_troll_east.SetActive(false);

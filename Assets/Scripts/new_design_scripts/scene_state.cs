@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,31 +14,43 @@ public interface IGame_level
     scene_state return_level_results(); // this method return level results
 
 }
+
+[DataContract]
 public class scene_state
 {
     public enum states // defines gamestates
     {
         intro, wait_for_dest_cmd, level_progress, wait_for_input_answer, level_intro, wait_for_input_player_name, enemy_pronouncing_question
     }
+    [DataMember]
     public int total_score = 0; // record scores
+    [DataMember]
     public level current_level; // current level we r doing
+    [DataMember]
     public states scene_stt; // current state
+    [DataMember]
     public List<level> levels = new List<level>(); //all set of levels
     //private states Scene_stt { get => scene_stt; set => scene_stt = value; }
 
 
 }
-
+[DataContract]
 public class level // store info about particular level
 {
-    public string name=""; 
+    [DataMember]
+    public string name="";
+    [DataMember]
     public int score=0;
+    [DataMember]
     public float time_level_finished;
+    [DataMember]
     public float time_level_started;
+    [DataMember]
     public bool passed = false; // determine if we pass this level already
+    [DataMember]
     public question current_question; // current question for level
+    [DataMember]
     public List<question> questions = new List<question>(); // list of questions for level
-
 
     public level(string level_name)
     {

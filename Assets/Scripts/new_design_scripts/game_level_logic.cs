@@ -153,6 +153,11 @@ public class game_level_logic : MonoBehaviour, IGame_level
         map_obj.map_visibility(visibility);
     }
 
+    public void map_redreaw_according_to_scenetate(scene_state st)
+    {
+        map_obj.map_redraw_according_scenestate(st);
+    }
+
 
     IEnumerator show_question(question q) // show current question
     {

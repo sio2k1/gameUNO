@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 //this is main console input handler, there is a component attatched to input and "go" button in input_button.cs which passes all input here to input_on_new_text_handler method
 
@@ -80,11 +81,42 @@ public class console_input_handling : MonoBehaviour
 
     }
 
+
+    bool game_save_handler(string input_text)
+    {
+        bool res = false;
+        if (input_text=="save")
+        {
+            res = true;
+
+            cmn_infrastructure.serializer_helper.json_serialize_object_to_string(gamestate, Path.Combine(Application.persistentDataPath, "game_save.json"));
+            Debug.Log("Saved");
+        }
+
+        if (input_text == "load")
+        {
+            res = true;
+            try
+            {
+                gamestate = cmn_infrastructure.serializer_helper.json_deserialize_object_from_file<scene_state>(Path.Combine(Application.persistentDataPath, "game_save.json"));
+                level_logic.map_redreaw_according_to_scenetate(gamestate);
+            } catch
+            {
+                Debug.Log("Error during loading");
+            }
+            Debug.Log("Loaded");
+        }
+
+
+        return res;
+    }
+
     void destination_handler(string input_text) // handling destination to go
     {
 
-        bool right_dest = false;
+        
 
+        bool right_dest = false;
         gamestate.levels.Where(p => p.passed == false).ToList().ForEach(l=> { // we select levels we haven't visited yet, and apply foreach arrow func
             if (l.name.ToLower() == input_text) //if found level equal to input -> go to that level
             {
@@ -95,33 +127,16 @@ public class console_input_handling : MonoBehaviour
                 level_logic.run_game_level(gamestate, l_f_handler);
                 //change scene
             }
-        }); 
+        });
+
+        right_dest = game_save_handler(input_text); //mb we want to save with "save" cmd
+
         if (!right_dest)
         {
             Debug.Log("Wrong destination");
             //wrong dest/or level passed
         }
 
-
-        /* //replaced with arrow func code above
-         var linq = gamestate.levels.Where(p => p.passed == false);
-        foreach (level l in linq)
-        {
-            if (l.name.ToLower() == input_text)
-            {
-                right_dest = true;
-                gamestate.current_level = l;
-                gamestate.scene_stt = scene_state.states.level_intro;
-                level_finished l_f_handler = level_finish_handler;
-
-                level_logic.run_game_level(gamestate, l_f_handler);
-                //change scene
-            }
-            if (!right_dest)
-            {
-                //wrong dest/or level passed
-            }
-        }*/
     }
 
     void level_progress_input_forwarder(string input_text) //forward input handling to level logic
