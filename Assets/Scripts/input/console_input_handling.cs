@@ -27,8 +27,7 @@ public class console_input_handling : MonoBehaviour
     }
     void Start()
     {
-        init(); // this is calde on scene load, so evry time we load scene we clear gamestate in init.
-
+        init(); // this is called on scene load, so every time we load scene we clear gamestate in init.
     }
 
     private void game_end_handler(scene_state st) //game over - calc results, set state to waiting player name
@@ -45,8 +44,7 @@ public class console_input_handling : MonoBehaviour
     }
 
     public void level_finish_handler(scene_state st) //after level finish we come here from callback.
-    {
-        
+    {     
         gamestate = st;
         gamestate.current_level.time_level_finished = Time.time;
         gamestate.current_level.passed = true;
@@ -77,8 +75,6 @@ public class console_input_handling : MonoBehaviour
             //game over - calc results, set state to waiting player name
             game_end_handler(st);
         }
-
-
     }
 
 
@@ -106,16 +102,11 @@ public class console_input_handling : MonoBehaviour
             }
             Debug.Log("Loaded");
         }
-
-
         return res;
     }
 
     void destination_handler(string input_text) // handling destination to go
     {
-
-        
-
         bool right_dest = false;
         gamestate.levels.Where(p => p.passed == false).ToList().ForEach(l=> { // we select levels we haven't visited yet, and apply foreach arrow func
             if (l.name.ToLower() == input_text) //if found level equal to input -> go to that level
@@ -136,7 +127,6 @@ public class console_input_handling : MonoBehaviour
             Debug.Log("Wrong destination");
             //wrong dest/or level passed
         }
-
     }
 
     void level_progress_input_forwarder(string input_text) //forward input handling to level logic

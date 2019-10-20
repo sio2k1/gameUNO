@@ -2,6 +2,7 @@
 using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
+using System;
 
 //this script is used for sqllite connection in editor and android
 
@@ -55,9 +56,16 @@ namespace cmn_infrastructure
             OpenConnection();
             if (connection.State == ConnectionState.Open)
             {
-                SqliteDataAdapter adapter = new SqliteDataAdapter(query, connection);
-                adapter.Fill(DS);
-                adapter.Dispose();
+                try
+                {
+                    SqliteDataAdapter adapter = new SqliteDataAdapter(query, connection);
+                    adapter.Fill(DS);
+                    adapter.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Error during query execution:" + e.Message);
+                }
                 CloseConnection();
             }
             else
@@ -74,7 +82,13 @@ namespace cmn_infrastructure
             if (connection.State == ConnectionState.Open)
             {
                 command.CommandText = query;
-                command.ExecuteNonQuery();
+                try
+                {
+                    command.ExecuteNonQuery();
+                } catch (Exception e)
+                {
+                    Debug.Log("Error during query execution:"+e.Message);
+                }
                 CloseConnection();
             } else
             {

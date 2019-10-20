@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using UnityEngine;
 
 
@@ -62,7 +64,7 @@ public static class db_helper_menu // access data for menu (ladderboard)
     }
 
 
-    public static List<table_line> search_in_ladder(string input_text) // return top 10 players scores as table lines
+    public static List<table_line> search_in_ladder(string input_text) // return top 10 players scores as table lines using search
     {
         DataTable storyline = sqlite_db_helper.GetTable("SELECT  ROW_NUMBER () OVER ( ORDER BY scores desc) RowNum, * from ladder"); // we will search all database in datatable.select
         List<table_line> res = new List<table_line>();
@@ -107,7 +109,7 @@ public static class db_helper_questions //class to extract/write questions from 
         });
     }
 
-    public static void clear_questions_from_db() // THIS WILL DELETE EVERY SINGLE QUESTIONS FROM QUESTIONS_JSON TABLE (made for dev reasons)
+    public static void clear_questions_from_db() // THIS WILL DELETE EVERY SINGLE QUESTION FROM QUESTIONS_JSON TABLE (made for dev reasons)
     {
         sqlite_db_helper.ExecuteQueryWithoutAnswer("DELETE FROM QUESTIONS_JSON");
     }
@@ -156,6 +158,8 @@ public static class db_helper_questions //class to extract/write questions from 
     
 }
 
+
+
 public static class db_helper_level_logic // this extract some dialogs for level intro
 {
     public class dialog_entry //define dialog entry to determine later who is speaking enemy or player
@@ -178,6 +182,75 @@ public static class db_helper_level_logic // this extract some dialogs for level
             dialog_entry de = new dialog_entry(r["ctext"].ToString(), r["char_talks"].ToString());
             res.Add(de);
         }
+        return res;
+    }
+}
+
+public static class db_helper_common //common helper
+{
+    public static void set_setting(string key, string value) // set settings in settings tabe - key value
+    {
+        key = key.ToLower(); // keys are not case sensitive
+        DataTable storyline = sqlite_db_helper.GetTable("select top 1 value from settings where key=" + key.ToLower()); // select asked setting
+        if (storyline.Select().Count() > 0) // debending on we have setting or not either update or insert
+        {
+            sqlite_db_helper.ExecuteQueryWithoutAnswer("update settings set value='" + value + "' where key='"+key+"'");
+        } else
+        {
+            sqlite_db_helper.ExecuteQueryWithoutAnswer("insert into settings (key,value) values ('"+key+"','"+value+"')");
+        }
+
+
+
+    }
+    public static string get_setting(string key) // get settings from settings table (key - value pairs)
+    {
+        key = key.ToLower(); // keys are not case sensitive
+        string res = "";
+        bool found = false;
+        DataTable storyline = sqlite_db_helper.GetTable("select top 1 value from settings where key=" + key); // select value based on key
+        if (storyline.Select().Count() > 0) // if there is a key in db
+        {
+            found = true;
+            res = storyline.Select()[0]["value"].ToString(); // we r selecting top 1 row so we neddt to get row[0]
+        }
+
+        if (!found) // if there is no key log that
+        {
+            res = "Key not found!";
+            Debug.Log(res);
+        }
+        return res;
+    }
+
+}
+    public static class db_helper_login // this extract some dialogs for level intro
+{
+    static string hash(string input) // calculating hash
+    {
+        //SHA1Managed s = new SHA1Managed
+        var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
+        return Encoding.UTF8.GetString(hash);
+    }
+
+    public static void set_last_user(int id)
+    {
+        db_helper_common.set_setting("lastuserid", id.ToString());
+    }
+    public static string get_last_user(int id)
+    {
+        return db_helper_common.get_setting("lastuserid");
+    }
+
+    public static int check_user_creds(string login, string pwd) //return >0 if there is user in db with provided creds
+    {
+        int res = -1;
+        DataTable storyline = sqlite_db_helper.GetTable("select top 1 userid from users where login='"+login+"' and pwd_hash='"+hash(pwd)+"'"); // using hash sha1 to store passwords
+        if (storyline.Select().Count()>0) // if there is a user in db
+        {
+            res = int.Parse(storyline.Select()[0]["userid"].ToString()); // we r selecting top 1 row so we neddt to get row[0]
+        }
+
         return res;
     }
 }
