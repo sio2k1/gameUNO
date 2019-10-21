@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 using System.IO;
+using cmn_infrastructure;
 
 //this is main console input handler, there is a component attatched to input and "go" button in input_button.cs which passes all input here to input_on_new_text_handler method
 
@@ -21,6 +22,7 @@ public class console_input_handling : MonoBehaviour
         level l1 = new level(levelnames.West);
         level l2 = new level(levelnames.East);
         level l3 = new level(levelnames.North);
+        
         gamestate.levels.Add(l1);
         gamestate.levels.Add(l2);
         gamestate.levels.Add(l3);
@@ -41,6 +43,8 @@ public class console_input_handling : MonoBehaviour
         ges.game_end_screen_set_scores(score);
         gamestate.total_score = score;
         gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state to wait player name
+
+        //TODO: Scores with current user
     }
 
     public void level_finish_handler(scene_state st) //after level finish we come here from callback.

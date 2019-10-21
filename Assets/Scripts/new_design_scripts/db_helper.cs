@@ -191,7 +191,7 @@ public static class db_helper_common //common helper
     public static void set_setting(string key, string value) // set settings in settings tabe - key value
     {
         key = key.ToLower(); // keys are not case sensitive
-        DataTable storyline = sqlite_db_helper.GetTable("select top 1 value from settings where key=" + key.ToLower()); // select asked setting
+        DataTable storyline = sqlite_db_helper.GetTable("select value from settings where key='" + key+ "' limit 1"); // select asked setting
         if (storyline.Select().Count() > 0) // debending on we have setting or not either update or insert
         {
             sqlite_db_helper.ExecuteQueryWithoutAnswer("update settings set value='" + value + "' where key='"+key+"'");
@@ -199,16 +199,13 @@ public static class db_helper_common //common helper
         {
             sqlite_db_helper.ExecuteQueryWithoutAnswer("insert into settings (key,value) values ('"+key+"','"+value+"')");
         }
-
-
-
     }
     public static string get_setting(string key) // get settings from settings table (key - value pairs)
     {
         key = key.ToLower(); // keys are not case sensitive
         string res = "";
         bool found = false;
-        DataTable storyline = sqlite_db_helper.GetTable("select top 1 value from settings where key=" + key); // select value based on key
+        DataTable storyline = sqlite_db_helper.GetTable("select value from settings where key='" + key+ "' limit 1"); // select value based on key
         if (storyline.Select().Count() > 0) // if there is a key in db
         {
             found = true;
@@ -224,31 +221,75 @@ public static class db_helper_common //common helper
     }
 
 }
-    public static class db_helper_login // this extract some dialogs for level intro
+public static class db_helper_login // this extract some dialogs for level intro
 {
     static string hash(string input) // calculating hash
     {
         //SHA1Managed s = new SHA1Managed
         var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
-        return Encoding.UTF8.GetString(hash);
+        string res="";
+        hash.ToList<byte>().ForEach(b => res += b.ToString("X2"));
+
+        return res;
     }
 
-    public static void set_last_user(int id)
+    public static void set_last_user(user u)
     {
-        db_helper_common.set_setting("lastuserid", id.ToString());
+        string json = serializer_helper.json_serialize_object_to_string(u);
+        db_helper_common.set_setting("lastuserid", json);
     }
-    public static string get_last_user(int id)
+    public static string get_last_user()
     {
         return db_helper_common.get_setting("lastuserid");
     }
 
-    public static int check_user_creds(string login, string pwd) //return >0 if there is user in db with provided creds
+
+    public static bool check_user_by_id(int id) //return >0 if there is user in db with provided creds
     {
-        int res = -1;
-        DataTable storyline = sqlite_db_helper.GetTable("select top 1 userid from users where login='"+login+"' and pwd_hash='"+hash(pwd)+"'"); // using hash sha1 to store passwords
+        bool res = false;
+        DataTable storyline = sqlite_db_helper.GetTable("select userid from users where userid="+id.ToString()); // using hash sha1 to store passwords
+        if (storyline.Select().Count() > 0) // if there is a user in db
+        {
+            res = true; // user exists in db
+        }
+
+        return res;
+    }
+
+    public static bool check_user_by_login(string login) //return >0 if there is user in db with provided creds
+    {
+        bool res = false;
+        DataTable storyline = sqlite_db_helper.GetTable("select userid from users where login='"+ login.ToLower() + "'"); // using hash sha1 to store passwords
+        if (storyline.Select().Count() > 0) // if there is a user in db
+        {
+            res = true; // user exists in db
+        }
+
+        return res;
+    }
+
+    public static bool reg_new_user(string login, string pwd)
+    {
+        bool res = false;
+        try
+        {
+            sqlite_db_helper.ExecuteQueryWithoutAnswer("insert into users (login,pwd_hash) VALUES('" + login + "','" + hash(pwd) + "')");
+            res = true;
+        } catch(Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        return res;
+    }
+
+    public static user check_user_creds(string login, string pwd) //return >0 if there is user in db with provided creds
+    {
+        user res = new user();
+        DataTable storyline = sqlite_db_helper.GetTable("select userid from users where login='"+login.ToLower()+"' and pwd_hash='"+hash(pwd)+"' limit 1"); // using hash sha1 to store passwords
         if (storyline.Select().Count()>0) // if there is a user in db
         {
-            res = int.Parse(storyline.Select()[0]["userid"].ToString()); // we r selecting top 1 row so we neddt to get row[0]
+            res.id = int.Parse(storyline.Select()[0]["userid"].ToString()); // we r selecting top 1 row so we neddt to get row[0]
+            res.login = login;
         }
 
         return res;
