@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
 public class login : MonoBehaviour
 {
@@ -32,5 +34,10 @@ public class login : MonoBehaviour
     public void btn_reg_click()
     {
         menu_init.register.SetActive(true); // show register user menu
+
+        List<InputField> l2 = menu_init.register.GetComponentsInChildren<InputField>().ToList();
+        menu_init.register.GetComponentsInChildren<InputField>().ToList().ForEach(l => {
+            l.text = "";
+            }); //clear input fields
     }
 }
