@@ -41,8 +41,9 @@ public class console_input_handling : MonoBehaviour
         }
         ges.game_end_screen_visibility(true);
         ges.game_end_screen_set_scores(score);
-        gamestate.total_score = score;
-        gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state to wait player name
+        gamestate.total_score = score; //TODO: check if we need that, part of older functionality
+        db_helper_menu.write_scores(app_globals.loggined_user.login, score); // write scores in db
+        gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state where we ait for user to click ok ant total score screen
 
         //TODO: Scores with current user
     }
@@ -152,8 +153,9 @@ public class console_input_handling : MonoBehaviour
         }
         if (gamestate.scene_stt == scene_state.states.wait_for_input_player_name) //if scenestate is wait_for_input_player_name -> we write scores to db and load menu.
         {
-            db_helper_menu.write_scores(input_text, gamestate.total_score);
-            SceneManager.LoadScene(0);
+            //we handle score writing here before, now its moved to
+            //db_helper_menu.write_scores(input_text, gamestate.total_score);
+            //SceneManager.LoadScene(0);
         }
 
     }

@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\common_utils\sqlite_db_helper.cs" />
     <Compile Include="Assets\Scripts\input\console_input_handling.cs" />
     <Compile Include="Assets\Scripts\intro_scripts\background_movement.cs" />
+    <Compile Include="Assets\Scripts\menu_scripts\back_to_menu.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\init.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\input_ladder.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\ladder_cl.cs" />
