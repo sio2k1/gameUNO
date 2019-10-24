@@ -188,11 +188,11 @@ public static class db_helper_level_logic // this extract some dialogs for level
 
 public static class db_helper_common //common helper
 {
-    public static void set_setting(string key, string value) // set settings in settings tabe - key value
+    public static void set_setting(string key, string value) // set settings in settings table - key value
     {
         key = key.ToLower(); // keys are not case sensitive
         DataTable storyline = sqlite_db_helper.GetTable("select value from settings where key='" + key+ "' limit 1"); // select asked setting
-        if (storyline.Select().Count() > 0) // debending on we have setting or not either update or insert
+        if (storyline.Select().Count() > 0) // debending on we have setting or not - either update or insert
         {
             sqlite_db_helper.ExecuteQueryWithoutAnswer("update settings set value='" + value + "' where key='"+key+"'");
         } else
@@ -225,20 +225,18 @@ public static class db_helper_login // this extract some dialogs for level intro
 {
     static string hash(string input) // calculating hash
     {
-        //SHA1Managed s = new SHA1Managed
         var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
         string res="";
-        hash.ToList<byte>().ForEach(b => res += b.ToString("X2"));
-
+        hash.ToList<byte>().ForEach(b => res += b.ToString("X2")); // format bytes to HEX-like string one by one 
         return res;
     }
 
-    public static void set_last_user(user u)
+    public static void set_last_user(user u) //set last user to db
     {
         string json = serializer_helper.json_serialize_object_to_string(u);
         db_helper_common.set_setting("lastuserid", json);
     }
-    public static string get_last_user()
+    public static string get_last_user() // get last user from DB
     {
         return db_helper_common.get_setting("lastuserid");
     }
