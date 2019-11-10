@@ -1,8 +1,11 @@
 ﻿using cmn_infrastructure;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 
 //this script defines button event handlers at main menu
@@ -21,8 +24,36 @@ public class main_menu_script : MonoBehaviour
         ladderboard.GetComponent<ladder_cl>().load_scores(); //load scores form db
     }
 
+    public class testrecord
+    {
+        [JsonProperty(PropertyName = "height")]
+        public int h { get; set; }
+    }
+    public void fb_get_(List<testrecord> obj)
+    {
+        foreach (var o in obj)
+        {
+            Debug.Log(
+            o.h.ToString());
+        }
+    }
+
     public void btn_logoff_onClick() // logoff
-    {  
+    {
+
+        
+        
+        /*
+        testrecord tr = new testrecord();
+        tr.h = 444;
+
+        firebase_comm.put_object_into_path(tr, "qqq");
+
+        
+        firebase_comm.get_objects_from_path<testrecord>(null, "qqq", fb_get_);
+        */
+        
+        
         try
         {
             menu_init.inp_login.text = ""; // clear fields

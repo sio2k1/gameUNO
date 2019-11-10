@@ -40,6 +40,7 @@ public class console_input_handling : MonoBehaviour
             score += Mathf.RoundToInt(l.score * 2000 / (l.time_level_finished - l.time_level_started));
         }
         ges.game_end_screen_visibility(true);
+        level_logic.scene.input_fade(0.0f, 0.01f);
         ges.game_end_screen_set_scores(score);
         gamestate.total_score = score; //TODO: check if we need that, part of older functionality
         db_helper_menu.write_scores(app_globals.loggined_user.login, score); // write scores in db
@@ -162,7 +163,13 @@ public class console_input_handling : MonoBehaviour
 
     public void input_on_new_text_handler(string input_text) // general handling of input, all input is comming here
     {
-        StartCoroutine(handling_thread(input_text.ToLower())); // passing input in lower case
+        try
+        {
+            StartCoroutine(handling_thread(input_text.ToLower())); // passing input in lower case
+        } catch
+        {
+            Debug.Log("Input handling error");
+        }
     }
 
 }

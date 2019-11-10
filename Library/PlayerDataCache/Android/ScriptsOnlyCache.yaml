@@ -5,6 +5,8 @@ ScriptsOnlyBuild:
     - back_to_menu
     - background_movement
     - console_input_handling
+    - debug_android_console
+    - display_cam_on_img
     - game_end_objects
     - game_intro_level
     - game_level_logic
@@ -32,6 +34,8 @@ ScriptsOnlyBuild:
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
     - UnityEditor.Graphs.AnimatorControllerTool
+    UnityEditor.TestRunner.dll:
+    - UnityEditor.TestTools.TestRunner.TestListCacheData
     UnityEngine.UI.dll:
     - UnityEngine.EventSystems.EventSystem
     - UnityEngine.EventSystems.StandaloneInputModule
@@ -40,6 +44,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
+    - UnityEngine.UI.RawImage
     - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
@@ -67,45 +72,45 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9346}
+      Script: {instanceID: 9356}
     - Class: 114
-      Script: {instanceID: 9414}
-    - Class: 114
-      Script: {instanceID: 9416}
-    - Class: 114
-      Script: {instanceID: 9422}
+      Script: {instanceID: 9426}
     - Class: 114
       Script: {instanceID: 9428}
     - Class: 114
-      Script: {instanceID: 9436}
+      Script: {instanceID: 9434}
     - Class: 114
-      Script: {instanceID: 9438}
+      Script: {instanceID: 9440}
     - Class: 114
-      Script: {instanceID: 9472}
+      Script: {instanceID: 9448}
     - Class: 114
-      Script: {instanceID: 9474}
+      Script: {instanceID: 9450}
     - Class: 114
-      Script: {instanceID: 9506}
+      Script: {instanceID: 9484}
     - Class: 114
-      Script: {instanceID: 9512}
+      Script: {instanceID: 9486}
     - Class: 114
-      Script: {instanceID: 9610}
+      Script: {instanceID: 9520}
     - Class: 114
-      Script: {instanceID: 9684}
+      Script: {instanceID: 9526}
     - Class: 114
-      Script: {instanceID: 9788}
+      Script: {instanceID: 9624}
     - Class: 114
-      Script: {instanceID: 9830}
+      Script: {instanceID: 9700}
     - Class: 114
-      Script: {instanceID: 10092}
+      Script: {instanceID: 9804}
     - Class: 114
-      Script: {instanceID: 10168}
+      Script: {instanceID: 9846}
     - Class: 114
-      Script: {instanceID: 10282}
+      Script: {instanceID: 10112}
+    - Class: 114
+      Script: {instanceID: 10188}
     - Class: 114
       Script: {instanceID: 10304}
     - Class: 114
-      Script: {instanceID: 10550}
+      Script: {instanceID: 10326}
+    - Class: 114
+      Script: {instanceID: 10576}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -144,47 +149,53 @@ ScriptsOnlyBuild:
     - Class: 109
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9308}
+      Script: {instanceID: 9318}
     - Class: 114
-      Script: {instanceID: 9414}
-    - Class: 114
-      Script: {instanceID: 9416}
-    - Class: 114
-      Script: {instanceID: 9422}
+      Script: {instanceID: 9426}
     - Class: 114
       Script: {instanceID: 9428}
     - Class: 114
-      Script: {instanceID: 9436}
+      Script: {instanceID: 9434}
     - Class: 114
-      Script: {instanceID: 9438}
+      Script: {instanceID: 9440}
     - Class: 114
-      Script: {instanceID: 9472}
+      Script: {instanceID: 9448}
     - Class: 114
-      Script: {instanceID: 9474}
+      Script: {instanceID: 9450}
+    - Class: 114
+      Script: {instanceID: 9470}
     - Class: 114
       Script: {instanceID: 9484}
     - Class: 114
-      Script: {instanceID: 9636}
+      Script: {instanceID: 9486}
     - Class: 114
-      Script: {instanceID: 9672}
+      Script: {instanceID: 9496}
     - Class: 114
-      Script: {instanceID: 9762}
+      Script: {instanceID: 9650}
     - Class: 114
-      Script: {instanceID: 9806}
+      Script: {instanceID: 9686}
     - Class: 114
-      Script: {instanceID: 9976}
+      Script: {instanceID: 9778}
     - Class: 114
-      Script: {instanceID: 10056}
+      Script: {instanceID: 9822}
     - Class: 114
-      Script: {instanceID: 10126}
+      Script: {instanceID: 9936}
     - Class: 114
-      Script: {instanceID: 10136}
+      Script: {instanceID: 9994}
     - Class: 114
-      Script: {instanceID: 10264}
+      Script: {instanceID: 10076}
     - Class: 114
-      Script: {instanceID: 10500}
+      Script: {instanceID: 10146}
     - Class: 114
-      Script: {instanceID: 10576}
+      Script: {instanceID: 10156}
+    - Class: 114
+      Script: {instanceID: 10238}
+    - Class: 114
+      Script: {instanceID: 10286}
+    - Class: 114
+      Script: {instanceID: 10524}
+    - Class: 114
+      Script: {instanceID: 10602}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -470,18 +481,6 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: game_level_logic
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: UnityEngine.Advertisements.dll
-    namespaceName: UnityEngine.Advertisements
-    className: CallbackExecutor
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: UnityEngine.Advertisements.dll
-    namespaceName: UnityEngine.Advertisements.Editor
-    className: Placeholder
   - hash:
       serializedVersion: 2
       Hash: cf9f5cf2c3145a37ac07f00e50e460f9
@@ -814,6 +813,12 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: debug_android_console
+  - hash:
+      serializedVersion: 2
       Hash: 3375c3d749f8f4cad889721b431bdc27
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
@@ -986,6 +991,12 @@ ScriptsOnlyBuild:
     assemblyName: Assembly-CSharp.dll
     namespaceName: TMPro.Examples
     className: SimpleScript
+  - hash:
+      serializedVersion: 2
+      Hash: 52b54422e360ebbfc696d168451410b5
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: display_cam_on_img
   - hash:
       serializedVersion: 2
       Hash: 274152c972478468d8321a977bbca8e3
