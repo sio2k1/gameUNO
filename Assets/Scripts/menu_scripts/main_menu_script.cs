@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.IO;
 
 
 //this script defines button event handlers at main menu
@@ -13,6 +14,9 @@ public class main_menu_script : MonoBehaviour
 {
     public GameObject ladderboard;
     public init menu_init;
+
+    public Camera cam;
+    //public RawImage cam_out;
     public void btn_play_onClick()
     {
         SceneManager.LoadScene(1); //Basically loads a gamelevel scene
@@ -40,9 +44,26 @@ public class main_menu_script : MonoBehaviour
 
     public void btn_logoff_onClick() // logoff
     {
+        
+      Camera Cam = cam;
 
+        RenderTexture currentRT = RenderTexture.active;
+        RenderTexture.active = Cam.targetTexture;
+
+        Cam.Render();
+
+        Texture2D Image = new Texture2D(1920, 1080);
+        Image.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0);
+        Image.Apply();
+        RenderTexture.active = currentRT;
+
+        var Bytes = Image.EncodeToPNG();
+        Destroy(Image);
+
+        File.WriteAllBytes(Application.streamingAssetsPath + "/pic.png", Bytes);
         
-        
+
+
         /*
         testrecord tr = new testrecord();
         tr.h = 444;
@@ -52,8 +73,8 @@ public class main_menu_script : MonoBehaviour
         
         firebase_comm.get_objects_from_path<testrecord>(null, "qqq", fb_get_);
         */
-        
-        
+
+        /*
         try
         {
             menu_init.inp_login.text = ""; // clear fields
@@ -65,7 +86,7 @@ public class main_menu_script : MonoBehaviour
         catch
         {
             Debug.Log("Logoff error");
-        }
+        }*/
     }
 
 
