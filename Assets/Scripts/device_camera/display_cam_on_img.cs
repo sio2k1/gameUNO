@@ -21,7 +21,7 @@ public class display_cam_on_img : MonoBehaviour
     {
 
         // NOTE - you almost certainly have to do this here:
-
+        yield return new WaitForSeconds(0.1f);
         yield return new WaitForEndOfFrame();
 
         // it's a rare case where the Unity doco is pretty clear,
@@ -92,6 +92,7 @@ public class display_cam_on_img : MonoBehaviour
             webCamTexture = new WebCamTexture(d.name);
             //Debug.Log(cam.name);
             cam_out.texture = webCamTexture;
+            //cam_out.material.mainTexture = webCamTexture;
             //cam_out.material.mainTexture = webCamTexture;
             webCamTexture.Play();
 
