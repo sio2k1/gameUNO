@@ -83,24 +83,15 @@ public class display_cam_on_img : MonoBehaviour
     }
     void Start()
     {
-
+        /*
         if (WebCamTexture.devices.Length > 0)
         {
             var d = WebCamTexture.devices.ToList().Find(x => x.isFrontFacing);
-
-
             webCamTexture = new WebCamTexture(d.name);
-            //Debug.Log(cam.name);
             cam_out.texture = webCamTexture;
-            //cam_out.material.mainTexture = webCamTexture;
-            //cam_out.material.mainTexture = webCamTexture;
             webCamTexture.Play();
-
-
-
-            //Application.RequestUserAuthorization(UserAuthorization.WebCam);
             StartCoroutine(TakePhoto());
-        }
+        }*/
 
     }
 

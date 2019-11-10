@@ -15,8 +15,8 @@ public class main_menu_script : MonoBehaviour
     public GameObject ladderboard;
     public init menu_init;
 
-    public Camera cam;
-    //public RawImage cam_out;
+    
+    public RawImage cam_out;
     public void btn_play_onClick()
     {
         SceneManager.LoadScene(1); //Basically loads a gamelevel scene
@@ -28,39 +28,44 @@ public class main_menu_script : MonoBehaviour
         ladderboard.GetComponent<ladder_cl>().load_scores(); //load scores form db
     }
 
-    public class testrecord
+    public class userrecord
     {
-        [JsonProperty(PropertyName = "height")]
-        public int h { get; set; }
+        [JsonProperty]
+        public string username { get; set; }
+        [JsonProperty]
+        public string password_hash { get; set; }
+        [JsonProperty]
+        public string b64_user_pic { get; set; }
     }
-    public void fb_get_(List<testrecord> obj)
+    /*public void fb_get_(List<userrecord> obj)
     {
         foreach (var o in obj)
         {
             Debug.Log(
             o.h.ToString());
         }
-    }
+    }*/
 
-    public void btn_logoff_onClick() // logoff
+    public async void btn_logoff_onClick() // logoff
     {
-        
-      Camera Cam = cam;
 
-        RenderTexture currentRT = RenderTexture.active;
-        RenderTexture.active = Cam.targetTexture;
+        Texture2D t = new Texture2D(200, 200);
+        byte[] b = File.ReadAllBytes(Application.streamingAssetsPath + "/pic.png");
+        string b64 = System.Convert.ToBase64String(b);
 
-        Cam.Render();
+        userrecord u = new userrecord { username = "test", password_hash = "ddsdsd", b64_user_pic = b64 };
 
-        Texture2D Image = new Texture2D(1920, 1080);
-        Image.ReadPixels(new Rect(0, 0, 1920, 1080), 0, 0);
-        Image.Apply();
-        RenderTexture.active = currentRT;
+        //string key = await firebase_comm.put_object_into_path(u, "qqq");
 
-        var Bytes = Image.EncodeToPNG();
-        Destroy(Image);
+        List<fbResult<userrecord>> url = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "test");
 
-        File.WriteAllBytes(Application.streamingAssetsPath + "/pic.png", Bytes);
+        //Debug.Log(key);
+
+        byte[] b2 = System.Convert.FromBase64String(url[0].obj.b64_user_pic);
+
+        t.LoadImage(b2);
+        cam_out.texture = t;
+
         
 
 
