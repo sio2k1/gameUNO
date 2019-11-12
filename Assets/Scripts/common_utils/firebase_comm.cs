@@ -18,22 +18,34 @@ public class fbResult<T>
 }
 public static class firebase_comm 
 {
-   
-    //private static string key = "SfKwW9OaccZhRtkPs5kqFdNqT7qkfSh1pAv5si6J";
+
+    public static bool useoldkey = false;
+    private static string OLDkey = "SfKwW9OaccZhRtkPs5kqFdNqT7qkfSh1pAv5si6J";
     private static string APIKEY="AIzaSyCLv3zAYAslktqJm4GyuboymcYxBVjCT3M";
     private static string APIurl = "https://knights-and-users.firebaseio.com/";
     //public static string last_inserted = "";
 
     public static async Task<FirebaseClient> fbConnection_auth()
     {
-        var auth = new FirebaseAuthProvider(new FirebaseConfig(APIKEY));
-        var data = await auth.SignInAnonymouslyAsync();
-        return new FirebaseClient(
-          APIurl,
-          new FirebaseOptions
-          {
-              AuthTokenAsyncFactory = () => Task.FromResult(data.FirebaseToken)
-          });
+        if (useoldkey)
+        {
+            var auth = new FirebaseAuthProvider(new FirebaseConfig(APIKEY));
+            var data = await auth.SignInAnonymouslyAsync();
+            return new FirebaseClient(
+              APIurl,
+              new FirebaseOptions
+              {
+                  AuthTokenAsyncFactory = () => Task.FromResult(data.FirebaseToken)
+              });
+        } else
+        {
+            return new FirebaseClient(
+              APIurl,
+              new FirebaseOptions
+              {
+                  AuthTokenAsyncFactory = () => Task.FromResult(OLDkey)
+              });
+        }
     }
 
     public static async Task<List<fbResult<T>>> get_objects_byfield_from_path<T>(string path, string property, string value)
@@ -44,8 +56,7 @@ public static class firebase_comm
             }
          */
         FirebaseClient fbc = await fbConnection_auth();
-        var res = await fbc
-       .Child(path).OrderBy(property).EqualTo(value).OnceAsync<T>();
+        var res = await fbc.Child(path).OrderBy(property).EqualTo(value).OnceAsync<T>();
         List<fbResult<T>> reslst = new List<fbResult<T>>();
         foreach (var o in res)
         {
@@ -58,8 +69,7 @@ public static class firebase_comm
     public static async Task<List<fbResult<T>>> get_all_objects_from_path<T>(string path)
     {
         FirebaseClient fbc = await fbConnection_auth();
-        var res = await fbc
-       .Child(path).OnceAsync<T>();
+        var res = await fbc.Child(path).OnceAsync<T>();
         List<fbResult<T>> reslst = new List<fbResult<T>>();
         foreach (var o in res)
         {
@@ -69,23 +79,24 @@ public static class firebase_comm
         return reslst;
     }
 
+    public static async Task<bool> update_object_into_path_key<T>(T obj, string path, string key)
+    {
+        FirebaseClient fbc = await fbConnection_auth();
+        await fbc.Child(path).Child(key).PatchAsync<T>(obj);
+        return true;
+    }
+
+    public static async Task<bool> delete_object_from_path_key(string path, string key)
+    {
+        FirebaseClient fbc = await fbConnection_auth();
+        await fbc.Child(path).Child(key).DeleteAsync();
+        return true;
+    }
 
     public static async Task<string> put_object_into_path<T>(T obj, string path)
     {
-        var auth = new FirebaseAuthProvider(new FirebaseConfig(APIKEY));
-        var data = await auth.SignInAnonymouslyAsync();
-        var firebaseClient = new FirebaseClient(
-          APIurl,
-          new FirebaseOptions
-          {
-              AuthTokenAsyncFactory = () => Task.FromResult(data.FirebaseToken)
-          });
-        //var firebaseClient = new FirebaseClient(APIurl);
-        //Type type = obj.GetType();
-        var res = await firebaseClient
-        .Child(path)
-        .PostAsync(obj);
-
+        FirebaseClient fbc = await fbConnection_auth();
+        var res = await fbc.Child(path).PostAsync(obj);
         return res.Key;
 
         //Debug.Log($"Key for the new record: {res.Key}");

@@ -35,8 +35,10 @@ public class main_menu_script : MonoBehaviour
         [JsonProperty]
         public string password_hash { get; set; }
         [JsonProperty]
-        public string b64_user_pic { get; set; }
-    }
+        public string b64_user_pic;
+        [JsonProperty]
+        public List<string> arr { get; set; }
+}
     /*public void fb_get_(List<userrecord> obj)
     {
         foreach (var o in obj)
@@ -46,27 +48,70 @@ public class main_menu_script : MonoBehaviour
         }
     }*/
 
+    private void Start()
+    {
+        global_debug_state.use_debug();
+    }
+
+    private static void UnpackToPersistentDataPathFromStreaming(string fileName) //unpack db to local folder at android
+    {
+        string toPath = Path.Combine(Application.persistentDataPath, fileName);
+        string fromPath = Path.Combine(Application.streamingAssetsPath, fileName);
+        WWW reader = new WWW(fromPath);
+        while (!reader.isDone) { }
+        File.WriteAllBytes(toPath, reader.bytes);
+    }
+
     public async void btn_logoff_onClick() // logoff
     {
 
         Texture2D t = new Texture2D(200, 200);
-        byte[] b = File.ReadAllBytes(Application.streamingAssetsPath + "/pic.png");
+        string flpath = "";
+#if UNITY_EDITOR
+        flpath = Path.Combine(Application.streamingAssetsPath, "pic.png");
+#endif
+
+#if UNITY_ANDROID
+        UnpackToPersistentDataPathFromStreaming("pic.png");
+        flpath = Path.Combine(Application.persistentDataPath, "pic.png");
+#endif
+        if (flpath=="")
+        {
+            throw new System.Exception("No path defined");
+        }
+
+        debub_console_log.msg = flpath;
+
+        byte[] b = File.ReadAllBytes(Path.Combine(Application.streamingAssetsPath, "pic.png"));
+        debub_console_log.msg = flpath+ "READED";
+        //Path.Combine(Application.persistentDataPath, fileName)
         string b64 = System.Convert.ToBase64String(b);
 
-        userrecord u = new userrecord { username = "test", password_hash = "ddsdsd", b64_user_pic = b64 };
+        userrecord u = new userrecord { username = "testqQQQ11aaaZZ", password_hash = "ddsdsd", b64_user_pic = "a" , arr = new List<string>() };
+        u.arr.Add("sss");
+        u.arr.Add("sss2");
+        await firebase_comm.update_object_into_path_key<userrecord>(u, "qqq", "-LtJTgcCpQ0hltFjwmpz");
 
-        //string key = await firebase_comm.put_object_into_path(u, "qqq");
 
-        List<fbResult<userrecord>> url = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "test");
-
-        //Debug.Log(key);
-
-        byte[] b2 = System.Convert.FromBase64String(url[0].obj.b64_user_pic);
-
-        t.LoadImage(b2);
-        cam_out.texture = t;
+        List<fbResult<userrecord>> usr = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "testqQQQ11aaaZZ");
 
         
+
+        //await firebase_comm.delete_object_from_path_key("qqq", "-LtJTgcCpQ0hltFjwmpz");
+
+        debub_console_log.msg = "updated";
+        //string key = await firebase_comm.put_object_into_path(u, "qqq");
+
+        //List<fbResult<userrecord>> url = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "test");
+        //debub_console_log.msg = url.Count.ToString();
+        //Debug.Log(key);
+
+        // byte[] b2 = System.Convert.FromBase64String(url[0].obj.b64_user_pic);
+
+        //t.LoadImage(b2);
+        //cam_out.texture = t;
+
+
 
 
         /*
