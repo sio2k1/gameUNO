@@ -13,7 +13,7 @@ public class game_intro_level : MonoBehaviour
         scene.narrator_enabled(false);
         scene.narrator_hide();
         scene.input_hide_disable();
-        Debug.Log(app_globals.loggined_user.login);
+        Debug.Log(app_globals.loggined_user_fb.login_display);
         StartCoroutine(introstory()); // start to display story
     }
 

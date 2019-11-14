@@ -43,7 +43,7 @@ public class console_input_handling : MonoBehaviour
         level_logic.scene.input_fade(0.0f, 0.01f);
         ges.game_end_screen_set_scores(score);
         gamestate.total_score = score; //TODO: check if we need that, part of older functionality
-        db_helper_menu.write_scores(app_globals.loggined_user.login, score); // write scores in db
+        db_helper_menu.write_scores(app_globals.loggined_user_fb.login_display, score); // write scores in db
         gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state where we ait for user to click ok ant total score screen
 
         //TODO: Scores with current user

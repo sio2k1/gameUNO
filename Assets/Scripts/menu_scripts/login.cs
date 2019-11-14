@@ -4,24 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+//user login procedures occurs here.
+
 public class login : MonoBehaviour
 {
     public init menu_init;
-    public void btn_login_onClick() // login
+    public async void btn_login_onClick() // login
     {
         try
         {
-            app_globals.loggined_user = db_helper_login.check_user_creds(menu_init.inp_login.text, menu_init.inp_pwd.text); //check credentials
-            menu_init.setusername(app_globals.loggined_user); // set username in main menu
-            db_helper_login.set_last_user(app_globals.loggined_user); // save last user in db
+            app_globals.loggined_user_fb = await db_helper_login_firebase.check_user_creds(menu_init.inp_login.text, menu_init.inp_pwd.text); //check credentials
+            menu_init.setusername(app_globals.loggined_user_fb); // 
+            db_helper_common.set_setting("lastuserid", app_globals.loggined_user_fb.combinedloginhash); // save user in local db for autologin
         }
         catch
         {
             Debug.Log("Cannot check username");
         }
 
-        if (app_globals.loggined_user.id != -1)
-        {
+        if (app_globals.loggined_user_fb.key != "") // good creds
+        {   
             menu_init.login.SetActive(false); // hide login screen
         }
         else
@@ -38,6 +40,6 @@ public class login : MonoBehaviour
         List<InputField> l2 = menu_init.register.GetComponentsInChildren<InputField>().ToList();
         menu_init.register.GetComponentsInChildren<InputField>().ToList().ForEach(l => {
             l.text = "";
-            }); //clear input fields
+        }); //clear input fields
     }
 }

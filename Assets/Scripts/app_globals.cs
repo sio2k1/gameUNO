@@ -4,6 +4,6 @@ using UnityEngine;
 
 public static class app_globals
 {
-    public static user loggined_user = new user();
+    public static user_fb loggined_user_fb = new user_fb();
    
 }

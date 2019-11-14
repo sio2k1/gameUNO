@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -221,11 +222,96 @@ public static class db_helper_common //common helper
     }
 
 }
-public static class db_helper_login // this extract some dialogs for level intro
+
+
+public static class db_helper_login_firebase // firebase login helper
+{
+    private static string salt = "3rhSS!!@#$%^Sxgjsawnv' vs ds LKKJDkhsa&&^$)!jdhw jijdsfewu skfji3834rsXdbu3732"; // salt for login hashing
+    private static string users_path = "users"; //database path
+    static string hash(string input) // calculating hash
+    {
+        var hash = new SHA256Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
+        string res = "";
+        hash.ToList<byte>().ForEach(b => res += b.ToString("X2")); // format bytes to HEX-like string one by one 
+        return res;
+    }
+
+    public static async Task<bool> check_user_by_login(string login) //return true if there is user in db with provided login
+    {
+        bool res = false;
+        List<fbResult<user_fb>> ulist = await firebase_comm.get_objects_byfield_from_path<user_fb>(users_path, "login", login.ToLower()); // dbquery
+        if (ulist.Count>0) 
+        {
+            res = true; // if more than 0 users -> return true (user exists in db)
+        }
+        return res;
+    }
+
+    public static async Task<user_fb> check_user_creds(string login, string pwd) //return >0 if there is user in db with provided creds
+    {
+        user_fb res = new user_fb();
+        List<fbResult<user_fb>> ulist = await firebase_comm.get_objects_byfield_from_path<user_fb>(users_path, "combinedloginhash", hash(login.ToLower()+ salt + pwd));
+
+        if (ulist.Count > 0) // if > 0 -> user exists and creds are correct
+        {
+            res = ulist.FirstOrDefault().obj;  // filling return
+            res.key = ulist.FirstOrDefault().key;
+            res.pwdhash = "";
+            //res.combinedloginhash = "";
+            //res.login = ulist.FirstOrDefault().obj.login;
+        }
+        return res;
+    }
+
+    public static async Task<user_fb> check_user_creds(string combined_hash) //return >0 if there is user in db with provided creds
+    {
+        user_fb res = new user_fb();
+        List<fbResult<user_fb>> ulist = await firebase_comm.get_objects_byfield_from_path<user_fb>(users_path, "combinedloginhash", combined_hash);
+
+        if (ulist.Count > 0) // if > 0 -> user exists and creds are correct
+        {
+            res = ulist.FirstOrDefault().obj;  // filling return
+            res.key = ulist.FirstOrDefault().key;
+            res.pwdhash = "";
+            //res.combinedloginhash = "";
+            //res.login = ulist.FirstOrDefault().obj.login;
+        }
+        return res;
+    }
+
+    public static async Task<bool> reg_new_user(string login, string pwd, byte[] userpic)
+    {
+        bool res = false;
+        try
+        {
+            user_fb u = new user_fb(); // init user obj
+            u.login = login.ToLower();
+            u.login_display = login;
+            u.pwdhash = hash(pwd);
+            u.combinedloginhash = hash(login.ToLower() +salt + pwd); // we combine login, pwd and salt to store auth info
+
+            if (userpic != null) // convert picture from bytes to b64str if we have piv
+            {
+                u.userpic = System.Convert.ToBase64String(userpic);
+            }
+
+            await firebase_comm.put_object_into_path(u, users_path); // put obj to db
+            res = true;
+        } catch
+        {
+            Debug.Log("Error during user creation");
+        }
+
+        return res;
+    }
+}
+
+public static class db_helper_login_OLD // this extract some dialogs for level intro
 {
     static string hash(string input) // calculating hash
     {
-        var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
+        
+        var hash = new SHA256Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
         string res="";
         hash.ToList<byte>().ForEach(b => res += b.ToString("X2")); // format bytes to HEX-like string one by one 
         return res;
@@ -242,7 +328,7 @@ public static class db_helper_login // this extract some dialogs for level intro
     }
 
 
-    public static bool check_user_by_id(int id) //return >0 if there is user in db with provided creds
+    public static bool check_user_by_id(int id) //return true if there is user in db with provided creds
     {
         bool res = false;
         DataTable storyline = sqlite_db_helper.GetTable("select userid from users where userid="+id.ToString()); // using hash sha1 to store passwords

@@ -11,11 +11,45 @@ public class display_cam_on_img : MonoBehaviour
     // Start is called before the first frame update
 
     public RawImage cam_out;
-    public RawImage test_img;
     WebCamDevice cam;
     WebCamTexture webCamTexture;
 
+    public byte[] lastcamerashoot=null;
 
+
+    public void startCamera()
+    {
+        if (WebCamTexture.devices.Length > 0)
+        {
+            cam_out.enabled = true;
+            var d = WebCamTexture.devices.ToList().Find(x => x.isFrontFacing);
+            webCamTexture = new WebCamTexture(d.name);
+            cam_out.texture = webCamTexture;
+            webCamTexture.Play();
+            StartCoroutine(TakePhoto());
+        }
+    }
+
+    public void stopCamera()
+    {
+        if (webCamTexture!=null)
+        {
+            if (webCamTexture.isPlaying)
+            {
+                
+                webCamTexture.Stop();
+            }
+        }
+        if (cam_out.enabled)
+        {
+            cam_out.enabled = false;
+        }
+    }
+
+    public void takePhoto()
+    {
+        StartCoroutine(TakePhoto());
+    }
 
     IEnumerator TakePhoto()  // Start this Coroutine on some button click
     {
@@ -31,11 +65,12 @@ public class display_cam_on_img : MonoBehaviour
         Texture2D photo = new Texture2D(webCamTexture.width, webCamTexture.height);
         photo.SetPixels(webCamTexture.GetPixels());
         photo.Apply();
+        webCamTexture.Pause();
+        lastcamerashoot = photo.EncodeToPNG();
 
         //Encode to a PNG
-        byte[] bytes = photo.EncodeToPNG();
-        //Write out the PNG. Of course you have to substitute your_path for something sensible
-        File.WriteAllBytes(Application.streamingAssetsPath + "/pic.png", bytes);
+        //byte[] bytes = photo.EncodeToPNG();
+        //File.WriteAllBytes(Application.streamingAssetsPath + "/pic.png", bytes);
     }
 
     IEnumerator cam_start()

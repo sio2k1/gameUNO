@@ -64,7 +64,7 @@ public class main_menu_script : MonoBehaviour
 
     public async void btn_logoff_onClick() // logoff
     {
-
+        /*
         Texture2D t = new Texture2D(200, 200);
         string flpath = "";
 #if UNITY_EDITOR
@@ -95,11 +95,11 @@ public class main_menu_script : MonoBehaviour
 
         List<fbResult<userrecord>> usr = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "testqQQQ11aaaZZ");
 
-        
+        */
 
         //await firebase_comm.delete_object_from_path_key("qqq", "-LtJTgcCpQ0hltFjwmpz");
 
-        debub_console_log.msg = "updated";
+        //debub_console_log.msg = "updated";
         //string key = await firebase_comm.put_object_into_path(u, "qqq");
 
         //List<fbResult<userrecord>> url = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "test");
@@ -124,19 +124,21 @@ public class main_menu_script : MonoBehaviour
         firebase_comm.get_objects_from_path<testrecord>(null, "qqq", fb_get_);
         */
 
-        /*
+        
         try
         {
             menu_init.inp_login.text = ""; // clear fields
             menu_init.inp_pwd.text = "";
-            user u = new user();
-            db_helper_login.set_last_user(u); // reset user
+            app_globals.loggined_user_fb = new user_fb();
+            db_helper_common.set_setting("lastuserid", "");
+            //user u = new user();
+            //db_helper_login.set_last_user(u); // reset user
             menu_init.login.SetActive(true); // show login screen
         }
         catch
         {
             Debug.Log("Logoff error");
-        }*/
+        }
     }
 
 
