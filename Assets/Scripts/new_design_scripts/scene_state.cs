@@ -64,4 +64,8 @@ public static class levelnames // define of levelnames
     public static string West = "west";
     public static string East = "east";
     public static string North = "north";
+    public static List<string> names = new List<string>(){West, East, North};
+
 }
+
+

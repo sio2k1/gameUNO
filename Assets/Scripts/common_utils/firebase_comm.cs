@@ -114,6 +114,24 @@ public static class firebase_comm
         }
     }
 
+    public static async Task<bool> delete_object_byfield_from_path<T>(string path, string property, string value)
+    {
+        try
+        {
+            List<fbResult<T>> list = await get_objects_byfield_from_path<T>(path, property, value);
+            list.ForEach(async i=> {
+                await delete_object_from_path_key(path, i.key);
+            });
+
+            return true;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+            return false;
+        }
+    }
+
     public static async Task<bool> delete_object_from_path_key(string path, string key) //delete JSON at specified path and key
     {
         try { 

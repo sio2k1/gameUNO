@@ -16,7 +16,7 @@ public class user
 
 public class user_fb
 {
-    [JsonProperty]
+    [JsonIgnore]
     public string key = "";
     [JsonProperty]
     public string login = "";

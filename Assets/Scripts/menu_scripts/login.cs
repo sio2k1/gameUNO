@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 //user login procedures occurs here.
 
@@ -37,8 +38,8 @@ public class login : MonoBehaviour
     {
         menu_init.register.SetActive(true); // show register user menu
 
-        List<InputField> l2 = menu_init.register.GetComponentsInChildren<InputField>().ToList();
-        menu_init.register.GetComponentsInChildren<InputField>().ToList().ForEach(l => {
+        //List<TMP_InputField> l2 = menu_init.register.GetComponentsInChildren<TMP_InputField>().ToList();
+        menu_init.register.GetComponentsInChildren<TMP_InputField>().ToList().ForEach(l => {
             l.text = "";
         }); //clear input fields
     }

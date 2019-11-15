@@ -17,9 +17,18 @@ public class main_menu_script : MonoBehaviour
 
     
     public RawImage cam_out;
-    public void btn_play_onClick()
+    public async void btn_play_onClick()
     {
-        SceneManager.LoadScene(1); //Basically loads a gamelevel scene
+        //SceneManager.LoadScene(1); //Basically loads a gamelevel scene
+
+        current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game();
+        //app_globals.loggined_user_fb
+        if (current_mgame.curr_mgame.key!="")
+        {
+
+           //start new game here 
+        }
+        Debug.Log(current_mgame.curr_mgame.key);
     }
 
     public void btn_ladder_onClick()
@@ -28,25 +37,7 @@ public class main_menu_script : MonoBehaviour
         ladderboard.GetComponent<ladder_cl>().load_scores(); //load scores form db
     }
 
-    public class userrecord
-    {
-        [JsonProperty]
-        public string username { get; set; }
-        [JsonProperty]
-        public string password_hash { get; set; }
-        [JsonProperty]
-        public string b64_user_pic;
-        [JsonProperty]
-        public List<string> arr { get; set; }
-}
-    /*public void fb_get_(List<userrecord> obj)
-    {
-        foreach (var o in obj)
-        {
-            Debug.Log(
-            o.h.ToString());
-        }
-    }*/
+
 
     private void Start()
     {

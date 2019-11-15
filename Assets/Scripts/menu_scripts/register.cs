@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 //user registration occurs here.
 
 public class register : MonoBehaviour
 {
-    public InputField loginbox;
-    public InputField pwd1box;
-    public InputField pwd2box;
+    public TMP_InputField loginbox_tmp;
+    public TMP_InputField pwd1box_tmp;
+    public TMP_InputField pwd2box_tmp;
+    //public InputField loginbox;
+    //public InputField pwd1box;
+    //public InputField pwd2box;
     public init menu_init;
     public display_cam_on_img regcamera;
     public void btn_back_click() // hide reg, show login
@@ -26,12 +30,14 @@ public class register : MonoBehaviour
 
     public async void btn_reg_click() // occurs on reg button click
     {
-        if ((pwd1box.text != "") && (loginbox.text != ""))
+        string login = loginbox_tmp.text;
+        string pwd = pwd1box_tmp.text;
+        if ((pwd != "") && (login != ""))
         {
-            if (pwd1box.text == pwd2box.text) // check if passwords not equal
+            if (pwd1box_tmp.text == pwd2box_tmp.text) // check if passwords not equal
             {
-                string login = loginbox.text;
-                string pwd = pwd1box.text; 
+                //string login = loginbox.text;
+                
                 if (!await db_helper_login_firebase.check_user_by_login(login)) // chech if we have user with same login in db
                 {
                     
