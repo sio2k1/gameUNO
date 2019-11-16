@@ -21,12 +21,18 @@ public class main_menu_script : MonoBehaviour
     {
         //SceneManager.LoadScene(1); //Basically loads a gamelevel scene
 
-        current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game();
+
+       // await mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, "_2west", "gamekey", app_globals.loggined_user_fb.key);
+       // List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level("gamekey", "_2west");
+
+       // Debug.Log(plist.Count);
+        
+        current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game(current_mgame.curr_mgame.key);
         //app_globals.loggined_user_fb
         if (current_mgame.curr_mgame.key!="")
         {
-
-           //start new game here 
+            //start new game here
+            SceneManager.LoadScene(1); //Basically loads a gamelevel scene                             
         }
         Debug.Log(current_mgame.curr_mgame.key);
     }
@@ -41,7 +47,7 @@ public class main_menu_script : MonoBehaviour
 
     private void Start()
     {
-        global_debug_state.use_debug();
+        //global_debug_state.use_debug();
     }
 
     private static void UnpackToPersistentDataPathFromStreaming(string fileName) //unpack db to local folder at android

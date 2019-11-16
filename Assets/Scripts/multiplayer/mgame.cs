@@ -21,6 +21,8 @@ public class mgame_player
     public string lvl { get; set; }
     [JsonProperty]
     public string playerkey { get; set; }
+    [JsonProperty]
+    public string gamekey { get; set; }
 }
 public class mgame 
 {

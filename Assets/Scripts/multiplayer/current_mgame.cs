@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class current_mgame
 {
-    public static mgame curr_mgame;
+    public static mgame curr_mgame = new mgame();
 }

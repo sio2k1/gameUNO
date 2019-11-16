@@ -175,6 +175,7 @@ public class game_level_logic : MonoBehaviour, IGame_level
     }
 
     float timer; // we use this to perform code on update, as it can affect performance not in every single frame, but every 300 ms
+    float timer_multipleer_request = 0;
     void Update()
     {
         if (level_timer)
@@ -182,8 +183,17 @@ public class game_level_logic : MonoBehaviour, IGame_level
             scene.level_duration_set((Time.time - current_game_state.current_level.time_level_started)); // display seonds you spent at level
        
         }
+        timer_multipleer_request += Time.deltaTime;
+        
+        if (timer_multipleer_request > 10f) // we use this to perform code on update, as it can affect performance not in every single frame, but every 10000 ms
+        {
+            //request players for multipleer on this screen
+            timer_multipleer_request = 0;
 
-        timer += Time.deltaTime;
+        }
+
+
+            timer += Time.deltaTime;
         if (timer>0.300f) // we use this to perform code on update, as it can affect performance not in every single frame, but every 300 ms
         {
             timer = 0;

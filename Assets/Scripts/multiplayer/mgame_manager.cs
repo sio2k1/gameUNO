@@ -8,6 +8,42 @@ using UnityEngine;
 public static class mgame_manager
 {
     const string gamepath = "games";
+    const string players_in_game_path = gamepath + "_players"; // firebase path players
+
+
+    public async static Task<List<mgame_player>> get_all_players_in_game_at_level(string game_key, string level_name) // request all players within a particular game at level
+    {
+        List<mgame_player> players = new List<mgame_player>();
+        try
+        {
+            List<fbResult<mgame_player>> res = await firebase_comm.get_objects_byfield_from_path<mgame_player>(players_in_game_path, "gamekey", game_key);
+            res.FindAll(x => x.obj.lvl == level_name).ForEach(x => players.Add(x.obj)); //select all players within current level and form list of players
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Unable to get list of players:" + e.Message);
+        }
+        return players;
+
+    }
+
+    public async static Task<bool> move_to_screen(string player_name_, string level_name, string game_key, string current_user_key) // move player to screen in particular game
+    {
+        bool res = false;
+        try
+        {
+            await firebase_comm.delete_object_byfield_from_path<mgame_player>(players_in_game_path, "playerkey", current_user_key); // delete all records about player movements
+            await firebase_comm.put_object_into_path(new mgame_player { lvl = level_name, player_name = player_name_, playerkey = current_user_key, gamekey = game_key }, players_in_game_path); // assign player to lvl and make a record
+
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Unable to change screen:" + e.Message);
+        }
+
+        return res;
+    }
+
     private static mgame create_new_game()
     {
         mgame g = new mgame();
@@ -22,27 +58,9 @@ public static class mgame_manager
         return g;
     }
 
-    public async static Task<bool> move_to_screen(string player_name_, string level_name, string game_key, string current_user_key) // move player to screen in particular game
-    {
-        bool res = false;
-        try
-        {
-            string currgamepath = gamepath + "/" + game_key; // game path
 
-            await firebase_comm.delete_object_byfield_from_path<mgame_player>(currgamepath, "playerkey", current_user_key); // delete all records about player movements
 
-            await firebase_comm.put_object_into_path(new mgame_player { lvl = level_name, player_name = player_name_, playerkey=current_user_key }, currgamepath); // assign player to lvl and make a record
-
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Unable to create game:" + e.Message);
-        }
-
-        return res;
-    }
-
-    public async static Task<mgame> get_or_start_new_multiplayer_game() // we get available game, if its outdated or not exists we create new
+    public async static Task<mgame> get_or_start_new_multiplayer_game(string last_game_key) // we get available game, if its outdated or not exists we create new
     {
         mgame g = new mgame();
 
@@ -58,14 +76,13 @@ public static class mgame_manager
             {
                 res.ForEach(async x =>
                 {
-                    if (x.obj.game_start.AddMinutes(15) < DateTime.UtcNow)
+                    if ((x.obj.game_start.AddMinutes(15) < DateTime.UtcNow) || (x.key== last_game_key)) // delete all outdated and curent game
                     {
-                        await firebase_comm.delete_object_from_path_key(gamepath, x.key); //delete outdated game
-                                                                                          //res.Remove(x);
+                        await firebase_comm.delete_object_from_path_key(gamepath, x.key); //delete outdated game                                                                 //res.Remove(x);
                     }
                 });
 
-                res.RemoveAll(x => x.obj.game_start.AddMinutes(15) < DateTime.UtcNow); // clear list
+                res.RemoveAll(x => (x.obj.game_start.AddMinutes(15) < DateTime.UtcNow) || (x.key == last_game_key)); // clear list
 
                 if (res.Count != 0)
                 {

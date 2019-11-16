@@ -25,6 +25,11 @@ public class scene_objects : MonoBehaviour
     public Text level_duration; // link to Text with level time duration
 
 
+    public GameObject multipleer_table;
+    public GameObject mtable_line_1;
+    public GameObject mtable_line_2;
+    public GameObject mtable_line_3;
+
     public void level_duration_set(float num) // set level duration text
     {
         level_duration.text = Mathf.RoundToInt(num).ToString();
