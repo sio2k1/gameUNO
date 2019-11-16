@@ -27,7 +27,7 @@ public class main_menu_script : MonoBehaviour
 
        // Debug.Log(plist.Count);
         
-        current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game(current_mgame.curr_mgame.key);
+        current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game(app_globals.loggined_user_fb.key);
         //app_globals.loggined_user_fb
         if (current_mgame.curr_mgame.key!="")
         {
@@ -47,7 +47,7 @@ public class main_menu_script : MonoBehaviour
 
     private void Start()
     {
-        //global_debug_state.use_debug();
+        global_debug_state.use_debug();
     }
 
     private static void UnpackToPersistentDataPathFromStreaming(string fileName) //unpack db to local folder at android

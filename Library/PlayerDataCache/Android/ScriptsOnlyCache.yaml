@@ -30,6 +30,7 @@ ScriptsOnlyBuild:
     Unity.TextMeshPro.dll:
     - TMPro.TMP_ColorGradient
     - TMPro.TMP_FontAsset
+    - TMPro.TMP_InputField
     - TMPro.TMP_Settings
     - TMPro.TMP_SpriteAsset
     - TMPro.TMP_StyleSheet
@@ -51,7 +52,9 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.InputField
+    - UnityEngine.UI.LayoutElement
     - UnityEngine.UI.RawImage
+    - UnityEngine.UI.RectMask2D
     - UnityEngine.UI.Text
     - UnityEngine.UI.VerticalLayoutGroup
   sceneClasses:
@@ -85,39 +88,47 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9910}
     - Class: 114
-      Script: {instanceID: 9954}
+      Script: {instanceID: 9956}
     - Class: 114
-      Script: {instanceID: 9994}
+      Script: {instanceID: 9996}
     - Class: 114
-      Script: {instanceID: 10004}
+      Script: {instanceID: 10006}
     - Class: 114
-      Script: {instanceID: 10026}
+      Script: {instanceID: 10028}
     - Class: 114
-      Script: {instanceID: 10178}
+      Script: {instanceID: 10096}
     - Class: 114
-      Script: {instanceID: 10406}
+      Script: {instanceID: 10180}
     - Class: 114
-      Script: {instanceID: 10416}
+      Script: {instanceID: 10408}
     - Class: 114
-      Script: {instanceID: 10482}
+      Script: {instanceID: 10418}
     - Class: 114
-      Script: {instanceID: 10840}
+      Script: {instanceID: 10484}
     - Class: 114
-      Script: {instanceID: 11030}
+      Script: {instanceID: 10844}
     - Class: 114
-      Script: {instanceID: 11050}
+      Script: {instanceID: 10944}
     - Class: 114
-      Script: {instanceID: 11148}
+      Script: {instanceID: 11034}
     - Class: 114
-      Script: {instanceID: 11332}
+      Script: {instanceID: 11054}
     - Class: 114
-      Script: {instanceID: 11372}
+      Script: {instanceID: 11088}
     - Class: 114
-      Script: {instanceID: 11382}
+      Script: {instanceID: 11152}
     - Class: 114
-      Script: {instanceID: 11648}
+      Script: {instanceID: 11312}
     - Class: 114
-      Script: {instanceID: 11806}
+      Script: {instanceID: 11336}
+    - Class: 114
+      Script: {instanceID: 11376}
+    - Class: 114
+      Script: {instanceID: 11386}
+    - Class: 114
+      Script: {instanceID: 11652}
+    - Class: 114
+      Script: {instanceID: 11810}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -162,47 +173,51 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9910}
     - Class: 114
-      Script: {instanceID: 9954}
+      Script: {instanceID: 9956}
     - Class: 114
-      Script: {instanceID: 10078}
+      Script: {instanceID: 9980}
     - Class: 114
-      Script: {instanceID: 10158}
+      Script: {instanceID: 10080}
     - Class: 114
-      Script: {instanceID: 10360}
+      Script: {instanceID: 10160}
     - Class: 114
-      Script: {instanceID: 10416}
+      Script: {instanceID: 10190}
     - Class: 114
-      Script: {instanceID: 10442}
+      Script: {instanceID: 10362}
     - Class: 114
-      Script: {instanceID: 10658}
+      Script: {instanceID: 10418}
     - Class: 114
-      Script: {instanceID: 10746}
+      Script: {instanceID: 10444}
     - Class: 114
-      Script: {instanceID: 10840}
+      Script: {instanceID: 10660}
     - Class: 114
-      Script: {instanceID: 10866}
+      Script: {instanceID: 10748}
     - Class: 114
-      Script: {instanceID: 10940}
+      Script: {instanceID: 10844}
     - Class: 114
-      Script: {instanceID: 10964}
+      Script: {instanceID: 10870}
     - Class: 114
-      Script: {instanceID: 11050}
+      Script: {instanceID: 10944}
     - Class: 114
-      Script: {instanceID: 11084}
+      Script: {instanceID: 10968}
     - Class: 114
-      Script: {instanceID: 11098}
+      Script: {instanceID: 11054}
     - Class: 114
-      Script: {instanceID: 11204}
+      Script: {instanceID: 11088}
     - Class: 114
-      Script: {instanceID: 11308}
+      Script: {instanceID: 11102}
     - Class: 114
-      Script: {instanceID: 11382}
+      Script: {instanceID: 11208}
     - Class: 114
-      Script: {instanceID: 11578}
+      Script: {instanceID: 11312}
     - Class: 114
-      Script: {instanceID: 11698}
+      Script: {instanceID: 11386}
     - Class: 114
-      Script: {instanceID: 11806}
+      Script: {instanceID: 11582}
+    - Class: 114
+      Script: {instanceID: 11702}
+    - Class: 114
+      Script: {instanceID: 11810}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -328,7 +343,7 @@ ScriptsOnlyBuild:
     className: TMP_InputField
   - hash:
       serializedVersion: 2
-      Hash: 6ea44d563ad6ad23068485a8300b5145
+      Hash: 0d474ae0e9b49d20f5d9b2a32607792c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: scene_objects
@@ -628,7 +643,7 @@ ScriptsOnlyBuild:
     className: VerticalLayoutGroup
   - hash:
       serializedVersion: 2
-      Hash: 3e1544c9433500651285f36243b535ea
+      Hash: e9b381db794c467cd622eb7d801145be
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: register

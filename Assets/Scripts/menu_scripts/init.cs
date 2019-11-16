@@ -25,6 +25,7 @@ public class init : MonoBehaviour
 
     public void setusername(user_fb u) // set user after login
     {
+        app_globals.userpic_for_mplay_taple_id = UnityEngine.Random.Range(0, 4); // this is for random picture in multiplayer list at level, should be user pic from camera though :))))
         username.text = u.login_display;
 
         Texture2D t = new Texture2D(200, 200);

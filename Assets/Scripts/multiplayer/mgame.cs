@@ -23,6 +23,8 @@ public class mgame_player
     public string playerkey { get; set; }
     [JsonProperty]
     public string gamekey { get; set; }
+    [JsonProperty]
+    public int playerpic { get; set; }
 }
 public class mgame 
 {
@@ -32,8 +34,10 @@ public class mgame
     public DateTime game_start = DateTime.UtcNow;
     [JsonProperty]
     public List<mgame_level> levels = new List<mgame_level>();
-    [JsonIgnore]
-    public bool originalgame = false; // it is true if we originally create this game, we want to delete it after completion it doesnot go to firebase 
+    [JsonProperty]
+    public string created_by_player_key = "";
+    //[JsonIgnore]
+   // public bool originalgame = false; // it is true if we originally create this game, we want to delete it after completion it doesnot go to firebase 
 }
 
 

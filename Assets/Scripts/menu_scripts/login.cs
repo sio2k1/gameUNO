@@ -15,7 +15,9 @@ public class login : MonoBehaviour
         try
         {
             app_globals.loggined_user_fb = await db_helper_login_firebase.check_user_creds(menu_init.inp_login.text, menu_init.inp_pwd.text); //check credentials
-            menu_init.setusername(app_globals.loggined_user_fb); // 
+            menu_init.setusername(app_globals.loggined_user_fb); // set username
+            
+           
             db_helper_common.set_setting("lastuserid", app_globals.loggined_user_fb.combinedloginhash); // save user in local db for autologin
         }
         catch

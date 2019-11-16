@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Data;
 using cmn_infrastructure;
+using System;
 
 /*
  * this class is represent our 3 levels, its a controller class, so we dont operate gameobjects directry, we r using scene_objects for it
@@ -50,6 +51,9 @@ public class game_level_logic : MonoBehaviour, IGame_level
     {
         
         yield return new WaitForSeconds(0.1f);
+        scene.multiplayer_table_enabled(true);
+        scene.multiplayer_table_fade(0f, 0f);
+        scene.multiplayer_table_fade(1f, 2f);
         foreach (db_helper_level_logic.dialog_entry de in db_helper_level_logic.level_west_intro_talk()) //showing dialog entries for player\enemi in appropriate bubbles
         {
             if (de.char_t == "player")
@@ -74,24 +78,31 @@ public class game_level_logic : MonoBehaviour, IGame_level
             }
         }
         yield return new WaitForSeconds(2);
+
         current_game_state.scene_stt = scene_state.states.level_progress; //change gamestate so we can show next question
         current_game_state.current_level.time_level_started = Time.time; // writing a time for timer
         level_timer = true; // starting level timer here
 
     }
 
-    void questions_init(level lvl) // init questions for current level
+    /*void questions_init(level lvl) // init questions for current level
     {
         current_game_state.current_level.questions.Clear();
         current_game_state.current_level.questions = db_helper_questions.load_questions(lvl.name, global_debug_state.questions_per_level); // get questions from db. for debug reasons we load questiond number from global_debug_state
+    }*/
 
-    }
+
 
     public void run_game_level(scene_state st, level_finished callback) // this one is called on level start
     {
         lvl_finish_callback = callback; // setup callback for level end
         current_game_state = st; // set current gamestate;
-        questions_init(current_game_state.current_level); // load questions from DB
+        
+        // this made without await on purpose(so we set destination in firegase in separate thread)
+        mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, current_game_state.current_level.name, current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_taple_id); //set player position in multiplayer game
+
+        current_game_state.current_level.questions = current_mgame.curr_mgame.levels.Find(x => x.lvl_name == current_game_state.current_level.name).questions;
+        //questions_init(current_game_state.current_level); // load questions from DB
         StartCoroutine(level_start()); // start intro of level
 
     }
@@ -175,25 +186,44 @@ public class game_level_logic : MonoBehaviour, IGame_level
     }
 
     float timer; // we use this to perform code on update, as it can affect performance not in every single frame, but every 300 ms
-    float timer_multipleer_request = 0;
-    void Update()
+    float timer_multiplayer_request = 10;
+
+    void Start()
+    {
+        scene.mplayer_table_redraw(new List<mgame_player>()); // int table with empty list
+    }
+    async void Update()
     {
         if (level_timer)
         {
             scene.level_duration_set((Time.time - current_game_state.current_level.time_level_started)); // display seonds you spent at level
        
         }
-        timer_multipleer_request += Time.deltaTime;
+        timer_multiplayer_request += Time.deltaTime;
         
-        if (timer_multipleer_request > 10f) // we use this to perform code on update, as it can affect performance not in every single frame, but every 10000 ms
+        if (timer_multiplayer_request > 10f) // we use this to perform code on update, as it can affect performance not in every single frame, but every 10000 ms
         {
             //request players for multipleer on this screen
-            timer_multipleer_request = 0;
+            timer_multiplayer_request = 0;
+
+            if (current_game_state != null)
+            {
+                //List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level("gamekey", "west");
+                //scene.mplayer_table_redraw(plist);
+                try
+                {
+                    List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level(current_mgame.curr_mgame.key, current_game_state.current_level.name);
+                    scene.mplayer_table_redraw(plist);
+                } catch (Exception e)
+                {
+                    Debug.Log("Unable to get multiplayer list:"+e.Message);
+                }
+            }
 
         }
 
 
-            timer += Time.deltaTime;
+        timer += Time.deltaTime;
         if (timer>0.300f) // we use this to perform code on update, as it can affect performance not in every single frame, but every 300 ms
         {
             timer = 0;
@@ -215,6 +245,10 @@ public class game_level_logic : MonoBehaviour, IGame_level
                         level_timer = false; // stop timer
                         scene.level_duration_set(0); // hide digits, that display duration
                         map_obj.map_redraw_according_passed_level(current_game_state.current_level);
+                        
+                        // no await -> separate thread;
+                        mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, "ENDLEVEL", current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_taple_id); //set player position in multiplayer game when level complete
+
                         lvl_finish_callback(current_game_state); // call calback to provide info to conole_input_handler that level is completed
                         //level ends here
                     }

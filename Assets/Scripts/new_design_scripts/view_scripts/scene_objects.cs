@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,10 +26,71 @@ public class scene_objects : MonoBehaviour
     public Text level_duration; // link to Text with level time duration
 
 
-    public GameObject multipleer_table;
+    public GameObject multiplayer_table;
+    public GameObject mplayer_panel;
     public GameObject mtable_line_1;
     public GameObject mtable_line_2;
     public GameObject mtable_line_3;
+
+    public void multiplayer_table_enabled(bool enabled) // set narrator activity
+    {
+        multiplayer_table.SetActive(enabled);
+    }
+
+    public void multiplayer_table_fade(float alpha, float time) // fade in\out input
+    {
+        vief.images_and_text_at_canvas_fade(multiplayer_table.GetComponentInChildren<Canvas>(), alpha, time);//hide image and text on start
+    }
+
+    public void mplayer_table_redraw(List<mgame_player> players) // redraw table with players from multiplayer
+    {
+        const string tag = "mplayer_list_to_del"; // tag for clearing table
+        void clear_tagged(string tag_) // clear scores, remove all existing table lines at start
+        {
+            var tagged = GameObject.FindGameObjectsWithTag(tag_);
+            foreach (GameObject go in tagged) // delete everything with tag ladder_to_del
+            {
+                Destroy(go);
+            }
+        }
+
+        void display_scores(List<mgame_player> players_, string tag_, List<GameObject> table_entrys, GameObject panel) // display lines as prefabed table lines
+        {
+            clear_tagged(tag_); // clear old first
+
+            players_.ForEach(p=> {
+
+                if (p.playerpic>table_entrys.Count-1) // if pic out of bounds assign 0 pic
+                { 
+                    p.playerpic = 0; 
+                } 
+                
+                var player_line = Instantiate(table_entrys[p.playerpic], new Vector3(0, 0, 0), Quaternion.identity, panel.transform); // place on panel to autodistribution with "vertical layout group"
+                player_line.tag = tag_;
+
+                player_line.GetComponentInChildren<TextMeshProUGUI>().text = p.player_name;
+            });
+
+        }
+
+        /*
+        players.Add(new mgame_player { player_name = "test" });
+        players.Add(new mgame_player { player_name = "test" });
+        players.Add(new mgame_player { player_name = "test" });
+        players.Add(new mgame_player { player_name = "test" });
+        players.Add(new mgame_player { player_name = "test" });
+        players.Add(new mgame_player { player_name = "test" });
+        */
+
+        List<GameObject> knightpics = new List<GameObject>(); // list for different player pictures
+        knightpics.Add(mtable_line_1);
+        knightpics.Add(mtable_line_2);
+        knightpics.Add(mtable_line_3);
+
+        display_scores(players, tag, knightpics, mplayer_panel); // show list of players at level
+
+
+    }
 
     public void level_duration_set(float num) // set level duration text
     {
@@ -36,6 +98,9 @@ public class scene_objects : MonoBehaviour
         if (level_duration.text=="0") // dont display anything if 0 (hide)
         {
             level_duration.text = "";
+        } else
+        {
+            level_duration.text = "Time:"+ Mathf.RoundToInt(num).ToString();
         }
     }
     

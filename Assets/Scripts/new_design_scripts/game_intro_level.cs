@@ -28,7 +28,7 @@ public class game_intro_level : MonoBehaviour
     IEnumerator introstory()
     {
         yield return null; //its a coroutine, so we need to return some delay or null to make it work.
-        global_debug_state.use_debug(); //its almost gamestart, so we set debug state incase we neeed to our game became shorter.
+        //global_debug_state.use_debug(); //its almost gamestart, so we set debug state incase we neeed to our game became shorter.
 
         StartCoroutine(populate_db_with_new_questions()); // get some extra questions from api
 
