@@ -32,7 +32,7 @@ public class console_input_handling : MonoBehaviour
         init(); // this is called on scene load, so every time we load scene we clear gamestate in init.
     }
 
-    private void game_end_handler(scene_state st) //game over - calc results, set state to waiting player name
+    private async void game_end_handler(scene_state st) //game over - calc results, set state to waiting player name
     {
         int score = 0;
         foreach (level l in gamestate.levels) // calculating scores
@@ -43,8 +43,10 @@ public class console_input_handling : MonoBehaviour
         level_logic.scene.input_fade(0.0f, 0.01f);
         ges.game_end_screen_set_scores(score);
         gamestate.total_score = score; //TODO: check if we need that, part of older functionality
-        db_helper_menu.write_scores(app_globals.loggined_user_fb.login_display, score); // write scores in db
-        gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state where we ait for user to click ok ant total score screen
+
+        await mgame_manager.scores_write_score_to_fb(current_mgame.curr_mgame.key, app_globals.loggined_user_fb, score); // write scores in firebase
+        //db_helper_menu.write_scores(app_globals.loggined_user_fb.login_display, score); // write scores in db
+        gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state where we wait for user to click ok at total score screen
 
         //TODO: Scores with current user
     }

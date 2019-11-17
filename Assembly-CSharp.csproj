@@ -77,10 +77,12 @@
     <Compile Include="Assets\Scripts\menu_scripts\init.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\input_ladder.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\ladder_cl.cs" />
+    <Compile Include="Assets\Scripts\menu_scripts\loading_spinner.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\login.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\main_menu_script.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\register.cs" />
     <Compile Include="Assets\Scripts\menu_scripts\user.cs" />
+    <Compile Include="Assets\Scripts\menu_scripts\vis_scoreboarg_game_entry.cs" />
     <Compile Include="Assets\Scripts\multiplayer\current_mgame.cs" />
     <Compile Include="Assets\Scripts\multiplayer\mgame.cs" />
     <Compile Include="Assets\Scripts\multiplayer\mgame_manager.cs" />

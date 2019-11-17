@@ -60,6 +60,7 @@ public static class firebase_comm
         try
         {
             FirebaseClient fbc = await fbConnection_auth();
+           
             var res = await fbc.Child(path).OrderBy(property).EqualTo(value).OnceAsync<T>();
             res.ToList().ForEach(o =>
             {

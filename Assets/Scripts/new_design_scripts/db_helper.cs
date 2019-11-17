@@ -306,6 +306,7 @@ public static class db_helper_login_firebase // firebase login helper
     }
 }
 
+/*
 public static class db_helper_login_OLD // this extract some dialogs for level intro
 {
     static string hash(string input) // calculating hash
@@ -379,3 +380,4 @@ public static class db_helper_login_OLD // this extract some dialogs for level i
         return res;
     }
 }
+*/

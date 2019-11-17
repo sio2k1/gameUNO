@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Data;
 using cmn_infrastructure;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 /*
  * this class is represent our 3 levels, its a controller class, so we dont operate gameobjects directry, we r using scene_objects for it
@@ -97,9 +99,9 @@ public class game_level_logic : MonoBehaviour, IGame_level
     {
         lvl_finish_callback = callback; // setup callback for level end
         current_game_state = st; // set current gamestate;
-        
+
         // this made without await on purpose(so we set destination in firegase in separate thread)
-        mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, current_game_state.current_level.name, current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_taple_id); //set player position in multiplayer game
+        mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, current_game_state.current_level.name, current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_table_id); //set player position in multiplayer game
 
         current_game_state.current_level.questions = current_mgame.curr_mgame.levels.Find(x => x.lvl_name == current_game_state.current_level.name).questions;
         //questions_init(current_game_state.current_level); // load questions from DB
@@ -192,6 +194,30 @@ public class game_level_logic : MonoBehaviour, IGame_level
     {
         scene.mplayer_table_redraw(new List<mgame_player>()); // int table with empty list
     }
+
+    async Task<bool> update_multiplayer_locations()
+    {
+        bool res = false;
+        if (current_game_state != null)
+        {
+            //List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level("gamekey", "west");
+            //scene.mplayer_table_redraw(plist);
+            try
+            {
+                await mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, current_game_state.current_level.name, current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_table_id); //set player position in multiplayer game
+
+                List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level(current_mgame.curr_mgame.key, current_game_state.current_level.name);
+                plist.RemoveAll(x => x.last_active_at_screen.AddSeconds(25) < DateTime.UtcNow); // clear players that were not re-registered at level for last X sec
+                scene.mplayer_table_redraw(plist);
+                res = true;
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Unable to get multiplayer list:" + e.Message);
+            }   
+        }
+        return res;
+    }
     async void Update()
     {
         if (level_timer)
@@ -205,20 +231,8 @@ public class game_level_logic : MonoBehaviour, IGame_level
         {
             //request players for multipleer on this screen
             timer_multiplayer_request = 0;
+            await update_multiplayer_locations();
 
-            if (current_game_state != null)
-            {
-                //List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level("gamekey", "west");
-                //scene.mplayer_table_redraw(plist);
-                try
-                {
-                    List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level(current_mgame.curr_mgame.key, current_game_state.current_level.name);
-                    scene.mplayer_table_redraw(plist);
-                } catch (Exception e)
-                {
-                    Debug.Log("Unable to get multiplayer list:"+e.Message);
-                }
-            }
 
         }
 
@@ -247,7 +261,7 @@ public class game_level_logic : MonoBehaviour, IGame_level
                         map_obj.map_redraw_according_passed_level(current_game_state.current_level);
                         
                         // no await -> separate thread;
-                        mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, "ENDLEVEL", current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_taple_id); //set player position in multiplayer game when level complete
+                        mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, "ENDLEVEL", current_mgame.curr_mgame.key, app_globals.loggined_user_fb.key, app_globals.userpic_for_mplay_table_id); //set player position in multiplayer game when level complete
 
                         lvl_finish_callback(current_game_state); // call calback to provide info to conole_input_handler that level is completed
                         //level ends here

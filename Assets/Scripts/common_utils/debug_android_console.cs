@@ -16,7 +16,7 @@ public class debug_android_console : MonoBehaviour
     {
         if (global_debug_state.is_debug)
         {
-            GameObject.FindObjectOfType<Text>().text = debub_console_log.msg;
+            gameObject.GetComponent<Text>().text = debub_console_log.msg;
         }
     }
 }

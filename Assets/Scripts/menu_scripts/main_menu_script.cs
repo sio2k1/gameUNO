@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Linq;
 using System.IO;
+using System;
 
 
 //this script defines button event handlers at main menu
@@ -17,24 +18,25 @@ public class main_menu_script : MonoBehaviour
 
     
     public RawImage cam_out;
-    public async void btn_play_onClick()
+    public async void btn_play_onClick() // start new game
     {
-        //SceneManager.LoadScene(1); //Basically loads a gamelevel scene
 
-
-       // await mgame_manager.move_to_screen(app_globals.loggined_user_fb.login_display, "_2west", "gamekey", app_globals.loggined_user_fb.key);
-       // List<mgame_player> plist = await mgame_manager.get_all_players_in_game_at_level("gamekey", "_2west");
-
-       // Debug.Log(plist.Count);
-        
-        current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game(app_globals.loggined_user_fb.key);
-        //app_globals.loggined_user_fb
-        if (current_mgame.curr_mgame.key!="")
+        menu_init.loading.SetActive(true); // show loading screen
+        try
         {
-            //start new game here
-            SceneManager.LoadScene(1); //Basically loads a gamelevel scene                             
+            current_mgame.curr_mgame = await mgame_manager.get_or_start_new_multiplayer_game(app_globals.loggined_user_fb.key, current_mgame.curr_mgame.key); // get new or existing game from firegase
+            if (current_mgame.curr_mgame.key != "") // if got a game
+            {
+                //start new game here
+                SceneManager.LoadScene(1); //Basically loads a gamelevel scene                             
+            }
         }
-        Debug.Log(current_mgame.curr_mgame.key);
+        catch (Exception e)
+        {
+            
+            Debug.Log("Can't start new game:" + e.Message);
+        }
+        menu_init.loading.SetActive(false);
     }
 
     public void btn_ladder_onClick()

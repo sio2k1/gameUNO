@@ -43,34 +43,45 @@ namespace cmn_infrastructure
             File.WriteAllBytes(toPath, reader.bytes);
         }
 
-        public static void OpenConnection() // open connection to DB
+        public static bool OpenConnection() // open connection to DB
         {
-            connection = new SqliteConnection("Data Source=" + DBPath);
-            command = new SqliteCommand(connection);
-            connection.Open();
+            bool res = false;
+            try
+            {
+                connection = new SqliteConnection("Data Source=" + DBPath);
+                command = new SqliteCommand(connection);
+                connection.Open();
+                res = true;
+            } catch (Exception e)
+            {
+                Debug.Log("Cant open db file:" + e.Message);
+            }
+            return res;
         }
 
         public static DataTable GetTable(string query) // return first table on select statment
         {
             DataSet DS = new DataSet();
-            OpenConnection();
-            if (connection.State == ConnectionState.Open)
+            if (OpenConnection())
             {
-                try
+                if (connection.State == ConnectionState.Open)
                 {
-                    SqliteDataAdapter adapter = new SqliteDataAdapter(query, connection);
-                    adapter.Fill(DS);
-                    adapter.Dispose();
+                    try
+                    {
+                        SqliteDataAdapter adapter = new SqliteDataAdapter(query, connection);
+                        adapter.Fill(DS);
+                        adapter.Dispose();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Error during query execution:" + e.Message);
+                    }
+                    CloseConnection();
                 }
-                catch (Exception e)
+                else
                 {
-                    Debug.Log("Error during query execution:" + e.Message);
+                    Debug.Log("Cannot open SQL connection");
                 }
-                CloseConnection();
-            }
-            else
-            {
-                Debug.Log("Cannot open SQL connection");
             }
 
             return DS.Tables[0];
@@ -78,21 +89,25 @@ namespace cmn_infrastructure
 
         public static void ExecuteQueryWithoutAnswer(string query) // execute insert\delete\update
         {
-            OpenConnection();
-            if (connection.State == ConnectionState.Open)
+            if (OpenConnection())
             {
-                command.CommandText = query;
-                try
+                if (connection.State == ConnectionState.Open)
                 {
-                    command.ExecuteNonQuery();
-                } catch (Exception e)
-                {
-                    Debug.Log("Error during query execution:"+e.Message);
+                    command.CommandText = query;
+                    try
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log("Error during query execution:" + e.Message);
+                    }
+                    CloseConnection();
                 }
-                CloseConnection();
-            } else
-            {
-                Debug.Log("Cannot open SQL connection");
+                else
+                {
+                    Debug.Log("Cannot open SQL connection");
+                }
             }
         }
 

@@ -25,7 +25,7 @@ public class init : MonoBehaviour
 
     public void setusername(user_fb u) // set user after login
     {
-        app_globals.userpic_for_mplay_taple_id = UnityEngine.Random.Range(0, 4); // this is for random picture in multiplayer list at level, should be user pic from camera though :))))
+        app_globals.userpic_for_mplay_table_id = UnityEngine.Random.Range(0, 4); // this is for random picture in multiplayer list at level, should be user pic from camera though :))))
         username.text = u.login_display;
 
         Texture2D t = new Texture2D(200, 200);
@@ -42,7 +42,11 @@ public class init : MonoBehaviour
             string combinedhash = db_helper_common.get_setting("lastuserid"); // get last loggined user
             if (combinedhash != "") // if we have some session login saved in db
             {
-                app_globals.loggined_user_fb = await db_helper_login_firebase.check_user_creds(combinedhash); //check credentials
+
+                if (app_globals.loggined_user_fb.key == "") // if its first launch
+                {
+                    app_globals.loggined_user_fb = await db_helper_login_firebase.check_user_creds(combinedhash); //check credentials
+                }
                 setusername(app_globals.loggined_user_fb);
             }
             loading.SetActive(false); // hide fb query proceed screen
