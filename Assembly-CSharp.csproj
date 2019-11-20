@@ -161,40 +161,40 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -368,31 +368,31 @@
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Auth">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Assets/Plugins/Firebase.Auth.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Assets/Plugins/Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="Firebase">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Assets/Plugins/Firebase.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Assets/Plugins/Firebase.dll</HintPath>
     </Reference>
     <Reference Include="LiteDB">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Assets/Plugins/LiteDB.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Assets/Plugins/LiteDB.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Assets/Plugins/Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Assets/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Reactive">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Assets/Plugins/System.Reactive.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Assets/Plugins/System.Reactive.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>E:/@SkyDrive/SkyDrive/@backup/@nmit/SWD2/uprj/gameUNO/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>D:/OLEG/gameUNO/Library/PackageCache/com.unity.analytics@3.3.2/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.11f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

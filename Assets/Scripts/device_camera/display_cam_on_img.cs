@@ -24,9 +24,11 @@ public class display_cam_on_img : MonoBehaviour
             cam_out.enabled = true;
             var d = WebCamTexture.devices.ToList().Find(x => x.isFrontFacing);
             webCamTexture = new WebCamTexture(d.name);
+            webCamTexture.requestedWidth = 320;
+            webCamTexture.requestedHeight = 240;
             cam_out.texture = webCamTexture;
             webCamTexture.Play();
-            StartCoroutine(TakePhoto());
+            
         }
     }
 
@@ -34,11 +36,11 @@ public class display_cam_on_img : MonoBehaviour
     {
         if (webCamTexture!=null)
         {
-            if (webCamTexture.isPlaying)
-            {
+           // if (webCamTexture.isPlaying)
+           // {
                 
                 webCamTexture.Stop();
-            }
+           // }
         }
         if (cam_out.enabled)
         {
@@ -66,11 +68,11 @@ public class display_cam_on_img : MonoBehaviour
         photo.SetPixels(webCamTexture.GetPixels());
         photo.Apply();
         webCamTexture.Pause();
-        lastcamerashoot = photo.EncodeToPNG();
+        lastcamerashoot = photo.EncodeToJPG(85);
 
         //Encode to a PNG
-        //byte[] bytes = photo.EncodeToPNG();
-        //File.WriteAllBytes(Application.streamingAssetsPath + "/pic.png", bytes);
+        //byte[] bytes = photo.EncodeToJPG(80);
+        //File.WriteAllBytes(Application.streamingAssetsPath + "/pic.jpg", bytes);
     }
 
     IEnumerator cam_start()
@@ -118,6 +120,7 @@ public class display_cam_on_img : MonoBehaviour
     }
     void Start()
     {
+        //startCamera();
         /*
         if (WebCamTexture.devices.Length > 0)
         {
