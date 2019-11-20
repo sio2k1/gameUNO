@@ -95,7 +95,7 @@ public class main_menu_script : MonoBehaviour
         List<fbResult<userrecord>> usr = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "testqQQQ11aaaZZ");
 
         */
-
+        
         //await firebase_comm.delete_object_from_path_key("qqq", "-LtJTgcCpQ0hltFjwmpz");
 
         //debub_console_log.msg = "updated";
@@ -123,7 +123,7 @@ public class main_menu_script : MonoBehaviour
         firebase_comm.get_objects_from_path<testrecord>(null, "qqq", fb_get_);
         */
 
-        
+
         try
         {
             menu_init.inp_login.text = ""; // clear fields
