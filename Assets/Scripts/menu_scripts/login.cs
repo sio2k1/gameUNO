@@ -39,7 +39,8 @@ public class login : MonoBehaviour
     public void btn_reg_click()
     {
         menu_init.register.SetActive(true); // show register user menu
-
+        //TODO: Camerainit 
+        //menu_init.GetComponent<register>().init_camera();
         //List<TMP_InputField> l2 = menu_init.register.GetComponentsInChildren<TMP_InputField>().ToList();
         menu_init.register.GetComponentsInChildren<TMP_InputField>().ToList().ForEach(l => {
             l.text = "";

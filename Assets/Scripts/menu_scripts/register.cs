@@ -19,8 +19,14 @@ public class register : MonoBehaviour
     public display_cam_on_img regcamera;
     public void btn_back_click() // hide reg, show login
     {
+        regcamera.stopCamera();
         menu_init.login.SetActive(true);
         menu_init.register.SetActive(false);
+    }
+
+    public void init_camera()
+    {
+        regcamera.startCamera();
     }
 
     public void btn_shoot_click() // occurs on take shoot btn click
@@ -40,8 +46,9 @@ public class register : MonoBehaviour
                 
                 if (!await db_helper_login_firebase.check_user_by_login(login)) // chech if we have user with same login in db
                 {
-                    
-                    byte[] pic = File.ReadAllBytes(Path.Combine(Application.streamingAssetsPath, "pic.png"));//regcamera.lastcamerashoot
+
+                    //byte[] pic = File.ReadAllBytes(Path.Combine(Application.streamingAssetsPath, "pic.png"));//regcamera.lastcamerashoot
+                    byte[] pic = regcamera.lastcamerashoot;
                     if (await db_helper_login_firebase.reg_new_user(login, pwd, pic)) // create new user, returns true if user created
                     {
                         menu_init.show_alert("User:" + login + " created."); // alert

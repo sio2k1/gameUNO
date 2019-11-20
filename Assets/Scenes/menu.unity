@@ -3483,10 +3483,10 @@ RectTransform:
   m_Father: {fileID: 1673708500}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.039370377, y: 0.42970374}
-  m_AnchorMax: {x: 0.24951853, y: 0.85651857}
-  m_AnchoredPosition: {x: 0, y: 4.040039}
-  m_SizeDelta: {x: -47.300003, y: -54.699997}
+  m_AnchorMin: {x: 0.04319408, y: 0.5}
+  m_AnchorMax: {x: 0.24000001, y: 0.8221681}
+  m_AnchoredPosition: {x: 1.5, y: 2.480011}
+  m_SizeDelta: {x: -7, y: -12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &636976950
 GameObject:
@@ -6052,7 +6052,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!1 &1401385371
 GameObject:
