@@ -134,10 +134,12 @@ public static class mgame_manager
 
                 res.RemoveAll(x => (x.obj.game_start.AddMinutes(15) < DateTime.UtcNow) || (x.obj.created_by_player_key == current_user_key) || (x.key == previous_game_key)); // clear list
 
+                res = res.OrderByDescending(x => x.obj.game_start).ToList();
+
                 if (res.Count != 0)
                 {
-                    g = res.FirstOrDefault().obj;
-                    g.key = res.FirstOrDefault().key;
+                    g = res.First().obj;
+                    g.key = res.First().key;
                 }
                 else
                 {

@@ -20,19 +20,24 @@ public class init : MonoBehaviour
     public GameObject alert;
 
     public RawImage userpic;
+    public GameObject userpic_vis;
     public GameObject loading;
 
 
     public void setusername(user_fb u) // set user after login
     {
+
         app_globals.userpic_for_mplay_table_id = UnityEngine.Random.Range(0, 4); // this is for random picture in multiplayer list at level, should be user pic from camera though :))))
-        username.text = u.login_display;
+        username.text = u.login_display; // set username
 
-        Texture2D t = new Texture2D(200, 200);
-        byte[] b2 = System.Convert.FromBase64String(u.userpic);
-
-        t.LoadImage(b2);
-        userpic.texture = t;
+        if (u.userpic != "") // if we have pic, display it
+        {
+            Texture2D t = new Texture2D(320, 240);
+            byte[] picbytes = System.Convert.FromBase64String(u.userpic);
+            t.LoadImage(picbytes);
+            userpic.texture = t;
+            userpic_vis.SetActive(true);
+        } 
     }
     private async void perform_init_login() // load last saved user
     {
@@ -45,6 +50,8 @@ public class init : MonoBehaviour
 
                 if (app_globals.loggined_user_fb.key == "") // if its first launch
                 {
+                    userpic_vis.SetActive(false);
+                    username.text = "Loading...";
                     app_globals.loggined_user_fb = await db_helper_login_firebase.check_user_creds(combinedhash); //check credentials
                 }
                 setusername(app_globals.loggined_user_fb);
@@ -68,28 +75,7 @@ public class init : MonoBehaviour
             login.SetActive(true);
             //show login screen
         }
-        /*try
-        {
-            string json = db_helper_login.get_last_user();
-            app_globals.loggined_user = serializer_helper.json_deserialize_object_from_string<user>(json); //deserialize to global user object
-            Debug.Log(app_globals.loggined_user.id.ToString()); // dev purpose
-        }
-        catch
-        {
-            Debug.Log("Unable to get info about last user");
-            app_globals.loggined_user = new user(); // clear current user
-        }
 
-        if (app_globals.loggined_user.id != -1)  // set name in menu if user found or shom login again if not
-        {
-            setusername(app_globals.loggined_user);
-            //show menu and playername
-        }
-        else
-        {
-            
-            //show login screen
-        }*/
 
        
     }
@@ -100,7 +86,7 @@ public class init : MonoBehaviour
         alert_text.text = text;
     }
 
-    void Start() // we
+    void Start() // autologin on start
     {
         perform_init_login();
     }

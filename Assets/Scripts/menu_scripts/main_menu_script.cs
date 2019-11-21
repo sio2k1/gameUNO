@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using System.IO;
 using System;
+using UnityEngine.Android;
 
 
 //this script defines button event handlers at main menu
@@ -17,7 +18,7 @@ public class main_menu_script : MonoBehaviour
     public init menu_init;
 
     
-    public RawImage cam_out;
+    public RawImage cam_out; // camera output (user pic)
     public async void btn_play_onClick() // start new game
     {
 
@@ -49,89 +50,26 @@ public class main_menu_script : MonoBehaviour
 
     private void Start()
     {
-        global_debug_state.use_debug();
-    }
+        //TODO: debug state in menu
+        //global_debug_state.use_debug();
 
-    private static void UnpackToPersistentDataPathFromStreaming(string fileName) //unpack db to local folder at android
-    {
-        string toPath = Path.Combine(Application.persistentDataPath, fileName);
-        string fromPath = Path.Combine(Application.streamingAssetsPath, fileName);
-        WWW reader = new WWW(fromPath);
-        while (!reader.isDone) { }
-        File.WriteAllBytes(toPath, reader.bytes);
-    }
-
-    public async void btn_logoff_onClick() // logoff
-    {
-        /*
-        Texture2D t = new Texture2D(200, 200);
-        string flpath = "";
-#if UNITY_EDITOR
-        flpath = Path.Combine(Application.streamingAssetsPath, "pic.png");
-#endif
-
-#if UNITY_ANDROID
-        UnpackToPersistentDataPathFromStreaming("pic.png");
-        flpath = Path.Combine(Application.persistentDataPath, "pic.png");
-#endif
-        if (flpath=="")
+        #if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.Camera)) //permission request for camera on start
         {
-            throw new System.Exception("No path defined");
+            Permission.RequestUserPermission(Permission.Camera);
         }
-
-        debub_console_log.msg = flpath;
-
-        byte[] b = File.ReadAllBytes(Path.Combine(Application.streamingAssetsPath, "pic.png"));
-        debub_console_log.msg = flpath+ "READED";
-        //Path.Combine(Application.persistentDataPath, fileName)
-        string b64 = System.Convert.ToBase64String(b);
-
-        userrecord u = new userrecord { username = "testqQQQ11aaaZZ", password_hash = "ddsdsd", b64_user_pic = "a" , arr = new List<string>() };
-        u.arr.Add("sss");
-        u.arr.Add("sss2");
-        await firebase_comm.update_object_into_path_key<userrecord>(u, "qqq", "-LtJTgcCpQ0hltFjwmpz");
+        #endif
+    }
 
 
-        List<fbResult<userrecord>> usr = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "testqQQQ11aaaZZ");
-
-        */
-        
-        //await firebase_comm.delete_object_from_path_key("qqq", "-LtJTgcCpQ0hltFjwmpz");
-
-        //debub_console_log.msg = "updated";
-        //string key = await firebase_comm.put_object_into_path(u, "qqq");
-
-        //List<fbResult<userrecord>> url = await firebase_comm.get_objects_byfield_from_path<userrecord>("qqq", "username", "test");
-        //debub_console_log.msg = url.Count.ToString();
-        //Debug.Log(key);
-
-        // byte[] b2 = System.Convert.FromBase64String(url[0].obj.b64_user_pic);
-
-        //t.LoadImage(b2);
-        //cam_out.texture = t;
-
-
-
-
-        /*
-        testrecord tr = new testrecord();
-        tr.h = 444;
-
-        firebase_comm.put_object_into_path(tr, "qqq");
-
-        
-        firebase_comm.get_objects_from_path<testrecord>(null, "qqq", fb_get_);
-        */
-
-
+    public void btn_logoff_onClick() // logoff
+    {
         try
         {
             menu_init.inp_login.text = ""; // clear fields
             menu_init.inp_pwd.text = "";
             app_globals.loggined_user_fb = new user_fb();
             db_helper_common.set_setting("lastuserid", "");
-            //user u = new user();
-            //db_helper_login.set_last_user(u); // reset user
             menu_init.login.SetActive(true); // show login screen
         }
         catch

@@ -6,49 +6,42 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
 
+
+// this script defines selfie camera i 
 public class display_cam_on_img : MonoBehaviour
 {
-    // Start is called before the first frame update
 
-    public RawImage cam_out;
-    WebCamDevice cam;
-    WebCamTexture webCamTexture;
+    public RawImage cam_out; // display camera content here
+    WebCamTexture webCamTexture; 
 
-    public byte[] lastcamerashoot=null;
+    public byte[] lastcamerashoot=null; // bytes of last shoot
 
 
-    public void startCamera()
+    public void startCamera() // start camera
     {
-        if (WebCamTexture.devices.Length > 0)
+
+        if (WebCamTexture.devices.Length > 0) // if we have some cameras
         {
             cam_out.enabled = true;
-            var d = WebCamTexture.devices.ToList().Find(x => x.isFrontFacing);
-            webCamTexture = new WebCamTexture(d.name);
+            var d = WebCamTexture.devices.ToList().Find(x => x.isFrontFacing); // select selfie camera
+            webCamTexture = new WebCamTexture(d.name); // intit webtexture on particular selfie camera
             webCamTexture.requestedWidth = 320;
             webCamTexture.requestedHeight = 240;
-            cam_out.texture = webCamTexture;
-            webCamTexture.Play();
+            cam_out.texture = webCamTexture; // output cam to image
+            webCamTexture.Play(); // launch camera
             
         }
     }
 
     public void stopCamera()
     {
-        if (webCamTexture!=null)
-        {
-           // if (webCamTexture.isPlaying)
-           // {
-                
-                webCamTexture.Stop();
-           // }
-        }
-        if (cam_out.enabled)
-        {
-            cam_out.enabled = false;
+        if (webCamTexture!=null) //if cam was initialized
+        {    
+            webCamTexture.Stop(); // shut down
         }
     }
 
-    public void takePhoto()
+    public void takePhoto() // launch take photo in thread (we need to wait some time for frame draw so we use can use WaitForEndOfFrame(); inside)
     {
         StartCoroutine(TakePhoto());
     }
@@ -58,11 +51,7 @@ public class display_cam_on_img : MonoBehaviour
 
         // NOTE - you almost certainly have to do this here:
         yield return new WaitForSeconds(0.1f);
-        yield return new WaitForEndOfFrame();
-
-        // it's a rare case where the Unity doco is pretty clear,
-        // http://docs.unity3d.com/ScriptReference/WaitForEndOfFrame.html
-        // be sure to scroll down to the SECOND long example on that doco page 
+        yield return new WaitForEndOfFrame(); // to avoid black camera shoots
 
         Texture2D photo = new Texture2D(webCamTexture.width, webCamTexture.height);
         photo.SetPixels(webCamTexture.GetPixels());
@@ -70,72 +59,9 @@ public class display_cam_on_img : MonoBehaviour
         webCamTexture.Pause();
         lastcamerashoot = photo.EncodeToJPG(85);
 
-        //Encode to a PNG
+        //Encode to a PNG // degugging code
         //byte[] bytes = photo.EncodeToJPG(80);
         //File.WriteAllBytes(Application.streamingAssetsPath + "/pic.jpg", bytes);
     }
 
-    IEnumerator cam_start()
-    {
-       yield return new WaitForSeconds(1); /*
-        if (WebCamTexture.devices.Length > 0)
-        {
-            List<WebCamDevice> d = WebCamTexture.devices.ToList();
-            cam = d[0];
-
-            tex = new WebCamTexture("DroidCam Source 3");
-            Debug.Log(cam.name);
-            cam_out.texture = tex;
-            cam_out.material.mainTexture = tex;
-            //tex.requestedFPS = 10;
-            yield return new WaitForSeconds(10);
-            //tex.Play();
-            
-
-           // Texture2D t = (Texture2D)cam_out.texture;
-           // byte[] b = t.EncodeToPNG();
-
-           // yield return new WaitForSeconds(4);
-            //tex.Stop();
-            //gameObject.GetComponentInChildren<MeshRenderer>().material.mainTexture = tex;
-            //test_img.texture = tex;
-
-
-    
-            
-
-            Texture2D newtex = new Texture2D(200,200);
-           // newtex.LoadImage(b);
-
-
-            yield return new WaitForSeconds(1);
-            //tex.Play();
-            yield return new WaitForSeconds(1);
-
-        }
-        else
-        {
-            Debug.Log("No camera");
-        }*/
-    }
-    void Start()
-    {
-        //startCamera();
-        /*
-        if (WebCamTexture.devices.Length > 0)
-        {
-            var d = WebCamTexture.devices.ToList().Find(x => x.isFrontFacing);
-            webCamTexture = new WebCamTexture(d.name);
-            cam_out.texture = webCamTexture;
-            webCamTexture.Play();
-            StartCoroutine(TakePhoto());
-        }*/
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }

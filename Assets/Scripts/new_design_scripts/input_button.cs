@@ -12,6 +12,9 @@ public class input_button : MonoBehaviour
     {
         cih.input_on_new_text_handler(inp.text); // pass input text to input handler
         inp.text = ""; // clear last command
+        
+        #if UNITY_EDITOR
         inp.ActivateInputField(); //return cursor to input field
+        #endif
     }
 }

@@ -30,7 +30,7 @@ namespace cmn_infrastructure
 #if UNITY_ANDROID
             string filePath = Path.Combine(Application.persistentDataPath, fileName);
             if (!File.Exists(filePath)) UnpackDatabase(filePath);
-            UnpackDatabase(filePath); //we perform overwrite on each run due to debug reasons
+            //UnpackDatabase(filePath); //we perform overwrite on each run due to debug reasons
             return filePath;
 #endif
         }

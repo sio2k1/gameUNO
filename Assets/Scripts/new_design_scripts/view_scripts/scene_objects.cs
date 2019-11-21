@@ -205,7 +205,10 @@ public class scene_objects : MonoBehaviour
 
     public void input_activate() // set cursor to input field
     {
-        input_cvns.GetComponentInChildren<InputField>().ActivateInputField();
+
+        #if UNITY_EDITOR 
+        input_cvns.GetComponentInChildren<InputField>().ActivateInputField(); // setactive within editor, on mobile it pop up keyboard.
+        #endif
     }
 
 

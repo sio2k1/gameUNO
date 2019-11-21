@@ -48,7 +48,7 @@ public class console_input_handling : MonoBehaviour
         //db_helper_menu.write_scores(app_globals.loggined_user_fb.login_display, score); // write scores in db
         gamestate.scene_stt = scene_state.states.wait_for_input_player_name; // set state where we wait for user to click ok at total score screen
 
-        //TODO: Scores with current user
+        
     }
 
     public void level_finish_handler(scene_state st) //after level finish we come here from callback.
@@ -167,7 +167,10 @@ public class console_input_handling : MonoBehaviour
     {
         try
         {
-            StartCoroutine(handling_thread(input_text.ToLower())); // passing input in lower case
+            if (input_text != "") // if not empty
+            {
+                StartCoroutine(handling_thread(input_text.ToLower())); // passing input in lower case
+            }
         } catch
         {
             Debug.Log("Input handling error");
