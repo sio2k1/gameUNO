@@ -27,8 +27,8 @@ public static class firebase_comm
 {
 
     public static bool usemodernauth = true; //we can specify to use legacy way of using DB secret (should be true for using modern auth)
-    private static string OLDkey = "SfKwW9OaccZhRtkPs5kqFdNqT7qkfSh1pAv5si6J"; // db secret for legacy auth method
-    private static string APIKEY="AIzaSyCLv3zAYAslktqJm4GyuboymcYxBVjCT3M"; // project auth key for modern auth
+    private static string OLDkey = ""; // db secret for legacy auth method
+    private static string APIKEY=""; // project auth key for modern auth
     private static string APIurl = "https://knights-and-users.firebaseio.com/"; // project URL
 
     public static async Task<FirebaseClient> fbConnection_auth() // connection, returns ready to use (for queries) firebase client
